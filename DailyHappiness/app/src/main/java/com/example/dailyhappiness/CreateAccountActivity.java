@@ -38,10 +38,10 @@ public class CreateAccountActivity extends AppCompatActivity {
                 if(!pw.equals(resultPW)){ //비밀번호와 비밀번호확인에 쓴게 다를경우
                     Toast.makeText(CreateAccountActivity.this, "비밀번호가 일치하지 않습니다!", Toast.LENGTH_SHORT).show();
                 }else{
-                    Account.id = id;
-                    Account.pw = pw;
-                    Account.gender = gender;
-                    Account.age = age;
+                    Account.setId(id);
+                    Account.setPw(pw);
+                    Account.setGender(gender);
+                    Account.setAge(age);
 
                     Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
                     intent.putExtra("id",id);
