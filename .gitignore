@@ -67,3 +67,7 @@ fastlane/readme.md
 #xml
 github.xml
 vcs.xml
+laf.xml 
+default.xml 
+androidStudionFirstRun.xml 
+debugger.xml
