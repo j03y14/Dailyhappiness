@@ -68,6 +68,6 @@ fastlane/readme.md
 github.xml
 vcs.xml
 laf.xml 
-default.xml 
+Default.xml 
 androidStudionFirstRun.xml 
 debugger.xml
