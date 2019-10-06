@@ -20,5 +20,5 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".CreateAccountActivity" />
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
