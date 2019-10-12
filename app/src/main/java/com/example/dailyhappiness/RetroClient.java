@@ -37,12 +37,15 @@ public class RetroClient {
     }
 
 
-    private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+    private static OkHttpClient httpClient = new OkHttpClient.Builder()
+                                                            .retryOnConnectionFailure(true)
+                                                            .build();
 
     private RetroClient(Context context) {
         retrofit = new Retrofit.Builder()
                 .baseUrl(URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient)
                 .build();
     }
 

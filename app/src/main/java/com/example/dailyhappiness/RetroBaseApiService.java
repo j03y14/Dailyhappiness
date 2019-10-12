@@ -14,14 +14,14 @@ import retrofit2.http.Path;
 
 public interface RetroBaseApiService {
 
-    final String Base_Url = "http://flagtag.cafe24.com/";
+    final String Base_Url = "http://15.164.95.132:5000/";
 
     @FormUrlEncoded
-    @POST("/Register.php")
+    @POST("/register/")
     Call<JsonObject> createAccount(@Field("id") String id, @Field("password") String password, @Field("gender") String gender, @Field("age") String age);
 
     @FormUrlEncoded
-    @POST("/Login.php")
+    @POST("/login/")
     Call<JsonObject> login(@Field("id") String id, @Field("password") String password);
 
 }
