@@ -9,144 +9,226 @@
             type="com.example.dailyhappiness.CreateAccountActivity" />
     </data>
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".CreateAccountActivity"
-        android:layout_marginHorizontal="50dp"
-        android:layout_marginVertical="50dp">
+        tools:context=".CreateAccountActivity">
 
-        <EditText
-            android:layout_width="240dp"
+        <LinearLayout
+            android:id="@+id/Id"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:id="@+id/edtInputID"
-            android:textSize="18dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="70dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/Passward"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/tvID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@id/edtInputID"
-            android:layout_alignBottom="@id/edtInputID"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginLeft="0dp"
-            android:layout_toLeftOf="@id/edtInputID"
-            android:gravity="center"
-            android:text="아이디"
-            android:textSize="18dp"
-            />
-
-        <EditText
-            android:id="@+id/edtInputPW"
-            android:layout_width="240dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/edtInputID"
-            android:layout_alignParentRight="true"
-            android:inputType="textPassword"
-            android:textSize="18dp"
-            android:layout_marginBottom="20dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tvPW"
-            android:text="비밀번호"
-            android:textSize="18dp"
-            android:gravity="center"
-            android:layout_toLeftOf="@id/edtInputPW"
-            android:layout_alignTop="@id/edtInputPW"
-            android:layout_alignBottom="@id/edtInputPW"/>
-
-        <EditText
-            android:id="@+id/edtRepeatInputPW"
-            android:layout_width="240dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/edtInputPW"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="20dp"
-            android:inputType="textPassword"
-            android:textSize="18dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tvRepeatPW"
-            android:text="비밀번호 확인"
-            android:textSize="18dp"
-            android:gravity="center"
-            android:layout_toLeftOf="@id/edtRepeatInputPW"
-            android:layout_alignTop="@id/edtRepeatInputPW"
-            android:layout_alignBottom="@id/edtRepeatInputPW"/>
-
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/rgGender"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/edtRepeatInputPW"
-            android:layout_alignLeft="@id/edtRepeatInputPW"
-            android:layout_marginBottom="20dp"
-            android:orientation="horizontal">
-
-            <RadioButton
+            <TextView
+                android:id="@+id/tvID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/rBtnFemale"
-                android:checked="true"
-                android:text="여" />
-            <RadioButton
+                android:layout_gravity="center"
+
+                android:text="아이디"
+                android:textSize="16dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <EditText
+                android:id="@+id/edtInputID"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Passward"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/PasswardRepeat"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Id">
+
+            <TextView
+                android:id="@+id/tvPW"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/rBtnMale"
-                android:text="남" />
+                android:gravity="center"
+                android:text="비밀번호"
+                android:textSize="16dp" />
 
-        </RadioGroup>
+            <View
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
 
-        <TextView
-            android:layout_width="match_parent"
+            <EditText
+                android:id="@+id/edtInputPW"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/PasswardRepeat"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:id="@+id/tvGender"
-            android:text="성별"
-            android:textSize="18dp"
-            android:gravity="center"
-            android:layout_toLeftOf="@id/rgGender"
-            android:layout_alignTop="@id/rgGender"
-            android:layout_alignBottom="@id/rgGender" />
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/Gender"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Passward">
 
-        <EditText
-            android:id="@+id/edtInputAge"
-            android:layout_width="240dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/rgGender"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="18dp"
-            android:layout_marginRight="3dp"
-            android:layout_marginBottom="20dp"
-            android:textSize="18dp"
-            android:inputType="number"/>
+            <TextView
+                android:id="@+id/tvRepeatPW"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="비밀번호 확인"
+                android:textSize="16dp" />
 
-        <TextView
-            android:layout_width="match_parent"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <EditText
+                android:id="@+id/edtRepeatInputPW"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/Gender"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:id="@+id/tvAge"
-            android:text="나이"
-            android:textSize="18dp"
-            android:gravity="center"
-            android:layout_alignTop="@id/edtInputAge"
-            android:layout_alignBottom="@id/edtInputAge"
-            android:layout_toLeftOf="@id/edtInputAge" />
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/Age"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.51"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/PasswardRepeat">
+
+            <TextView
+                android:id="@+id/tvGender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="성별"
+                android:textSize="16dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <RadioGroup
+                android:id="@+id/rgGender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rBtnFemale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="여" />
+
+                <RadioButton
+                    android:id="@+id/rBtnMale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="남" />
+            </RadioGroup>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Age"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginBottom="43dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/btnConfirm"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Gender">
+
+            <TextView
+                android:id="@+id/tvAge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="나이"
+                android:textSize="16dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <EditText
+                android:id="@+id/edtInputAge"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </LinearLayout>
 
         <Button
+            android:id="@+id/btnConfirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btnConfirm"
+            android:layout_marginStart="162dp"
+            android:layout_marginLeft="162dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="162dp"
+            android:layout_marginRight="162dp"
+            android:layout_marginBottom="184dp"
             android:text="확인"
-            android:layout_below="@id/edtInputAge"
-            android:layout_centerHorizontal="true"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Age" />
 
-    </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
