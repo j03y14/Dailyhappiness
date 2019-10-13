@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -11,12 +12,18 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.google.gson.JsonObject;
+
 import com.example.dailyhappiness.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
 
     ActivityLoginBinding binding;
     //SharedPreferences sp = getApplicationContext().getSharedPreferences("sp",Activity.MODE_PRIVATE); //(저장될 키, 값)
+
+    //서버 연동 객체
+    private RetroClient retroClient;
+    private Account user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +38,9 @@ public class LoginActivity extends AppCompatActivity {
         final SharedPreferences sp = getSharedPreferences("sp",Activity.MODE_PRIVATE); //(저장될 키, 값)
         String loginID = sp.getString("id", ""); // 처음엔 값이 없으므로 ""
         String loginPW = sp.getString("pw","");
+
+        retroClient = RetroClient.getInstance(this).createBaseApi();
+        user = Account.getInstance();
 
         if(loginID != "" && loginPW != "") {
             Toast.makeText(this, "자동 로그인 되었습니다.", Toast.LENGTH_SHORT).show();
@@ -54,6 +64,8 @@ public class LoginActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.putExtra("id", id);
                         startActivity(intent);
+
+                        login(v, id, pw);
 
                         SharedPreferences.Editor editor = sp.edit(); //로그인 정보 저장
                         editor.putString("id", id);
@@ -84,5 +96,29 @@ public class LoginActivity extends AppCompatActivity {
                 binding.edtInputID.setText(id);
             }
         }
+    }
+
+    public void login(View v, String id, String pw){
+        retroClient.login(id, pw, new RetroCallback<JsonObject>(){
+
+            @Override
+            public void onError(Throwable t) {
+                Log.e("error", t.toString());
+            }
+
+            @Override
+            public void onSuccess(int code, JsonObject receivedData) {
+                user.setId(receivedData.get("id").toString());
+                user.setPw(receivedData.get("password").toString());
+                user.setAge(receivedData.get("age").toString());
+                user.setGender(receivedData.get("gender").toString());
+
+            }
+
+            @Override
+            public void onFailure(int code) {
+                Log.e("error", "오류가 생겼습니다.");
+            }
+        });
     }
 }

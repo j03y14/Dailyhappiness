@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -48,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         binding.tvMission.setText(Mission.getTodayMission());
 
-        binding.imgBtnSuccess.setOnClickListener(new View.OnClickListener() {
+        binding.ibtnSuccess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),WriteReviewActivity.class);
@@ -56,7 +58,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        binding.btnLogout.setOnClickListener(new View.OnClickListener() {
+        binding.ibtnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                show();
+            }
+        });
+
+        binding.ibtnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //SharedPreferences에 저장된 값들을 로그아웃 버튼을 누르면 삭제함
@@ -74,6 +83,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
 
+    public  void show(){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this,R.style.Theme_AppCompat_Light_Dialog_Alert);
+
+        dialog.setTitle("이 미션이 마음에 안 드시나요?");
+        dialog.setPositiveButton("다음에 할래요", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //미션을 다음으로 넘기기
+            }
+        });
+
+        dialog.setNegativeButton("마음에 안 들어요", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //미션 목록에서 지움
+            }
+        });
+
+        dialog.show();
     }
 }
