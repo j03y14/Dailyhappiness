@@ -2,6 +2,7 @@ package com.example.dailyhappiness;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -10,16 +11,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.dailyhappiness.databinding.ActivityCreateAccountBinding;
+import com.google.gson.JsonObject;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
     ActivityCreateAccountBinding binding;
+
+    //서버 연동 객체
+    private RetroClient retroClient;
+    private Account user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_create_account);
         binding.setActivity(this);
+
+        retroClient = RetroClient.getInstance(this).createBaseApi();
+        user = Account.getInstance();
 
         binding.btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,12 +52,41 @@ public class CreateAccountActivity extends AppCompatActivity {
                     Account.setGender(gender);
                     Account.setAge(age);
 
+                    createAccount(v, id,pw,gender,age);
+
                     Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
                     intent.putExtra("id",id);
                     setResult(2001,intent);
                     finish();
                 }
 
+            }
+        });
+    }
+
+    public void createAccount(View v, final String id, String pw, String gender, String age){
+        retroClient.createAccount(id, pw, gender, age, new RetroCallback<JsonObject>() {
+            @Override
+            public void onError(Throwable t) {
+                Log.e("error", t.toString());
+            }
+
+            @Override
+            public void onSuccess(int code, JsonObject receivedData) {
+                String success = receivedData.get("success").toString();
+
+                Log.d("회원가입", success);
+
+                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                intent.putExtra("id",id);
+                setResult(2001,intent);
+                finish();
+
+            }
+
+            @Override
+            public void onFailure(int code) {
+                Log.e("error", "오류가 생겼습니다.");
             }
         });
     }

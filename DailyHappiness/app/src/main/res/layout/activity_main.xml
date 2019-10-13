@@ -20,7 +20,7 @@
 
 
         <ImageButton
-            android:id="@+id/btnLogout"
+            android:id="@+id/ibtnLogout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="307dp"
@@ -67,7 +67,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tvDate" />
 
         <ImageButton
-            android:id="@+id/imgBtnSuccess"
+            android:id="@+id/ibtnSuccess"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="162dp"
@@ -130,7 +130,7 @@
                     android:textSize="20dp" />
 
                 <ImageButton
-                    android:id="@+id/imgBtnNext"
+                    android:id="@+id/ibtnNext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignEnd="@+id/imgMission"
