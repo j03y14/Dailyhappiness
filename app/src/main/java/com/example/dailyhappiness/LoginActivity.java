@@ -25,6 +25,8 @@ public class LoginActivity extends AppCompatActivity {
     private RetroClient retroClient;
     private Account user;
 
+    SharedPreferences sp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //저장했던 정보 꺼내서 보여주기
 
-        final SharedPreferences sp = getSharedPreferences("sp",Activity.MODE_PRIVATE); //(저장될 키, 값)
+        sp = getSharedPreferences("sp",Activity.MODE_PRIVATE); //(저장될 키, 값)
         String loginID = sp.getString("id", ""); // 처음엔 값이 없으므로 ""
         String loginPW = sp.getString("pw","");
 
@@ -56,23 +58,9 @@ public class LoginActivity extends AppCompatActivity {
                     String id = binding.edtInputID.getText().toString();
                     String pw = binding.edtInputPW.getText().toString();
 
-                    if (!id.equals(Account.getId())) {     //해당 아이디가 목록에 없을때
-                        Toast.makeText(LoginActivity.this, "아이디가 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
-                    } else if (!pw.equals(Account.getPw())) {   //비밀번호가 일치하지 않을때
-                        Toast.makeText(LoginActivity.this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        intent.putExtra("id", id);
-                        startActivity(intent);
+                    login(v, id, pw);
 
-                        login(v, id, pw);
 
-                        SharedPreferences.Editor editor = sp.edit(); //로그인 정보 저장
-                        editor.putString("id", id);
-                        editor.putString("pw", pw);
-                        editor.commit();
-                        finish();
-                    }
                 }
             });
         }
@@ -98,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void login(View v, String id, String pw){
+    public void login(View v, final String id, final String pw){
         retroClient.login(id, pw, new RetroCallback<JsonObject>(){
 
             @Override
@@ -108,10 +96,28 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(int code, JsonObject receivedData) {
-                user.setId(receivedData.get("id").toString());
-                user.setPw(receivedData.get("password").toString());
-                user.setAge(receivedData.get("age").toString());
-                user.setGender(receivedData.get("gender").toString());
+                user.setId(receivedData.get("id").getAsString());
+                user.setPw(receivedData.get("password").getAsString());
+                user.setAge(receivedData.get("age").getAsString());
+                user.setGender(receivedData.get("gender").getAsString());
+
+                if (!id.equals(user.getId())) {     //해당 아이디가 목록에 없을때
+                    Toast.makeText(LoginActivity.this, "아이디가 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
+                } else if (!pw.equals(user.getPw())) {   //비밀번호가 일치하지 않을때
+                    Toast.makeText(LoginActivity.this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+
+
+
+                    SharedPreferences.Editor editor = sp.edit(); //로그인 정보 저장
+                    editor.putString("id", id);
+                    editor.putString("pw", pw);
+                    editor.commit();
+                    finish();
+                }
 
             }
 
