@@ -10,8 +10,7 @@ public class Account {
     static String pw = "";
     static String gender = "";
     static String age = "";
-    private static Account instance =null;
-
+    private static Account instance = null;
 
     public static String getId() {
         return id;
@@ -48,7 +47,7 @@ public class Account {
     private Account(){}
 
     public static Account getInstance(){
-        if(instance ==null){
+        if(instance == null){
             instance = new Account();
         }
         return instance;
@@ -61,7 +60,5 @@ public class Account {
         setId(id);
         setPw(pw);
     }
-
-
 
 }

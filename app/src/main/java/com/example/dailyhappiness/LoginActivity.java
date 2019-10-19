@@ -2,8 +2,10 @@ package com.example.dailyhappiness;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SearchRecentSuggestionsProvider;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Debug;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -16,16 +18,17 @@ import com.google.gson.JsonObject;
 
 import com.example.dailyhappiness.databinding.ActivityLoginBinding;
 
+import java.security.NoSuchAlgorithmException;
+
 public class LoginActivity extends AppCompatActivity {
 
     ActivityLoginBinding binding;
-    //SharedPreferences sp = getApplicationContext().getSharedPreferences("sp",Activity.MODE_PRIVATE); //(저장될 키, 값)
+
+    SharedPreferences sp; //(저장될 키, 값)
 
     //서버 연동 객체
     private RetroClient retroClient;
     private Account user;
-
-    SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +37,6 @@ public class LoginActivity extends AppCompatActivity {
 
         binding = DataBindingUtil.setContentView(this,R.layout.activity_login);
         binding.setActivity(this);
-
-        //저장했던 정보 꺼내서 보여주기
 
         sp = getSharedPreferences("sp",Activity.MODE_PRIVATE); //(저장될 키, 값)
         String loginID = sp.getString("id", ""); // 처음엔 값이 없으므로 ""
@@ -57,9 +58,15 @@ public class LoginActivity extends AppCompatActivity {
 
                     String id = binding.edtInputID.getText().toString();
                     String pw = binding.edtInputPW.getText().toString();
+                    String cryptoPW = "";
 
-                    login(v, id, pw);
+                    try {
+                        cryptoPW = Crypto.sha256(pw);
+                    } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    }
 
+                    login(v, id, cryptoPW);
 
                 }
             });
@@ -110,19 +117,17 @@ public class LoginActivity extends AppCompatActivity {
                     intent.putExtra("id", id);
                     startActivity(intent);
 
-
-
                     SharedPreferences.Editor editor = sp.edit(); //로그인 정보 저장
                     editor.putString("id", id);
                     editor.putString("pw", pw);
                     editor.commit();
                     finish();
                 }
-
             }
 
             @Override
-            public void onFailure(int code) {
+            public void onFailure(int code)
+            {
                 Log.e("error", "오류가 생겼습니다.");
             }
         });

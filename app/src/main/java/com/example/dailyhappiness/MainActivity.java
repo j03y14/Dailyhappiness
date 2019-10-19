@@ -5,11 +5,14 @@ import androidx.databinding.DataBindingUtil;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.example.dailyhappiness.databinding.ActivityMainBinding;
@@ -23,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
 
+    //현재 날짜와 시간 가져오기
     Date currentDate = Calendar.getInstance().getTime();
     long nowTime = System.currentTimeMillis();
     Date time = new Date(nowTime);
@@ -40,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //화면 위에 액션바 없애기
 
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         binding.setActivity(this);
@@ -49,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         binding.tvLeftTime.setText("남은 시간 "+(23-Integer.parseInt(hours)) + " : " + (60-Integer.parseInt(minutes)));
 
         binding.tvMission.setText(Mission.getTodayMission());
+
 
         binding.ibtnSuccess.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,17 +98,23 @@ public class MainActivity extends AppCompatActivity {
         dialog.setPositiveButton("다음에 할래요", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //미션을 다음으로 넘기기
+                //기존 미션을 목록에서 삭제하지 않고 다음으 미션으로 넘기기
+                Mission.setTodayMission(Mission.nextMission);
+                binding.tvMission.setText(Mission.getTodayMission());
             }
         });
 
         dialog.setNegativeButton("마음에 안 들어요", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //미션 목록에서 지움
+                //미션 목록에서 지우고 다음 미션으로 넘기기
+                Mission.setTodayMission(Mission.nextMission);
+                binding.tvMission.setText(Mission.getTodayMission());
             }
         });
 
         dialog.show();
     }
+
+
 }
