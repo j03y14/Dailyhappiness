@@ -10,7 +10,7 @@ import retrofit2.http.POST;
 
 public interface RetroBaseApiService {
 
-    final String Base_Url = "http://15.164.95.132:5000/";
+    final String Base_Url = "https://dailyhappiness.xyz";
 
     @FormUrlEncoded
     @POST("/register/")
