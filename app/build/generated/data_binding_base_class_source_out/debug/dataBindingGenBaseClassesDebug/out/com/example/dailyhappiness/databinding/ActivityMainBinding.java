@@ -20,13 +20,13 @@ import java.lang.Object;
 
 public abstract class ActivityMainBinding extends ViewDataBinding {
   @NonNull
-  public final ImageButton btnLogout;
+  public final ImageButton ibtnLogout;
 
   @NonNull
-  public final ImageButton imgBtnNext;
+  public final ImageButton ibtnNext;
 
   @NonNull
-  public final ImageButton imgBtnSuccess;
+  public final ImageButton ibtnSuccess;
 
   @NonNull
   public final ImageView imgMission;
@@ -47,13 +47,12 @@ public abstract class ActivityMainBinding extends ViewDataBinding {
   protected MainActivity mActivity;
 
   protected ActivityMainBinding(Object _bindingComponent, View _root, int _localFieldCount,
-      ImageButton btnLogout, ImageButton imgBtnNext, ImageButton imgBtnSuccess,
-      ImageView imgMission, LinearLayout linearLayout, TextView tvDate, TextView tvLeftTime,
-      TextView tvMission) {
+      ImageButton ibtnLogout, ImageButton ibtnNext, ImageButton ibtnSuccess, ImageView imgMission,
+      LinearLayout linearLayout, TextView tvDate, TextView tvLeftTime, TextView tvMission) {
     super(_bindingComponent, _root, _localFieldCount);
-    this.btnLogout = btnLogout;
-    this.imgBtnNext = imgBtnNext;
-    this.imgBtnSuccess = imgBtnSuccess;
+    this.ibtnLogout = ibtnLogout;
+    this.ibtnNext = ibtnNext;
+    this.ibtnSuccess = ibtnSuccess;
     this.imgMission = imgMission;
     this.linearLayout = linearLayout;
     this.tvDate = tvDate;

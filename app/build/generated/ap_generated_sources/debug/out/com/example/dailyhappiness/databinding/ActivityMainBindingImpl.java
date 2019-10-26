@@ -14,14 +14,14 @@ public class ActivityMainBindingImpl extends ActivityMainBinding  {
     static {
         sIncludes = null;
         sViewsWithIds = new android.util.SparseIntArray();
-        sViewsWithIds.put(R.id.btnLogout, 1);
+        sViewsWithIds.put(R.id.ibtnLogout, 1);
         sViewsWithIds.put(R.id.tvDate, 2);
         sViewsWithIds.put(R.id.tvLeftTime, 3);
-        sViewsWithIds.put(R.id.imgBtnSuccess, 4);
+        sViewsWithIds.put(R.id.ibtnSuccess, 4);
         sViewsWithIds.put(R.id.linearLayout, 5);
         sViewsWithIds.put(R.id.imgMission, 6);
         sViewsWithIds.put(R.id.tvMission, 7);
-        sViewsWithIds.put(R.id.imgBtnNext, 8);
+        sViewsWithIds.put(R.id.ibtnNext, 8);
     }
     // views
     @NonNull

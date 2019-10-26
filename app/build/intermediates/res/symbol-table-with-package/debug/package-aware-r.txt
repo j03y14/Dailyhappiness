@@ -695,7 +695,6 @@ id bottom
 id btnConfirm
 id btnJoinIn
 id btnLogin
-id btnLogout
 id buttonPanel
 id center
 id center_horizontal
@@ -734,11 +733,13 @@ id group_divider
 id groups
 id home
 id homeAsUp
+id ibtnLogout
+id ibtnNext
+id ibtnSuccess
 id icon
 id icon_group
 id ifRoom
 id image
-id imgBtnNext
 id imgBtnOK
 id imgBtnSuccess
 id imgMission
