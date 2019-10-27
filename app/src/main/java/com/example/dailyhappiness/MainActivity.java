@@ -5,17 +5,16 @@ import androidx.databinding.DataBindingUtil;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.example.dailyhappiness.databinding.ActivityMainBinding;
+import com.google.gson.JsonObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -25,6 +24,10 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
+
+
+    private RetroClient retroClient;
+    private Account user;
 
     //현재 날짜와 시간 가져오기
     Date currentDate = Calendar.getInstance().getTime();
@@ -43,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        retroClient = RetroClient.getInstance(this).createBaseApi();
+        user = Account.getInstance();
+
         super.onCreate(savedInstanceState);
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //화면 위에 액션바 없애기
 
@@ -53,7 +60,9 @@ public class MainActivity extends AppCompatActivity {
 
         binding.tvLeftTime.setText("남은 시간 "+(23-Integer.parseInt(hours)) + " : " + (60-Integer.parseInt(minutes)));
 
-        binding.tvMission.setText(Mission.getTodayMission());
+        getMission(user.getUserIndex());
+
+
 
 
         binding.ibtnSuccess.setOnClickListener(new View.OnClickListener() {
@@ -83,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Toast.makeText(MainActivity.this, "로그아웃되었습니다.", Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -116,5 +125,26 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    public void getMission(final String userIndex){
+        retroClient.getMission(userIndex, new RetroCallback<JsonObject>(){
+            @Override
+            public void onError(Throwable t) {
+                Log.e("error", t.toString());
+            }
+
+            @Override
+            public void onSuccess(int code, JsonObject receivedData) {
+
+                Mission.setMissionNumber(receivedData.get("missionIndex").getAsInt());
+                Mission.setTodayMission(receivedData.get("missionName").getAsString());
+                binding.tvMission.setText(Mission.getTodayMission());
+            }
+
+            @Override
+            public void onFailure(int code) {
+                Log.e("error", "getMission 오류가 생겼습니다.");
+            }
+        });
+    }
 
 }

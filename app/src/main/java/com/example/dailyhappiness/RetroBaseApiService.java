@@ -20,4 +20,8 @@ public interface RetroBaseApiService {
     @POST("/login/")
     Call<JsonObject> login(@Field("id") String id, @Field("password") String password);
 
+    @FormUrlEncoded
+    @POST("/missionBundle/get")
+    Call<JsonObject> getMission(@Field("userIndex") String userIndex);
+
 }

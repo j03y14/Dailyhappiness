@@ -99,4 +99,22 @@ public class RetroClient {
         });
     }
 
+    public void getMission(String userIndex, final RetroCallback callback){
+        apiService.getMission(userIndex).enqueue(new Callback<JsonObject>(){
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onError(t);
+            }
+        } );
+    }
+
 }
