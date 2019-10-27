@@ -2,10 +2,8 @@ package com.example.dailyhappiness;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SearchRecentSuggestionsProvider;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Debug;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -107,6 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                 user.setPw(receivedData.get("password").getAsString());
                 user.setAge(receivedData.get("age").getAsString());
                 user.setGender(receivedData.get("gender").getAsString());
+                user.setUserIndex(receivedData.get("userIndex").getAsString());
 
                 if (!id.equals(user.getId())) {     //해당 아이디가 목록에 없을때
                     Toast.makeText(LoginActivity.this, "아이디가 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
@@ -128,7 +127,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(int code)
             {
-                Log.e("error", "오류가 생겼습니다.");
+                Log.e("error", "로그인 오류가 생겼습니다.");
             }
         });
     }
