@@ -2,9 +2,14 @@ package com.example.dailyhappiness;
 
 public class Mission {
 
-    static String todayMission = "자전거 30분 이상 타기";
-    static String nextMission = "초코 케이크 먹기";
+    static String todayMission = "";
+    static String nextMission = "";
     static int missionNumber = 0;
+    static int count = 0;
+
+    public static int getCount() { return count; }
+
+    public static void setCount(int count) { Mission.count = count; }
 
     public static String getTodayMission() {
         return todayMission;

@@ -10,7 +10,7 @@ import retrofit2.http.POST;
 
 public interface RetroBaseApiService {
 
-    final String Base_Url = "http://15.164.95.132:5000/";
+    final String Base_Url = "https://dailyhappiness.xyz ";
 
     @FormUrlEncoded
     @POST("/register/")
@@ -19,5 +19,22 @@ public interface RetroBaseApiService {
     @FormUrlEncoded
     @POST("/login/")
     Call<JsonObject> login(@Field("id") String id, @Field("password") String password);
+
+    @FormUrlEncoded
+    @POST("/missionBundle/get")
+    Call<JsonObject> getMission(@Field("userIndex") String userIndex);
+
+    @FormUrlEncoded
+    @POST("/missionBundle/increment")
+    Call<JsonObject> incrementMissionOrder(@Field("userIndex") String userIndex);
+
+    @FormUrlEncoded
+    @POST("/missionBundle/increment")
+    Call<JsonObject> passMission(@Field("userIndex") String userIndex, @Field("cost") String cost);
+
+    @FormUrlEncoded
+    @POST("/missionBundle/increment")
+    Call<JsonObject> passDislikeMission(@Field("userIndex") String userIndex, @Field("cost") String cost, @Field("mission") String missionNumber, @Field("dislike") String dislike);
+
 
 }

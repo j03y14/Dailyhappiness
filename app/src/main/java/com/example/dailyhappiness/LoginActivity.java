@@ -20,6 +20,8 @@ import com.example.dailyhappiness.databinding.ActivityLoginBinding;
 
 import java.security.NoSuchAlgorithmException;
 
+import static com.example.dailyhappiness.Account.userIndex;
+
 public class LoginActivity extends AppCompatActivity {
 
     ActivityLoginBinding binding;
@@ -41,15 +43,17 @@ public class LoginActivity extends AppCompatActivity {
         sp = getSharedPreferences("sp",Activity.MODE_PRIVATE); //(저장될 키, 값)
         String loginID = sp.getString("id", ""); // 처음엔 값이 없으므로 ""
         String loginPW = sp.getString("pw","");
+        String loginUserID = sp.getString("userIndex","");
 
         retroClient = RetroClient.getInstance(this).createBaseApi();
         user = Account.getInstance();
 
         if(loginID != "" && loginPW != "") {
             Toast.makeText(this, "자동 로그인 되었습니다.", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-            finish();
+//            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//            startActivity(intent);
+//            finish();
+            login(loginID,loginPW);
         }
         else if(loginID == "" && loginPW == "") {
             binding.btnLogin.setOnClickListener(new View.OnClickListener() {  //로그인 버튼을 눌렀을때
@@ -66,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    login(v, id, cryptoPW);
+                    login( id, cryptoPW);
 
                 }
             });
@@ -93,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void login(View v, final String id, final String pw){
+    public void login(final String id, final String pw){
         retroClient.login(id, pw, new RetroCallback<JsonObject>(){
 
             @Override
@@ -107,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
                 user.setPw(receivedData.get("password").getAsString());
                 user.setAge(receivedData.get("age").getAsString());
                 user.setGender(receivedData.get("gender").getAsString());
+                user.setUserIndex(receivedData.get("userIndex").getAsString());
 
                 if (!id.equals(user.getId())) {     //해당 아이디가 목록에 없을때
                     Toast.makeText(LoginActivity.this, "아이디가 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
@@ -120,6 +125,7 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = sp.edit(); //로그인 정보 저장
                     editor.putString("id", id);
                     editor.putString("pw", pw);
+                    editor.putString("userIndex", Account.getUserIndex());
                     editor.commit();
                     finish();
                 }

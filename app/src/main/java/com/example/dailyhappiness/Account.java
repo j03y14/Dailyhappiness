@@ -10,6 +10,8 @@ public class Account {
     static String pw = "";
     static String gender = "";
     static String age = "";
+    static String userIndex = "";
+
     private static Account instance = null;
 
     public static String getId() {
@@ -27,6 +29,15 @@ public class Account {
     public static String getAge() {
         return age;
     }
+
+    public static String getUserIndex() {
+        return userIndex;
+    }
+
+    public static void setUserIndex(String userIndex) {
+        Account.userIndex = userIndex;
+    }
+
 
     public static void setId(String id) {
         Account.id = id;
