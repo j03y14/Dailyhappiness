@@ -93,7 +93,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginBottom="50dp"
             android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/imgBtnSuccess"
+            app:layout_constraintBottom_toTopOf="@+id/ibtnSuccess"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.432"
             app:layout_constraintStart_toStartOf="parent"

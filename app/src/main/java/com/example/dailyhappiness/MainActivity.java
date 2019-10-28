@@ -108,8 +108,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //기존 미션을 목록에서 삭제하지 않고 다음으 미션으로 넘기기
-                Mission.setTodayMission(Mission.nextMission);
-                binding.tvMission.setText(Mission.getTodayMission());
+                passMission(user.getUserIndex(),"true");
+
             }
         });
 
@@ -117,8 +117,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //미션 목록에서 지우고 다음 미션으로 넘기기
-                Mission.setTodayMission(Mission.nextMission);
-                binding.tvMission.setText(Mission.getTodayMission());
+                passDislikeMission(user.getUserIndex(), "true", String.valueOf(Mission.getMissionNumber()),"true" );
             }
         });
 
@@ -129,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         retroClient.getMission(userIndex, new RetroCallback<JsonObject>(){
             @Override
             public void onError(Throwable t) {
-                Log.e("error", t.toString());
+                Log.e("getMission error", t.toString());
             }
 
             @Override
@@ -143,6 +142,47 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(int code) {
                 Log.e("error", "getMission 오류가 생겼습니다.");
+            }
+        });
+    }
+
+    //다음에 할게요로 미션 넘기기
+    public void passMission(final String userIndex, final String cost){
+        retroClient.passMission(userIndex, cost, new RetroCallback<JsonObject>() {
+            @Override
+            public void onError(Throwable t) {
+                Log.e("passMission error", t.toString());
+            }
+
+            @Override
+            public void onSuccess(int code, JsonObject receivedData) {
+                //서버에서 count를 증가시키고 user의 missionOrder를 증가시키면 미션을 다시 가져온다.
+                getMission(userIndex);
+            }
+
+            @Override
+            public void onFailure(int code) {
+                Log.e("error", "passMission 오류가 생겼습니다.");
+            }
+        });
+    }
+    //미션이 싫어서 미션을 넘기는 것
+    public void passDislikeMission(final String userIndex, final String cost,final String mission,final String dislike){
+        retroClient.passDislikeMission(userIndex, cost, mission, dislike,new RetroCallback<JsonObject>() {
+            @Override
+            public void onError(Throwable t) {
+                Log.e("passDislikMissionerror", t.toString());
+            }
+
+            @Override
+            public void onSuccess(int code, JsonObject receivedData) {
+                //서버에서 count를 증가시키고 user의 missionOrder를 증가시키고 해당 미션 점수를 1점으로 주면 미션을 다시 가져온다.
+                getMission(userIndex);
+            }
+
+            @Override
+            public void onFailure(int code) {
+                Log.e("error", "passDislikMissionerror 오류가 생겼습니다.");
             }
         });
     }

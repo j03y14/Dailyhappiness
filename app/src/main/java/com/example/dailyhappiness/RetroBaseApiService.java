@@ -24,4 +24,16 @@ public interface RetroBaseApiService {
     @POST("/missionBundle/get")
     Call<JsonObject> getMission(@Field("userIndex") String userIndex);
 
+    @FormUrlEncoded
+    @POST("/missionBundle/increment")
+    Call<JsonObject> incrementMissionOrder(@Field("userIndex") String userIndex);
+
+    @FormUrlEncoded
+    @POST("/missionBundle/increment")
+    Call<JsonObject> passMission(@Field("userIndex") String userIndex, @Field("cost") String cost);
+
+    @FormUrlEncoded
+    @POST("/missionBundle/increment")
+    Call<JsonObject> passDislikeMission(@Field("userIndex") String userIndex, @Field("cost") String cost, @Field("mission") String missionNumber, @Field("dislike") String dislike);
+
 }
