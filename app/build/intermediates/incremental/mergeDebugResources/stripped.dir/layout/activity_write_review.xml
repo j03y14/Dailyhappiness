@@ -32,6 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="25dp"
             android:text="OO님의 한줄평"
+            android:textSize="20dp"
             android:layout_below="@id/tvMission"
             android:layout_centerHorizontal="true"/>
 
@@ -49,6 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="25dp"
             android:layout_below="@id/ratingBar"
+            android:textSize="20dp"
             android:layout_centerHorizontal="true"/>
 
         <ImageView

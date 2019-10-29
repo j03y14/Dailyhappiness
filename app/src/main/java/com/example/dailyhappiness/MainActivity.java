@@ -1,5 +1,6 @@
 package com.example.dailyhappiness;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
@@ -11,6 +12,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -23,6 +26,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,19 +37,26 @@ public class MainActivity extends AppCompatActivity {
     private Account user;
 
     //현재 날짜와 시간 가져오기
+    SimpleDateFormat timeFormat1;
+    SimpleDateFormat timeFormat2;
+    SimpleDateFormat timeFormat3;
+    String hours;
+    String minutes;
+    String seconds;
+
     Date currentDate = Calendar.getInstance().getTime();
-    long nowTime = System.currentTimeMillis();
-    Date time = new Date(nowTime);
+    //long nowTime = System.currentTimeMillis();
+    //Date time = new Date(nowTime);
 
     SimpleDateFormat dayFormat = new SimpleDateFormat("dd", Locale.getDefault());
     SimpleDateFormat monthFormat = new SimpleDateFormat("MM", Locale.getDefault());
-    SimpleDateFormat timeFormat1 = new SimpleDateFormat("HH",Locale.getDefault());
-    SimpleDateFormat timeFormat2 = new SimpleDateFormat("mm",Locale.getDefault());
+//    SimpleDateFormat timeFormat1 = new SimpleDateFormat("HH",Locale.getDefault());
+//    SimpleDateFormat timeFormat2 = new SimpleDateFormat("mm",Locale.getDefault());
 
     String month = monthFormat.format(currentDate);
     String date = dayFormat.format(currentDate);
-    String hours = timeFormat1.format(time);
-    String minutes = timeFormat2.format(time);
+//    String hours = timeFormat1.format(time);
+//    String minutes = timeFormat2.format(time);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +72,10 @@ public class MainActivity extends AppCompatActivity {
 
         binding.tvDate.setText(month+" / "+date);
 
-        binding.tvLeftTime.setText("남은 시간 "+(23-Integer.parseInt(hours)) + " : " + (60-Integer.parseInt(minutes)));
+        //실시간 받아오기
+        ShowLeftTime();
 
         getMission(user.getUserIndex());
-
 
         binding.ibtnSuccess.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +115,74 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    public void ShowLeftTime(){
+        final Handler handler = new Handler(){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+               // super.handleMessage(msg);
+
+                timeFormat1 = new SimpleDateFormat("HH",Locale.getDefault());
+                timeFormat2 = new SimpleDateFormat("mm",Locale.getDefault());
+                timeFormat3 = new SimpleDateFormat("ss",Locale.getDefault());
+
+                hours = timeFormat1.format(new Date());
+                minutes = timeFormat2.format(new Date());
+                seconds = timeFormat3.format(new Date());
+
+                Log.d("Time", hours + minutes + seconds + "똑딱");
+                binding.tvLeftTime.setText("남은 시간 "+(23-Integer.parseInt(hours)) + " : " + (60-Integer.parseInt(minutes)) + " : " + (60-Integer.parseInt(seconds)));
+            }
+        };
+
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+                while (true){
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    handler.sendEmptyMessage(1);  //핸들러를 호출해 시간을 갱신
+                }
+
+            }
+        };
+
+        Thread thread = new Thread(task);
+        thread.start();
+    }
+
+//    class CustomRunnable implements Runnable{
+//        @Override
+//        public void run() {
+//                while(true){
+//
+//                    timeFormat1 = new SimpleDateFormat("HH",Locale.getDefault());
+//                    timeFormat2 = new SimpleDateFormat("mm",Locale.getDefault());
+//                    timeFormat3 = new SimpleDateFormat("ss",Locale.getDefault());
+//
+//                    hours = timeFormat1.format(new Date());
+//                    minutes = timeFormat2.format(new Date());
+//                    seconds = timeFormat3.format(new Date());
+//
+//                    //binding.tvLeftTime.setText("남은 시간 "+(23-Integer.parseInt(hours)) + " : " + (60-Integer.parseInt(minutes)) + " : " + (60-Integer.parseInt(seconds)));
+//
+//                    Log.d("Time", hours + minutes + seconds + "똑딱");
+//
+//                    try {
+//                        Thread.sleep(1000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//        //    } catch (InterruptedException e) {
+//        //        e.printStackTrace();
+//        //    }
+//        }
+//    }
+
 
     public  void show(){
         AlertDialog.Builder dialog = new AlertDialog.Builder(this,R.style.Theme_AppCompat_Light_Dialog_Alert);
