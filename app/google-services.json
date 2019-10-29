@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "662556977207",
+    "firebase_url": "https://dailyhappiness-dd963.firebaseio.com",
+    "project_id": "dailyhappiness-dd963",
+    "storage_bucket": "dailyhappiness-dd963.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:662556977207:android:c078be94d387aa546a77b2",
+        "android_client_info": {
+          "package_name": "com.example.dailyhappiness"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "662556977207-pv1mao6i4r5s0ebi70lbb30an4jsqufi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dailyhappiness",
+            "certificate_hash": "a9a0bf5f851b266e14749dad0ac249751165884d"
+          }
+        },
+        {
+          "client_id": "662556977207-abhku88ope2it69jlhqsu7lobc13r8i8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZ9lo29GVCCkl73_aX2YbgiuX0hG6nJZM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "662556977207-abhku88ope2it69jlhqsu7lobc13r8i8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
