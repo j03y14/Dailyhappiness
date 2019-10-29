@@ -35,3 +35,5 @@ Default.xml
 androidStudionFirstRun.xml
 debugger.xml
 path.macros.xml
+*.iml
+.idea/gradle.xml
