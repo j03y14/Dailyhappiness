@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -21,10 +20,7 @@ import java.lang.Object;
 
 public abstract class ActivityWriteReviewBinding extends ViewDataBinding {
   @NonNull
-  public final EditText edtInputReview;
-
-  @NonNull
-  public final ImageButton imgBtnOK;
+  public final EditText edtReview;
 
   @NonNull
   public final ImageView imgPhoto;
@@ -33,24 +29,23 @@ public abstract class ActivityWriteReviewBinding extends ViewDataBinding {
   public final RatingBar ratingBar;
 
   @NonNull
-  public final TextView tvMission;
+  public final TextView tvID;
 
   @NonNull
-  public final TextView tvReview;
+  public final TextView tvMission;
 
   @Bindable
   protected WriteReviewActivity mActivity;
 
   protected ActivityWriteReviewBinding(Object _bindingComponent, View _root, int _localFieldCount,
-      EditText edtInputReview, ImageButton imgBtnOK, ImageView imgPhoto, RatingBar ratingBar,
-      TextView tvMission, TextView tvReview) {
+      EditText edtReview, ImageView imgPhoto, RatingBar ratingBar, TextView tvID,
+      TextView tvMission) {
     super(_bindingComponent, _root, _localFieldCount);
-    this.edtInputReview = edtInputReview;
-    this.imgBtnOK = imgBtnOK;
+    this.edtReview = edtReview;
     this.imgPhoto = imgPhoto;
     this.ratingBar = ratingBar;
+    this.tvID = tvID;
     this.tvMission = tvMission;
-    this.tvReview = tvReview;
   }
 
   public abstract void setActivity(@Nullable WriteReviewActivity activity);

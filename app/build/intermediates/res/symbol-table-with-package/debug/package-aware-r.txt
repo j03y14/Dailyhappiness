@@ -719,8 +719,8 @@ id edit_query
 id edtInputAge
 id edtInputID
 id edtInputPW
-id edtInputReview
 id edtRepeatInputPW
+id edtReview
 id end
 id expand_activities_button
 id expanded_menu
@@ -740,7 +740,6 @@ id icon
 id icon_group
 id ifRoom
 id image
-id imgBtnOK
 id imgBtnSuccess
 id imgMission
 id imgPhoto
@@ -831,7 +830,6 @@ id tvLeftTime
 id tvMission
 id tvPW
 id tvRepeatPW
-id tvReview
 id uniform
 id up
 id useLogo

@@ -76,8 +76,7 @@ public class MainActivity extends AppCompatActivity {
         binding.ibtnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(Mission.getCount() > 1){
+                if(Mission.getCount().equals("error")){
                     Toast.makeText(MainActivity.this, "미션은 하루에 2번만 넘길 수 있어요", Toast.LENGTH_SHORT).show();
                 }else{
                     show();
@@ -114,9 +113,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 //기존 미션을 목록에서 삭제하지 않고 다음으 미션으로 넘기기
                 passMission(user.getUserIndex(),"true");
-                int count = Mission.getCount();
-                Mission.setCount(++count);
-
             }
         });
 
@@ -125,8 +121,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 //미션 목록에서 지우고 다음 미션으로 넘기기
                 passDislikeMission(user.getUserIndex(), "true", String.valueOf(Mission.getMissionNumber()),"true" );
-                int count = Mission.getCount();
-                Mission.setCount(++count);
+
             }
         });
 
@@ -166,9 +161,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int code, JsonObject receivedData) {
                 //서버에서 count를 증가시키고 user의 missionOrder를 증가시키면 미션을 다시 가져온다.
-               // int count = Mission.getCount();
-                getMission(userIndex);
-               // Mission.setCount(count++);
+
+                if(receivedData.get("count").getAsString().equals("error")){
+                    Mission.setCount(receivedData.get("count").getAsString());
+                }else {
+                Log.d("dd",receivedData.get("count").getAsString());
+
+                    getMission(userIndex);
+                }
+
             }
 
             @Override
@@ -188,9 +189,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int code, JsonObject receivedData) {
                 //서버에서 count를 증가시키고 user의 missionOrder를 증가시키고 해당 미션 점수를 1점으로 주면 미션을 다시 가져온다.
-                //int count = Mission.getCount();
-                getMission(userIndex);
-               // Mission.setCount(count++);
+
+                if(receivedData.get("count").getAsString().equals("error")){
+                    Mission.setCount(receivedData.get("count").getAsString());
+                }else{
+                    getMission(userIndex);
+                }
+
             }
 
             @Override

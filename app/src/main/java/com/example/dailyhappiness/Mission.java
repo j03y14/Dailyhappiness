@@ -5,11 +5,11 @@ public class Mission {
     static String todayMission = "";
     static String nextMission = "";
     static int missionNumber = 0;
-    static int count = 0;
+    static String count = "";
 
-    public static int getCount() { return count; }
+    public static String getCount() { return count; }
 
-    public static void setCount(int count) { Mission.count = count; }
+    public static void setCount(String count) { Mission.count = count; }
 
     public static String getTodayMission() {
         return todayMission;

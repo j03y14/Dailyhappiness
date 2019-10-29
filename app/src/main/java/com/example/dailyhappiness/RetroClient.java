@@ -135,8 +135,8 @@ public class RetroClient {
         } );
     }
 
-    public void passMission(String userIndex, String cost, final RetroCallback callback){
-        apiService.passMission(userIndex,cost).enqueue(new Callback<JsonObject>(){
+    public void passMission(String userIndex, String count, final RetroCallback callback){
+        apiService.passMission(userIndex,count).enqueue(new Callback<JsonObject>(){
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {

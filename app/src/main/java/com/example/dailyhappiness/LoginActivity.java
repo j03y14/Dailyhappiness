@@ -114,6 +114,7 @@ public class LoginActivity extends AppCompatActivity {
                 user.setUserIndex(receivedData.get("userIndex").getAsString());
 
                 if (!id.equals(user.getId())) {     //해당 아이디가 목록에 없을때
+                    Log.i("idididid","아이디 없음");
                     Toast.makeText(LoginActivity.this, "아이디가 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
                 } else if (!pw.equals(user.getPw())) {   //비밀번호가 일치하지 않을때
                     Toast.makeText(LoginActivity.this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();

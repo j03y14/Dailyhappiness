@@ -15,33 +15,31 @@ public class ActivityWriteReviewBindingImpl extends ActivityWriteReviewBinding  
         sIncludes = null;
         sViewsWithIds = new android.util.SparseIntArray();
         sViewsWithIds.put(R.id.tvMission, 1);
-        sViewsWithIds.put(R.id.tvReview, 2);
+        sViewsWithIds.put(R.id.tvID, 2);
         sViewsWithIds.put(R.id.ratingBar, 3);
-        sViewsWithIds.put(R.id.edtInputReview, 4);
+        sViewsWithIds.put(R.id.edtReview, 4);
         sViewsWithIds.put(R.id.imgPhoto, 5);
-        sViewsWithIds.put(R.id.imgBtnOK, 6);
     }
     // views
     @NonNull
-    private final androidx.constraintlayout.widget.ConstraintLayout mboundView0;
+    private final android.widget.RelativeLayout mboundView0;
     // variables
     // values
     // listeners
     // Inverse Binding Event Handlers
 
     public ActivityWriteReviewBindingImpl(@Nullable androidx.databinding.DataBindingComponent bindingComponent, @NonNull View root) {
-        this(bindingComponent, root, mapBindings(bindingComponent, root, 7, sIncludes, sViewsWithIds));
+        this(bindingComponent, root, mapBindings(bindingComponent, root, 6, sIncludes, sViewsWithIds));
     }
     private ActivityWriteReviewBindingImpl(androidx.databinding.DataBindingComponent bindingComponent, View root, Object[] bindings) {
         super(bindingComponent, root, 0
             , (android.widget.EditText) bindings[4]
-            , (android.widget.ImageButton) bindings[6]
             , (android.widget.ImageView) bindings[5]
             , (android.widget.RatingBar) bindings[3]
-            , (android.widget.TextView) bindings[1]
             , (android.widget.TextView) bindings[2]
+            , (android.widget.TextView) bindings[1]
             );
-        this.mboundView0 = (androidx.constraintlayout.widget.ConstraintLayout) bindings[0];
+        this.mboundView0 = (android.widget.RelativeLayout) bindings[0];
         this.mboundView0.setTag(null);
         setRootTag(root);
         // listeners
