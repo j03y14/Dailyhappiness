@@ -2,8 +2,10 @@ package com.example.dailyhappiness;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SearchRecentSuggestionsProvider;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Debug;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -17,6 +19,8 @@ import com.google.gson.JsonObject;
 import com.example.dailyhappiness.databinding.ActivityLoginBinding;
 
 import java.security.NoSuchAlgorithmException;
+
+import static com.example.dailyhappiness.Account.userIndex;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -39,15 +43,17 @@ public class LoginActivity extends AppCompatActivity {
         sp = getSharedPreferences("sp",Activity.MODE_PRIVATE); //(저장될 키, 값)
         String loginID = sp.getString("id", ""); // 처음엔 값이 없으므로 ""
         String loginPW = sp.getString("pw","");
+        String loginUserID = sp.getString("userIndex","");
 
         retroClient = RetroClient.getInstance(this).createBaseApi();
         user = Account.getInstance();
 
         if(loginID != "" && loginPW != "") {
             Toast.makeText(this, "자동 로그인 되었습니다.", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-            finish();
+//            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//            startActivity(intent);
+//            finish();
+            login(loginID,loginPW);
         }
         else if(loginID == "" && loginPW == "") {
             binding.btnLogin.setOnClickListener(new View.OnClickListener() {  //로그인 버튼을 눌렀을때
@@ -64,12 +70,12 @@ public class LoginActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    login(v, id, cryptoPW);
+                    login( id, cryptoPW);
 
                 }
             });
         }
-        
+
         binding.btnJoinIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {  //회원가입하기를 눌렀을때
@@ -91,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void login(View v, final String id, final String pw){
+    public void login(final String id, final String pw){
         retroClient.login(id, pw, new RetroCallback<JsonObject>(){
 
             @Override
@@ -119,6 +125,7 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = sp.edit(); //로그인 정보 저장
                     editor.putString("id", id);
                     editor.putString("pw", pw);
+                    editor.putString("userIndex", Account.getUserIndex());
                     editor.commit();
                     finish();
                 }
@@ -127,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(int code)
             {
-                Log.e("error", "로그인 오류가 생겼습니다.");
+                Log.e("error", "오류가 생겼습니다.");
             }
         });
     }
