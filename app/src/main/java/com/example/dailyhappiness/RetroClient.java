@@ -135,8 +135,8 @@ public class RetroClient {
         } );
     }
 
-    public void passMission(String userIndex, String cost, final RetroCallback callback){
-        apiService.passMission(userIndex,cost).enqueue(new Callback<JsonObject>(){
+    public void passMission(String userIndex, String count, final RetroCallback callback){
+        apiService.passMission(userIndex,count).enqueue(new Callback<JsonObject>(){
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
@@ -153,8 +153,8 @@ public class RetroClient {
         } );
     }
 
-    public void passDislikeMission(String userIndex, String cost, String mission, String dislike, final RetroCallback callback){
-        apiService.passDislikeMission(userIndex,cost,mission,dislike).enqueue(new Callback<JsonObject>(){
+    public void passDislikeMission(String userIndex, String count, String mission, String dislike, final RetroCallback callback){
+        apiService.passDislikeMission(userIndex,count,mission,dislike).enqueue(new Callback<JsonObject>(){
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
