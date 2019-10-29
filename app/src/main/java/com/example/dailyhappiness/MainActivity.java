@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
     private RetroClient retroClient;
     private Account user;
-
     //현재 날짜와 시간 가져오기
     Date currentDate = Calendar.getInstance().getTime();
     long nowTime = System.currentTimeMillis();
@@ -77,10 +76,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(Mission.getCount().equals("error")){
+                if(Mission.getCount()>=3){
                     Toast.makeText(MainActivity.this, "미션은 하루에 2번만 넘길 수 있어요", Toast.LENGTH_SHORT).show();
                 }else{
                     show();
+
+
                 }
             }
         });
@@ -106,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public  void show(){
+
         AlertDialog.Builder dialog = new AlertDialog.Builder(this,R.style.Theme_AppCompat_Light_Dialog_Alert);
 
         dialog.setTitle("이 미션이 마음에 안 드시나요?");
@@ -165,11 +167,10 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(int code, JsonObject receivedData) {
                 //서버에서 count를 증가시키고 user의 missionOrder를 증가시키면 미션을 다시 가져온다.
                 // int count = Mission.getCount();
-                if(receivedData.get("count").getAsString().equals("error")){
-                    Mission.setCount("error");
-                }else{
+
+                    Mission.setCount(receivedData.get("count").getAsInt());
                     getMission(userIndex);
-                }
+
 
                 // Mission.setCount(count++);
             }
@@ -179,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("error", "passMission 오류가 생겼습니다.");
             }
         });
+
     }
     //미션이 싫어서 미션을 넘기는 것
     public void passDislikeMission(final String userIndex, final String cost,final String mission,final String dislike){
@@ -192,11 +194,8 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(int code, JsonObject receivedData) {
                 //서버에서 count를 증가시키고 user의 missionOrder를 증가시키고 해당 미션 점수를 1점으로 주면 미션을 다시 가져온다.
                 //int count = Mission.getCount();
-                if(receivedData.get("count").getAsString().equals("error")){
-                    Mission.setCount(receivedData.get("count").getAsString());
-                }else{
-                    getMission(userIndex);
-                }
+                Mission.setCount(receivedData.get("count").getAsInt());
+                getMission(userIndex);
                 // Mission.setCount(count++);
             }
 
@@ -205,6 +204,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("error", "passDislikMissionerror 오류가 생겼습니다.");
             }
         });
+
     }
 
 }

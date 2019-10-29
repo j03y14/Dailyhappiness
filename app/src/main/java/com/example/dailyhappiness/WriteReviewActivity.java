@@ -22,7 +22,7 @@ public class WriteReviewActivity extends AppCompatActivity {
 
         binding.tvMission.setText(Mission.getTodayMission());
 
-        binding.tvReview.setText(Account.getId() + " 님의 한줄평");
+        binding.tvID.setText(Account.getId() + " 님의 한줄평");
 
         binding.ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override

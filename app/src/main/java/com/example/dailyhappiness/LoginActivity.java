@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         sp = getSharedPreferences("sp",Activity.MODE_PRIVATE); //(저장될 키, 값)
         String loginID = sp.getString("id", ""); // 처음엔 값이 없으므로 ""
         String loginPW = sp.getString("pw","");
-        String loginUserID = sp.getString("userIndex","");
+        //String loginUserID = sp.getString("userIndex","");
 
         retroClient = RetroClient.getInstance(this).createBaseApi();
         user = Account.getInstance();
@@ -112,6 +112,7 @@ public class LoginActivity extends AppCompatActivity {
                 user.setAge(receivedData.get("age").getAsString());
                 user.setGender(receivedData.get("gender").getAsString());
                 user.setUserIndex(receivedData.get("userIndex").getAsString());
+                Mission.setCount(receivedData.get("count").getAsInt());
 
                 if (!id.equals(user.getId())) {     //해당 아이디가 목록에 없을때
                     Toast.makeText(LoginActivity.this, "아이디가 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
