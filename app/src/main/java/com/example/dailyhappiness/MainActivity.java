@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         binding.tvDate.setText(month+" / "+date);
 
         //실시간 받아오기
-        ShowLeftTime();
+        showLeftTime();
 
         getMission(user.getUserIndex());
 
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void ShowLeftTime(){
+    public void showLeftTime(){
         final Handler handler = new Handler(){
             @Override
             public void handleMessage(@NonNull Message msg) {
@@ -130,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
                 minutes = timeFormat2.format(new Date());
                 seconds = timeFormat3.format(new Date());
 
-                Log.d("Time", hours + minutes + seconds + "똑딱");
                 binding.tvLeftTime.setText("남은 시간 "+(23-Integer.parseInt(hours)) + " : " + (60-Integer.parseInt(minutes)) + " : " + (60-Integer.parseInt(seconds)));
             }
         };
@@ -153,35 +152,6 @@ public class MainActivity extends AppCompatActivity {
         Thread thread = new Thread(task);
         thread.start();
     }
-
-//    class CustomRunnable implements Runnable{
-//        @Override
-//        public void run() {
-//                while(true){
-//
-//                    timeFormat1 = new SimpleDateFormat("HH",Locale.getDefault());
-//                    timeFormat2 = new SimpleDateFormat("mm",Locale.getDefault());
-//                    timeFormat3 = new SimpleDateFormat("ss",Locale.getDefault());
-//
-//                    hours = timeFormat1.format(new Date());
-//                    minutes = timeFormat2.format(new Date());
-//                    seconds = timeFormat3.format(new Date());
-//
-//                    //binding.tvLeftTime.setText("남은 시간 "+(23-Integer.parseInt(hours)) + " : " + (60-Integer.parseInt(minutes)) + " : " + (60-Integer.parseInt(seconds)));
-//
-//                    Log.d("Time", hours + minutes + seconds + "똑딱");
-//
-//                    try {
-//                        Thread.sleep(1000);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//        //    } catch (InterruptedException e) {
-//        //        e.printStackTrace();
-//        //    }
-//        }
-//    }
 
 
     public  void show(){

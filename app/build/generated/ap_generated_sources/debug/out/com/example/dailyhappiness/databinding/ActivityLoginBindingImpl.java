@@ -18,6 +18,7 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding  {
         sViewsWithIds.put(R.id.edtInputPW, 2);
         sViewsWithIds.put(R.id.btnLogin, 3);
         sViewsWithIds.put(R.id.btnJoinIn, 4);
+        sViewsWithIds.put(R.id.btnNoId, 5);
     }
     // views
     @NonNull
@@ -28,12 +29,13 @@ public class ActivityLoginBindingImpl extends ActivityLoginBinding  {
     // Inverse Binding Event Handlers
 
     public ActivityLoginBindingImpl(@Nullable androidx.databinding.DataBindingComponent bindingComponent, @NonNull View root) {
-        this(bindingComponent, root, mapBindings(bindingComponent, root, 5, sIncludes, sViewsWithIds));
+        this(bindingComponent, root, mapBindings(bindingComponent, root, 6, sIncludes, sViewsWithIds));
     }
     private ActivityLoginBindingImpl(androidx.databinding.DataBindingComponent bindingComponent, View root, Object[] bindings) {
         super(bindingComponent, root, 0
             , (android.widget.Button) bindings[4]
             , (android.widget.Button) bindings[3]
+            , (android.widget.Button) bindings[5]
             , (android.widget.EditText) bindings[1]
             , (android.widget.EditText) bindings[2]
             );

@@ -24,6 +24,9 @@ public abstract class ActivityLoginBinding extends ViewDataBinding {
   public final Button btnLogin;
 
   @NonNull
+  public final Button btnNoId;
+
+  @NonNull
   public final EditText edtInputID;
 
   @NonNull
@@ -33,10 +36,11 @@ public abstract class ActivityLoginBinding extends ViewDataBinding {
   protected LoginActivity mActivity;
 
   protected ActivityLoginBinding(Object _bindingComponent, View _root, int _localFieldCount,
-      Button btnJoinIn, Button btnLogin, EditText edtInputID, EditText edtInputPW) {
+      Button btnJoinIn, Button btnLogin, Button btnNoId, EditText edtInputID, EditText edtInputPW) {
     super(_bindingComponent, _root, _localFieldCount);
     this.btnJoinIn = btnJoinIn;
     this.btnLogin = btnLogin;
+    this.btnNoId = btnNoId;
     this.edtInputID = edtInputID;
     this.edtInputPW = edtInputPW;
   }

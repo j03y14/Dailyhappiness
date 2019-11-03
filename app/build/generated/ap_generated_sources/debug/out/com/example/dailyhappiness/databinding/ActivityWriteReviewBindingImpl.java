@@ -18,7 +18,8 @@ public class ActivityWriteReviewBindingImpl extends ActivityWriteReviewBinding  
         sViewsWithIds.put(R.id.tvID, 2);
         sViewsWithIds.put(R.id.ratingBar, 3);
         sViewsWithIds.put(R.id.edtReview, 4);
-        sViewsWithIds.put(R.id.imgPhoto, 5);
+        sViewsWithIds.put(R.id.ivPhoto, 5);
+        sViewsWithIds.put(R.id.iBtnOK, 6);
     }
     // views
     @NonNull
@@ -29,11 +30,12 @@ public class ActivityWriteReviewBindingImpl extends ActivityWriteReviewBinding  
     // Inverse Binding Event Handlers
 
     public ActivityWriteReviewBindingImpl(@Nullable androidx.databinding.DataBindingComponent bindingComponent, @NonNull View root) {
-        this(bindingComponent, root, mapBindings(bindingComponent, root, 6, sIncludes, sViewsWithIds));
+        this(bindingComponent, root, mapBindings(bindingComponent, root, 7, sIncludes, sViewsWithIds));
     }
     private ActivityWriteReviewBindingImpl(androidx.databinding.DataBindingComponent bindingComponent, View root, Object[] bindings) {
         super(bindingComponent, root, 0
             , (android.widget.EditText) bindings[4]
+            , (android.widget.ImageButton) bindings[6]
             , (android.widget.ImageView) bindings[5]
             , (android.widget.RatingBar) bindings[3]
             , (android.widget.TextView) bindings[2]

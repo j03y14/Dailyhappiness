@@ -636,6 +636,7 @@ drawable ic_launcher_background
 drawable ic_launcher_foreground
 drawable icon
 drawable icon2
+drawable imgphoto
 drawable imgpostit
 drawable imgreview
 drawable imgsplashscreen
@@ -695,6 +696,7 @@ id bottom
 id btnConfirm
 id btnJoinIn
 id btnLogin
+id btnNoId
 id buttonPanel
 id center
 id center_horizontal
@@ -733,6 +735,7 @@ id group_divider
 id groups
 id home
 id homeAsUp
+id iBtnOK
 id ibtnLogout
 id ibtnNext
 id ibtnSuccess
@@ -742,10 +745,10 @@ id ifRoom
 id image
 id imgBtnSuccess
 id imgMission
-id imgPhoto
 id info
 id invisible
 id italic
+id ivPhoto
 id left
 id line1
 id line3
@@ -872,6 +875,7 @@ layout abc_tooltip
 layout activity_create_account
 layout activity_login
 layout activity_main
+layout activity_my_review
 layout activity_splash_screen
 layout activity_write_review
 layout notification_action
@@ -926,8 +930,13 @@ string abc_shareactionprovider_share_with
 string abc_shareactionprovider_share_with_application
 string abc_toolbar_collapse_description
 string app_name
+string permission_1
+string permission_2
 string search_menu_title
 string status_bar_notification_info_overflow
+string tedpermission_close
+string tedpermission_confirm
+string tedpermission_setting
 style AlertDialog_AppCompat
 style AlertDialog_AppCompat_Light
 style Animation_AppCompat_Dialog
@@ -1193,6 +1202,7 @@ style Theme_AppCompat_Light_Dialog_MinWidth
 style Theme_AppCompat_Light_DialogWhenLarge
 style Theme_AppCompat_Light_NoActionBar
 style Theme_AppCompat_NoActionBar
+style Theme_Transparent_Permission
 style ThemeOverlay_AppCompat
 style ThemeOverlay_AppCompat_ActionBar
 style ThemeOverlay_AppCompat_Dark
@@ -1323,3 +1333,4 @@ styleable Toolbar android_gravity android_minHeight buttonGravity collapseConten
 styleable View android_theme android_focusable paddingEnd paddingStart theme
 styleable ViewBackgroundHelper android_background backgroundTint backgroundTintMode
 styleable ViewStubCompat android_id android_layout android_inflatedId
+xml provider_paths

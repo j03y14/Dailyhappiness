@@ -1,5 +1,6 @@
 package com.example.dailyhappiness;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SearchRecentSuggestionsProvider;
@@ -17,8 +18,11 @@ import androidx.databinding.DataBindingUtil;
 import com.google.gson.JsonObject;
 
 import com.example.dailyhappiness.databinding.ActivityLoginBinding;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 import static com.example.dailyhappiness.Account.userIndex;
 
@@ -36,6 +40,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
+
+        tedPermission();
 
         binding = DataBindingUtil.setContentView(this,R.layout.activity_login);
         binding.setActivity(this);
@@ -81,6 +87,15 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {  //회원가입하기를 눌렀을때
                 Intent intent = new Intent(getApplicationContext(), CreateAccountActivity.class);
                 startActivityForResult(intent,1001);
+            }
+        });
+
+        binding.btnNoId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -139,4 +154,29 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void tedPermission() {
+
+        PermissionListener permissionListener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                // 권한 요청 성공
+            }
+
+            @Override
+            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                // 권한 요청 실패
+            }
+        };
+
+        TedPermission.with(this)
+                .setPermissionListener(permissionListener)
+                .setRationaleMessage(getResources().getString(R.string.permission_2))
+                .setDeniedMessage(getResources().getString(R.string.permission_1))
+                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+                .check();
+
+    }
+
+
 }

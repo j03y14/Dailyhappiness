@@ -51,5 +51,12 @@
             android:text="회원가입하기"
             android:textSize="15dp"/>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnNoId"
+            android:text="비회원 로그인"
+            android:textSize="15dp"/>
+
     </LinearLayout>
 </layout>
