@@ -9,6 +9,8 @@ import org.json.JSONObject;
 
 import java.net.URL;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -166,6 +168,24 @@ public class RetroClient {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onError(t);
+            }
+        } );
+    }
+
+    public void uploadImage(MultipartBody.Part file, RequestBody requestBody, final RetroCallback callback){
+        apiService.uploadImage(file,requestBody).enqueue(new Callback<ResponseBody>(){
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 callback.onError(t);
             }
         } );

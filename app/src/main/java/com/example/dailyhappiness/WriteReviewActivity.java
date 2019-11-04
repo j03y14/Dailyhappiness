@@ -9,13 +9,26 @@ import android.widget.RatingBar;
 
 import com.example.dailyhappiness.databinding.ActivityWriteReviewBinding;
 
+import java.io.File;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+
 public class WriteReviewActivity extends AppCompatActivity {
 
     ActivityWriteReviewBinding binding;
 
+    private RetroClient retroClient;
+    private Account user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        retroClient = RetroClient.getInstance(this).createBaseApi();
+        user = Account.getInstance();
 
         binding = DataBindingUtil.setContentView(this,R.layout.activity_write_review);
         binding.setActivity(this);
@@ -33,4 +46,33 @@ public class WriteReviewActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void uploadImage(String filePath){
+
+        File file = new File(filePath);
+
+        RequestBody fileReqBody = RequestBody.create(getContentResolver().getType(file.getData()), file);
+
+        MultipartBody.Part part = MultipartBody.Part.createFormData("upload", file.getName(), fileReqBody);
+
+        RequestBody description = RequestBody.create(MediaType.parse("text/plain"), "image-type");
+        retroClient.uploadImage(file, requestBody, new RetroCallback<ResponseBody>(){
+
+            @Override
+            public void onError(Throwable t) {
+
+            }
+
+            @Override
+            public void onSuccess(int code, ResponseBody receivedData) {
+
+            }
+
+            @Override
+            public void onFailure(int code) {
+
+            }
+        });
+    }
+
 }
