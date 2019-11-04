@@ -37,6 +37,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
 
+        tedPermission();
+
+
         binding = DataBindingUtil.setContentView(this,R.layout.activity_login);
         binding.setActivity(this);
 
@@ -139,4 +142,28 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void tedPermission() { //권한 요청
+
+        PermissionListener permissionListener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                // 권한 요청 성공
+            }
+
+            @Override
+            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                // 권한 요청 실패
+            }
+        };
+
+        TedPermission.with(this)
+                .setPermissionListener(permissionListener)
+                .setDeniedMessage("[설정] > [권한] 에서 권한을 허용할 수 있습니다.")
+                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION)
+                .check();
+
+    }
+
+
 }
