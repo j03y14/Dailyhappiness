@@ -1,5 +1,6 @@
 package com.example.dailyhappiness;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SearchRecentSuggestionsProvider;
@@ -15,10 +16,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.google.gson.JsonObject;
-
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 import com.example.dailyhappiness.databinding.ActivityLoginBinding;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 import static com.example.dailyhappiness.Account.userIndex;
 
