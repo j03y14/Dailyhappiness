@@ -40,8 +40,8 @@ public class RetroClient {
 
 
     private static OkHttpClient httpClient = new OkHttpClient.Builder()
-                                                            .retryOnConnectionFailure(true)
-                                                            .build();
+            .retryOnConnectionFailure(true)
+            .build();
 
     private RetroClient(Context context) {
         retrofit = new Retrofit.Builder()
