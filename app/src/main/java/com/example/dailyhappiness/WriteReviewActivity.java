@@ -28,6 +28,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Toast;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 
 import com.example.dailyhappiness.databinding.ActivityWriteReviewBinding;
 
@@ -292,6 +296,7 @@ public class WriteReviewActivity extends AppCompatActivity {
 
         }
     };
+    /*
     public void uploadImage(String filePath){
 
         File file = new File(filePath);
@@ -318,5 +323,5 @@ public class WriteReviewActivity extends AppCompatActivity {
 
             }
         });
-    }
+    }*/
 }
