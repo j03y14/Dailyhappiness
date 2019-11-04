@@ -26,6 +26,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     private RetroClient retroClient;
     private Account user;
-    //현재 날짜와 시간 가져오기
+
     //현재 날짜와 시간 가져오기
     SimpleDateFormat timeFormat1;
     SimpleDateFormat timeFormat2;
@@ -126,8 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 minutes = timeFormat2.format(new Date());
                 seconds = timeFormat3.format(new Date());
 
-                Log.d("Time", hours + minutes + seconds + "똑딱");
-                binding.tvLeftTime.setText("남은 시간 "+(23-Integer.parseInt(hours)) + " : " + (59-Integer.parseInt(minutes)) + " : " + (60-Integer.parseInt(seconds)));
+                binding.tvLeftTime.setText("남은 시간 "+(23-Integer.parseInt(hours)) + " : " + (60-Integer.parseInt(minutes)) + " : " + (60-Integer.parseInt(seconds)));
             }
         };
 
@@ -150,8 +151,8 @@ public class MainActivity extends AppCompatActivity {
         thread.start();
     }
 
-    public  void show(){
 
+    public  void show(){
         AlertDialog.Builder dialog = new AlertDialog.Builder(this,R.style.Theme_AppCompat_Light_Dialog_Alert);
 
         dialog.setTitle("이 미션이 마음에 안 드시나요?");
