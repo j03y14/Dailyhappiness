@@ -1,18 +1,25 @@
 package com.example.dailyhappiness;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.databinding.DataBindingUtil;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -45,8 +52,9 @@ public class WriteReviewActivity extends AppCompatActivity {
 
     ActivityWriteReviewBinding binding;
 
-    private File tempFile;
-    private Boolean isPermission = true;
+    private File tempFile; //불러온 사진을 임시로 저장하기 위한 변수
+
+    private LocationManager locationManager; //위치를 불러오기위한 manager
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,30 +83,50 @@ public class WriteReviewActivity extends AppCompatActivity {
             }
         });
 
+
+        locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
         binding.iBtnOK.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
 
+                int permissionCheck = checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION);
+                if(PackageManager.PERMISSION_GRANTED == permissionCheck) {
+                    try {
+                        Log.i("트롸이","위치가져왔지");
+                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, locationListener); //민타임은 초,  민디스턴스는 미터
+                        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, locationListener);
+                    } catch (SecurityException e) {
+                        e.printStackTrace();
+                    }
 
-                Intent intent = new Intent(getApplicationContext(),MyReviewActivity.class);
-                startActivity(intent);
+                    Intent intent = new Intent(getApplicationContext(),MyReviewActivity.class);
+                    startActivity(intent);
+
+                }else{
+                    Toast.makeText(WriteReviewActivity.this, "정확한 미션 추천을 위해 위치정보 접근 권한이 필요합니다.", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(getApplicationContext(),MyReviewActivity.class);
+                    startActivity(intent);
+                }
+
+
             }
         });
     }
-
-
-
 
     public void addImage(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("인증하기").setMessage("사진을 추가해주세요");
         builder.setPositiveButton("카메라",
                 new DialogInterface.OnClickListener(){
+                    @RequiresApi(api = Build.VERSION_CODES.M)
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // 카메라
 
-                        if(isPermission){
+                        int permissionCheck = checkSelfPermission(Manifest.permission.CAMERA);
+                        if(PackageManager.PERMISSION_GRANTED == permissionCheck){
                             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
                             try {
@@ -124,20 +152,21 @@ public class WriteReviewActivity extends AppCompatActivity {
 
                                 }
                             }
-                        } else Toast.makeText(WriteReviewActivity.this, getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
+                        } else Toast.makeText(WriteReviewActivity.this, "사진 및 파일을저장하기 위하여 접근 권한이 필요합니다", Toast.LENGTH_LONG).show();
                     }
                 });
         builder.setNegativeButton("앨범",
                 new DialogInterface.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.M)
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // 갤러리
-
-                        if(isPermission){
+                        int permissionCheck = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                        if(PackageManager.PERMISSION_GRANTED == permissionCheck){
                             Intent intent = new Intent(Intent.ACTION_PICK);
                             intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
                             startActivityForResult(intent,1);
-                        } else Toast.makeText(WriteReviewActivity.this, getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
+                        } else Toast.makeText(WriteReviewActivity.this, "사진 및 파일을저장하기 위하여 접근 권한이 필요합니다", Toast.LENGTH_LONG).show();
 
                     }
                 });
@@ -145,7 +174,7 @@ public class WriteReviewActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {  //예외처리
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode != Activity.RESULT_OK) {
@@ -202,7 +231,7 @@ public class WriteReviewActivity extends AppCompatActivity {
 
     }
 
-    private File createImageFile() throws IOException {
+    private File createImageFile() throws IOException {  //카메라에서 찍은 사진을 저장할 파일 만들기
 
         // 이미지 파일 이름 ( userId_{시간}_ )
         String timeStamp = new SimpleDateFormat("HHmmss").format(new Date());
@@ -219,7 +248,7 @@ public class WriteReviewActivity extends AppCompatActivity {
         return image;
     }
 
-    private void setImage() {
+    private void setImage() { // 파일을 bitmap 파일로 변형한 후 ivPhoto에 넣음
 
         BitmapFactory.Options options = new BitmapFactory.Options();
         Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
@@ -227,12 +256,39 @@ public class WriteReviewActivity extends AppCompatActivity {
 
         binding.ivPhoto.setImageBitmap(originalBm);
 
-        /**
-         *  tempFile 사용 후 null 처리를 해줘야 합니다.
-         *  (resultCode != RESULT_OK) 일 때 tempFile 을 삭제하기 때문에
-         *  기존에 데이터가 남아 있게 되면 원치 않은 삭제가 이뤄집니다.
-         */
+         // tempFile 사용 후 null 처리
+         //  (resultCode != RESULT_OK) 일 때 tempFile 을 삭제하기 때문에
+         //기존에 데이터가 남아 있게 되면 원치 않은 삭제가 이루어짐
+
         tempFile = null;
 
     }
+
+    LocationListener locationListener = new LocationListener() {  //로케이션 리스너
+        @Override
+        public void onLocationChanged(Location location) { //location에 위도 경도가 들어있음.
+            double lat = location.getLatitude();
+            double lon = location.getLongitude();
+            float acc = location.getAccuracy();
+
+            String result = String.format("위도 : %f\n경도 : %f\n정확도 : %f\n",lat,lon,acc);
+
+            Log.i("위치",result);
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+    };
 }
