@@ -174,9 +174,9 @@ public class RetroClient {
     }
 
     public void uploadImage(MultipartBody.Part file, RequestBody requestBody, final RetroCallback callback){
-        apiService.uploadImage(file,requestBody).enqueue(new Callback<ResponseBody>(){
+        apiService.uploadImage(file,requestBody).enqueue(new Callback<JsonObject>(){
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
                     callback.onSuccess(response.code(), response.body());
                 } else {
@@ -185,11 +185,29 @@ public class RetroClient {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<JsonObject> call, Throwable t) {
                 callback.onError(t);
             }
         } );
     }
+
+    public void uploadReview(String userIndex, int missionIndex, String missionRating, String location_lat, String location_lon, String content, final RetroCallback callback){
+        apiService.uploadReview(userIndex, missionIndex, missionRating, location_lat, location_lon, content).enqueue(new Callback<JsonObject>(){
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+
+            }
+        });
+    };
 
 
 }

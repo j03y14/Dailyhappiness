@@ -34,6 +34,7 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 
 import com.example.dailyhappiness.databinding.ActivityWriteReviewBinding;
+import com.google.gson.JsonObject;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -46,7 +47,9 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -60,10 +63,18 @@ public class WriteReviewActivity extends AppCompatActivity {
     private LocationManager locationManager; //위치를 불러오기위한 manager
     private RetroClient retroClient;
     private Account user;
+    private String missionRating;
+    //위치 정보를 가지고 있다.
+    private String location_lat; //위도
+    private String location_lon; //경도
+    private String content; //한줄평
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        retroClient = RetroClient.getInstance(this).createBaseApi();
+        user = Account.getInstance();
 
         binding = DataBindingUtil.setContentView(this,R.layout.activity_write_review);
         binding.setActivity(this);
@@ -76,10 +87,13 @@ public class WriteReviewActivity extends AppCompatActivity {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
 
-                System.out.println(rating);
+                missionRating = Integer.toString(Math.round(rating*2));
+                System.out.println(missionRating);
 
             }
         });
+
+
 
         binding.ivPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +109,8 @@ public class WriteReviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                Log.i("ibtnok","ibtnok 진입");
+                content  = binding.edtReview.getText().toString();
                 int permissionCheck = checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION);
                 if(PackageManager.PERMISSION_GRANTED == permissionCheck) {
                     try {
@@ -106,7 +122,12 @@ public class WriteReviewActivity extends AppCompatActivity {
                     }
 
                     Intent intent = new Intent(getApplicationContext(),MyReviewActivity.class);
-                    startActivity(intent);
+
+                    uploadImage(tempFile, Account.getUserIndex(), intent);
+
+
+
+
 
                 }else{
                     Toast.makeText(WriteReviewActivity.this, "정확한 미션 추천을 위해 위치정보 접근 권한이 필요합니다.", Toast.LENGTH_SHORT).show();
@@ -265,18 +286,20 @@ public class WriteReviewActivity extends AppCompatActivity {
          //  (resultCode != RESULT_OK) 일 때 tempFile 을 삭제하기 때문에
          //기존에 데이터가 남아 있게 되면 원치 않은 삭제가 이루어짐
 
-        tempFile = null;
+
 
     }
 
     LocationListener locationListener = new LocationListener() {  //로케이션 리스너
         @Override
         public void onLocationChanged(Location location) { //location에 위도 경도가 들어있음.
-            double lat = location.getLatitude();
-            double lon = location.getLongitude();
+            location_lat = Double.toString(location.getLatitude());
+            location_lon = Double.toString(location.getLongitude());
             float acc = location.getAccuracy();
 
-            String result = String.format("위도 : %f\n경도 : %f\n정확도 : %f\n",lat,lon,acc);
+
+
+            String result = String.format("위도 : %s\n경도 : %s\n정확도 : %f\n",location_lat,location_lon,acc);
 
             Log.i("위치",result);
         }
@@ -296,32 +319,67 @@ public class WriteReviewActivity extends AppCompatActivity {
 
         }
     };
-    /*
-    public void uploadImage(String filePath){
 
-        File file = new File(filePath);
+    public void uploadImage(File file, String userIndex,final Intent intent){
 
-        RequestBody fileReqBody = RequestBody.create(getContentResolver().getType(file.getData()), file);
+        if(file==null){
+            //Log.e("err", "uploadImage: file is null");
+            return;
+        }
 
-        MultipartBody.Part part = MultipartBody.Part.createFormData("upload", file.getName(), fileReqBody);
+        Date currentTime = Calendar.getInstance().getTime();
+        String date = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()).format(currentTime);
+
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+
+        MultipartBody.Part part = MultipartBody.Part.createFormData("upload", userIndex+"-"+date+".jpg", requestFile);
 
         RequestBody description = RequestBody.create(MediaType.parse("text/plain"), "image-type");
-        retroClient.uploadImage(file, requestBody, new RetroCallback<ResponseBody>(){
+        retroClient.uploadImage(part, description, new RetroCallback<JsonObject>(){
 
             @Override
             public void onError(Throwable t) {
-
+                Log.e("error", "uploadImage 오류가 생겼습니다.");
+                tempFile = null;
             }
 
             @Override
-            public void onSuccess(int code, ResponseBody receivedData) {
-
+            public void onSuccess(int code, JsonObject receivedData) {
+                Log.i("uploadimage", " Success! ");
+                uploadReview(Account.getUserIndex(),Mission.getMissionNumber(), missionRating,location_lat, location_lon, content,intent);
+                tempFile = null;
             }
 
             @Override
             public void onFailure(int code) {
+                Log.e("error", "uploadImage 오류가 생겼습니다.");
+                tempFile = null;
+            }
+        });
+    }
+
+
+    public void uploadReview(String userIndex, int missionIndex, String missionRating, String location_lat, String location_lon, String content,final Intent intent){
+
+
+        retroClient.uploadReview(userIndex, missionIndex, missionRating, location_lat, location_lon, content, new RetroCallback<JsonObject>(){
+
+            @Override
+            public void onError(Throwable t) {
+                Log.e("error", "uploadReview 오류가 생겼습니다.");
+
+            }
+
+            @Override
+            public void onSuccess(int code, JsonObject receivedData) {
+                startActivity(intent);
+            }
+
+            @Override
+            public void onFailure(int code) {
+                Log.e("error", "uploadReview 오류가 생겼습니다.");
 
             }
         });
-    }*/
+    }
 }

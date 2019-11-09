@@ -42,6 +42,16 @@ public interface RetroBaseApiService {
     Call<JsonObject> passDislikeMission(@Field("userIndex") String userIndex, @Field("count") String count, @Field("mission") String missionNumber, @Field("dislike") String dislike);
 
     @Multipart
-    @POST("/upload")
-    Call<ResponseBody> uploadImage(@Part MultipartBody.Part file, @Part("name") RequestBody requestBody);
+    @POST("/writeReview/image")
+    Call<JsonObject> uploadImage(@Part MultipartBody.Part file, @Part("name") RequestBody requestBody);
+
+
+    @FormUrlEncoded
+    @POST("/writeReview/review")
+    Call<JsonObject> uploadReview(@Field("userIndex") String userIndex, @Field("missionIndex") int missionIndex, @Field("missionRating") String missionRating, @Field("locationlat") String location_lat, @Field("locationlon") String location_lon,@Field("content") String content);
+
+
+
+
+
 }
