@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="activity"
+            type="com.example.dailyhappiness.DrawerActivity" />
+    </data>
+
+    <LinearLayout
+    android:layout_width="240dp"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:background="#FFD5DA"
+    android:orientation="vertical"
+    android:id="@+id/drawer"
+    tools:context=".DrawerActivity">
+
+
+    <LinearLayout
+        android:background="@drawable/imgsun"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <ImageView
+            android:paddingLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"
+            android:scaleType="fitCenter"
+            android:layout_marginTop="20dp"
+            android:id="@+id/ivPhoto"/>
+        <TextView
+            android:paddingLeft="20dp"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="20dp"
+            android:gravity="center"
+            android:id="@+id/tvId"
+            android:text="아이디는 이거임"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="#FFFFFFFF"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        android:gravity="center|top"
+        android:orientation="vertical">
+
+        <TextView
+            android:paddingLeft="20dp"
+            android:textSize="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:text="메뉴1"/>
+
+        <TextView
+            android:paddingLeft="20dp"
+            android:textSize="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:text="메뉴2"/>
+
+        <TextView
+            android:paddingLeft="20dp"
+            android:textSize="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:text="메뉴3"/>
+
+        <TextView
+            android:clickable="true"
+            android:paddingLeft="20dp"
+            android:textSize="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:id="@+id/tvLogout"
+            android:text="로그아웃"/>
+
+    </LinearLayout>
+
+</LinearLayout>
+</layout>
