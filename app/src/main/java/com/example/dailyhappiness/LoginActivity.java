@@ -113,16 +113,16 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(int code, JsonObject receivedData) {
-                user.setId(receivedData.get("id").getAsString());
-                user.setPw(receivedData.get("password").getAsString());
-                user.setAge(receivedData.get("age").getAsString());
-                user.setGender(receivedData.get("gender").getAsString());
-                user.setUserIndex(receivedData.get("userIndex").getAsString());
+                Account.setId(receivedData.get("id").getAsString());
+                Account.setPw(receivedData.get("password").getAsString());
+                Account.setAge(receivedData.get("age").getAsString());
+                Account.setGender(receivedData.get("gender").getAsString());
+                Account.setUserIndex(receivedData.get("userIndex").getAsString());
                 Mission.setCount(receivedData.get("count").getAsInt());
 
-                if (!id.equals(user.getId())) {     //해당 아이디가 목록에 없을때
+                if (!id.equals(Account.getId())) {     //해당 아이디가 목록에 없을때
                     Toast.makeText(LoginActivity.this, "아이디가 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
-                } else if (!pw.equals(user.getPw())) {   //비밀번호가 일치하지 않을때
+                } else if (!pw.equals(Account.getPw())) {   //비밀번호가 일치하지 않을때
                     Toast.makeText(LoginActivity.this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
                 } else {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);

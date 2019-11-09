@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         showLeftTime();
 
-        getMission(user.getUserIndex());
+        getMission(Account.getUserIndex());
 
 
         binding.ibtnSuccess.setOnClickListener(new View.OnClickListener() {
