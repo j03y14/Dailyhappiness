@@ -3,6 +3,7 @@ package com.example.dailyhappiness;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -15,8 +16,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dailyhappiness.databinding.ActivityMainBinding;
@@ -58,6 +61,10 @@ public class MainActivity extends AppCompatActivity {
 //    String hours = timeFormat1.format(time);
 //    String minutes = timeFormat2.format(time);
 
+    //DrawerActivity에서 가져다 씀
+    View drawer;
+    TextView tvLogout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -70,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         binding.setActivity(this);
 
+        drawer = findViewById(R.id.drawer);
+        tvLogout = findViewById(R.id.tvLogout);
+
         binding.tvDate.setText(month+" / "+date);
 
         //실시간 받아오기
@@ -77,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
         getMission(user.getUserIndex());
 
-        binding.ibtnSuccess.setOnClickListener(new View.OnClickListener() {
+        binding.iBtnSuccess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),WriteReviewActivity.class);
@@ -96,7 +106,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        binding.ibtnLogout.setOnClickListener(new View.OnClickListener() {
+        binding.iBtnDrawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+
+                binding.drawerLayout.openDrawer(drawer);
+
+            }
+        });
+
+        binding.drawerLayout.setDrawerListener(drawerListener);
+        drawer.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(View v, MotionEvent event) {
+                // TODO Auto-generated method stub
+                return true;
+            }
+        });
+
+        tvLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //SharedPreferences에 저장된 값들을 로그아웃 버튼을 누르면 삭제함
@@ -115,6 +143,37 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    DrawerLayout.DrawerListener drawerListener = new DrawerLayout.DrawerListener() {
+
+        public void onDrawerClosed(View drawerView) {
+        }
+        public void onDrawerOpened(View drawerView) {
+        }
+
+        public void onDrawerSlide(View drawerView, float slideOffset) {
+
+        }
+
+        public void onDrawerStateChanged(int newState) {
+//            String state;
+//            switch (newState) {
+//                case DrawerLayout.STATE_IDLE:
+//                    state = "STATE_IDLE";
+//                    break;
+//                case DrawerLayout.STATE_DRAGGING:
+//                    state = "STATE_DRAGGING";
+//                    break;
+//                case DrawerLayout.STATE_SETTLING:
+//                    state = "STATE_SETTLING";
+//                    break;
+//                default:
+//                    state = "unknown!";
+//            }
+
+            //tvState.setText(state);
+        }
+    };
 
     public void showLeftTime(){
         final Handler handler = new Handler(){

@@ -76,6 +76,8 @@ public class WriteReviewActivity extends AppCompatActivity {
             }
         });
 
+        //String a = binding.edtReview.getText().toString();
+
         binding.ivPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
