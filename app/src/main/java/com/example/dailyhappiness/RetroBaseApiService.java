@@ -1,6 +1,7 @@
 package com.example.dailyhappiness;
 
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import okhttp3.MultipartBody;
@@ -51,7 +52,9 @@ public interface RetroBaseApiService {
     Call<JsonObject> uploadReview(@Field("userIndex") String userIndex, @Field("missionIndex") int missionIndex, @Field("missionRating") String missionRating, @Field("locationlat") String location_lat, @Field("locationlon") String location_lon,@Field("content") String content);
 
 
-
+    @FormUrlEncoded
+    @POST("/getReviews/")
+    Call<JsonArray> getReviews(@Field("userIndex") String userIndex, @Field("getMine") boolean getMine, @Field("reviewCount") int reviewCount);
 
 
 }

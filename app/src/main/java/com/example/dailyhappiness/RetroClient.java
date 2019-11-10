@@ -2,6 +2,7 @@ package com.example.dailyhappiness;
 
 import android.content.Context;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 
@@ -207,7 +208,24 @@ public class RetroClient {
 
             }
         });
-    };
+    }
+    public void getReviews(String userIndex, boolean getMine, int reviewCount, final RetroCallback callback){
+        apiService.getReviews(userIndex,getMine,reviewCount).enqueue(new Callback<JsonArray>(){
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+                callback.onError(t);
+            }
+        } );
+    }
 
 
 }
