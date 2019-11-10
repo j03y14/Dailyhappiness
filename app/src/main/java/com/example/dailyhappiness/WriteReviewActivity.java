@@ -69,6 +69,7 @@ public class WriteReviewActivity extends AppCompatActivity {
     private String location_lon; //경도
     private String content; //한줄평
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,8 +77,33 @@ public class WriteReviewActivity extends AppCompatActivity {
         retroClient = RetroClient.getInstance(this).createBaseApi();
         user = Account.getInstance();
 
+
         binding = DataBindingUtil.setContentView(this,R.layout.activity_write_review);
         binding.setActivity(this);
+
+
+
+        locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
+        int permissionCheck = checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION);
+        if(PackageManager.PERMISSION_GRANTED == permissionCheck) {
+            try {
+                Log.i("트롸이","위치가져왔지");
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, locationListener); //민타임은 초,  민디스턴스는 미터
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, locationListener);
+            } catch (SecurityException e) {
+                e.printStackTrace();
+            }
+
+
+
+
+        }else{
+            Toast.makeText(WriteReviewActivity.this, "정확한 미션 추천을 위해 위치정보 접근 권한이 필요합니다.", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(getApplicationContext(),MyReviewActivity.class);
+            startActivity(intent);
+        }
+
 
         binding.tvMission.setText(Mission.getTodayMission());
 
@@ -103,39 +129,20 @@ public class WriteReviewActivity extends AppCompatActivity {
         });
 
 
-        locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
+
         binding.iBtnOK.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
+
             @Override
             public void onClick(View v) {
 
                 Log.i("ibtnok","ibtnok 진입");
                 content  = binding.edtReview.getText().toString();
-                int permissionCheck = checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION);
-                if(PackageManager.PERMISSION_GRANTED == permissionCheck) {
-                    try {
-                        Log.i("트롸이","위치가져왔지");
-                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, locationListener); //민타임은 초,  민디스턴스는 미터
-                        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, locationListener);
-                    } catch (SecurityException e) {
-                        e.printStackTrace();
-                    }
 
-                    Intent intent = new Intent(getApplicationContext(),MyReviewActivity.class);
-
-                    uploadImage(tempFile, Account.getUserIndex(), intent);
+                Intent intent = new Intent(getApplicationContext(),MyReviewActivity.class);
 
 
 
-
-
-                }else{
-                    Toast.makeText(WriteReviewActivity.this, "정확한 미션 추천을 위해 위치정보 접근 권한이 필요합니다.", Toast.LENGTH_SHORT).show();
-
-                    Intent intent = new Intent(getApplicationContext(),MyReviewActivity.class);
-                    startActivity(intent);
-                }
-
+                uploadImage(tempFile, Account.getUserIndex(), intent);
 
             }
         });
