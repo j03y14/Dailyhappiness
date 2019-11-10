@@ -28,6 +28,15 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".CreateAccountActivity" />
         <activity android:name=".MyReviewActivity" />
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="{com.example.dailyhappiness}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
 
     </application>
 
