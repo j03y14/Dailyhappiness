@@ -69,7 +69,7 @@ public class ListAdapter extends BaseAdapter {
             public void run(){
 
                 try {
-                    URL url = new URL("https://dailyhappiness.xyz/image?filename="+imageFile);
+                    URL url = new URL(imageFile);
                     //https://dailyhappiness.xyz/image?filename=70-2019_11_12.jpg
 
                     // Web에서 이미지를 가져온 뒤
