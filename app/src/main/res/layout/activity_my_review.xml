@@ -9,16 +9,16 @@
             name="activity"
             type="com.example.dailyhappiness.MyReviewActivity" />
     </data>
-<androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
 
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MyReviewActivity">
-
-    <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/lvView"></ListView>
+        tools:context=".MyReviewActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/lvView"></ListView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
