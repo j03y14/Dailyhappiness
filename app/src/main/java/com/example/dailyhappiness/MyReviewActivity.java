@@ -39,10 +39,7 @@ public class MyReviewActivity extends AppCompatActivity {
         retroClient= RetroClient.getInstance(this).createBaseApi();
         reviewArray = new ArrayList<Review>();
         getReviews(Account.getUserIndex(), true, 0);
-
-        //listAdapter = new ListAdapter();
-
-
+        Log.d("", "onCreate: ");
     }
 
 
@@ -79,7 +76,6 @@ public class MyReviewActivity extends AppCompatActivity {
                     reviewArray.add(new Review(missionNumber,user,date,missionName,content,rating,weather,temperature,image));
                 }
                 reviewArray.isEmpty();
-
                 listAdapter = new ListAdapter();
 
                 for(int i=0;i<reviewArray.size();i++){

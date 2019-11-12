@@ -4,15 +4,12 @@ public class Review {
     int missionNumber;  //미션번호
     String user;        //유저의 id
     String date;        //날짜
-    String missionName; //미션이뭔지
+    String missionName;     //미션
     String content;     //내용
     int rating;         //평점 (1점 ~ 10점)
     int weather;        //날씨 1: 맑음, 2: 비, 3: 눈, 4: 흐림
     float temperature;  //온도
     String image;     //인증사진이 보여지는 사진 주소를 가지고 있음
-
-
-
 
     public Review(int missionNumber, String user, String date, String missionName, String content, int rating, int weather, float temperature, String image) {
         this.missionNumber = missionNumber;
