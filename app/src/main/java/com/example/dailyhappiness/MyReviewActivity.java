@@ -1,31 +1,49 @@
 package com.example.dailyhappiness;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.dailyhappiness.databinding.ActivityMyReviewBinding;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class MyReviewActivity extends AppCompatActivity {
 
+    ActivityMyReviewBinding binding;
+
     private RetroClient retroClient;
     private ArrayList<Review> reviewArray;
+
+    private ListAdapter listAdapter;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i("MyReviewActivity", "MyReviewActivity 호출");
-        setContentView(R.layout.activity_my_review);
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_my_review);
+        binding.setActivity(this);
 
         retroClient= RetroClient.getInstance(this).createBaseApi();
         reviewArray = new ArrayList<Review>();
         getReviews(Account.getUserIndex(), true, 0);
+
+        //listAdapter = new ListAdapter();
+
+
     }
-
-
 
 
 
@@ -37,7 +55,7 @@ public class MyReviewActivity extends AppCompatActivity {
 
      */
     public void getReviews(String userIndex, boolean getMine, int reviewCount){
-        Log.i("getReives","getRevies 호출");
+        Log.i("getReviews","getReviews 호출");
         retroClient.getReviews(userIndex, getMine, reviewCount, new RetroCallback<JsonArray>() {
             @Override
             public void onError(Throwable t) {
@@ -50,6 +68,7 @@ public class MyReviewActivity extends AppCompatActivity {
                 for(int i=0; i<receivedData.size();i++) {
                     JsonObject review = (JsonObject) receivedData.get(i);
                     int missionNumber = review.get("mission").getAsInt();  //미션번호
+                    String missionName = review.get("missionName").getAsString();//미션내용
                     String user = review.get("id").getAsString();          //유저 아이디
                     String date = review.get("date").getAsString();        //날짜
                     String content = review.get("comment").getAsString();     //내용
@@ -57,9 +76,17 @@ public class MyReviewActivity extends AppCompatActivity {
                     int weather = review.get("weather").getAsInt();        //날씨 1: 맑음, 2: 비, 3: 눈, 4: 흐림
                     float temperature = review.get("temperature").getAsFloat();  //온도
                     String image = review.get("picture").getAsString();     //인증사진이 보여지는 사진 주소를 가지고 있음
-                    reviewArray.add(new Review(missionNumber,user,date,content,rating,weather,temperature,image));
+                    reviewArray.add(new Review(missionNumber,user,date,missionName,content,rating,weather,temperature,image));
                 }
                 reviewArray.isEmpty();
+
+                listAdapter = new ListAdapter();
+
+                for(int i=0;i<reviewArray.size();i++){
+                    listAdapter.addItem(reviewArray.get(i));
+                }
+
+                binding.lvView.setAdapter(listAdapter);
             }
 
             @Override

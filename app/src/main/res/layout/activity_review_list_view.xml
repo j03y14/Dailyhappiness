@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="activity"
+            type="com.example.dailyhappiness.ReviewListView" />
+    </data>
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ReviewListView">
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/ivID"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/ic_launcher"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvID"
+        android:layout_toRightOf="@id/ivID"
+        android:layout_alignTop="@id/ivID"
+        android:layout_alignBottom="@id/ivID"
+        android:textStyle="bold"
+        android:textSize="25dp"
+        android:gravity="center"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ivPhoto"
+        android:scaleType="fitCenter"
+        android:layout_below="@id/ivID" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvDate"
+        android:layout_marginHorizontal="20dp"
+        android:padding="5dp"
+        android:layout_below="@id/ivPhoto"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvMission"
+        android:layout_marginHorizontal="20dp"
+        android:layout_below="@id/tvDate"/>
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ratingBar"
+        android:layout_below="@id/tvMission"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvContents"
+        android:layout_marginHorizontal="20dp"
+        android:layout_below="@id/ratingBar"/>
+
+
+</RelativeLayout>
+</layout>

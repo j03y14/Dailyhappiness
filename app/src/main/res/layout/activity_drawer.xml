@@ -34,7 +34,7 @@
             android:src="@mipmap/ic_launcher"
             android:scaleType="fitCenter"
             android:layout_marginTop="20dp"
-            android:id="@+id/ivPhoto"/>
+            android:id="@+id/ivID"/>
         <TextView
             android:paddingLeft="20dp"
             android:textSize="25dp"

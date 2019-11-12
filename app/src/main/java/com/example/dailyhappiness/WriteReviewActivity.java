@@ -141,8 +141,9 @@ public class WriteReviewActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),MyReviewActivity.class);
 
 
-
                 uploadImage(tempFile, Account.getUserIndex(), intent);
+
+                //startActivity(intent);
 
             }
         });
@@ -293,8 +294,6 @@ public class WriteReviewActivity extends AppCompatActivity {
          //  (resultCode != RESULT_OK) 일 때 tempFile 을 삭제하기 때문에
          //기존에 데이터가 남아 있게 되면 원치 않은 삭제가 이루어짐
 
-
-
     }
 
     LocationListener locationListener = new LocationListener() {  //로케이션 리스너
@@ -308,7 +307,7 @@ public class WriteReviewActivity extends AppCompatActivity {
 
             String result = String.format("위도 : %s\n경도 : %s\n정확도 : %f\n",location_lat,location_lon,acc);
 
-            Log.i("위치",result);
+            //Log.i("위치",result);
         }
 
         @Override
