@@ -23,6 +23,7 @@ public class MyReviewActivity extends AppCompatActivity {
         retroClient= RetroClient.getInstance(this).createBaseApi();
         reviewArray = new ArrayList<Review>();
         getReviews(Account.getUserIndex(), true, 0);
+        Log.d("", "onCreate: ");
     }
 
 
@@ -50,6 +51,7 @@ public class MyReviewActivity extends AppCompatActivity {
                 for(int i=0; i<receivedData.size();i++) {
                     JsonObject review = (JsonObject) receivedData.get(i);
                     int missionNumber = review.get("mission").getAsInt();  //미션번호
+                    String missionName = review.get("missionName").getAsString();
                     String user = review.get("id").getAsString();          //유저 아이디
                     String date = review.get("date").getAsString();        //날짜
                     String content = review.get("comment").getAsString();     //내용
@@ -57,9 +59,11 @@ public class MyReviewActivity extends AppCompatActivity {
                     int weather = review.get("weather").getAsInt();        //날씨 1: 맑음, 2: 비, 3: 눈, 4: 흐림
                     float temperature = review.get("temperature").getAsFloat();  //온도
                     String image = review.get("picture").getAsString();     //인증사진이 보여지는 사진 주소를 가지고 있음
-                    reviewArray.add(new Review(missionNumber,user,date,content,rating,weather,temperature,image));
+                    reviewArray.add(new Review(missionNumber,user,date,missionName,content,rating,weather,temperature,image));
                 }
                 reviewArray.isEmpty();
+                Log.i("아아아앙어레이확인",reviewArray.toString());
+
             }
 
             @Override
