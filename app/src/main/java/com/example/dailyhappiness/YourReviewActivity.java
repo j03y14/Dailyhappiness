@@ -4,43 +4,37 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import com.example.dailyhappiness.databinding.ActivityMyReviewBinding;
+import com.example.dailyhappiness.databinding.ActivityYourReviewBinding;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
-public class MyReviewActivity extends AppCompatActivity {
+public class YourReviewActivity extends AppCompatActivity {
 
-    ActivityMyReviewBinding binding;
+    ActivityYourReviewBinding binding;
 
     private RetroClient retroClient;
     private ArrayList<Review> reviewArray;
 
     private ListAdapter listAdapter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i("MyReviewActivity", "MyReviewActivity 호출");
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_my_review);
+        //Log.i("YourReviewActivity", "ReviewActivity 호출");
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_your_review);
         binding.setActivity(this);
 
         retroClient= RetroClient.getInstance(this).createBaseApi();
         reviewArray = new ArrayList<Review>();
-        getReviews(Account.getUserIndex(), true, 0);
+
+        getReviews(Account.getUserIndex(), false, 0);
         Log.d("", "onCreate: ");
 
         binding.iBtnBack.setOnClickListener(new View.OnClickListener() {
@@ -103,15 +97,3 @@ public class MyReviewActivity extends AppCompatActivity {
         });
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-

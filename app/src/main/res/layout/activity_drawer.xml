@@ -55,24 +55,24 @@
         android:gravity="center|top"
         android:orientation="vertical">
 
-        <TextView
-            android:paddingLeft="20dp"
+        <Button
+            android:id="@+id/btnMyReview"
+            android:paddingRight="145dp"
             android:textSize="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:text="메뉴1"/>
+            android:text="나의 리뷰"/>
 
-        <TextView
-            android:paddingLeft="20dp"
+        <Button
+            android:id="@+id/btnYourReview"
+            android:paddingRight="145dp"
             android:textSize="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:text="메뉴2"/>
+            android:text="너의 리뷰"/>
 
         <TextView
-            android:paddingLeft="20dp"
+            android:paddingLeft="10dp"
             android:textSize="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
 
         <TextView
             android:clickable="true"
-            android:paddingLeft="20dp"
+            android:paddingLeft="10dp"
             android:textSize="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

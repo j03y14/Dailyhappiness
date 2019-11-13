@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
     //DrawerActivity에서 가져다 씀
     View drawer;
     TextView tvLogout;
+    Button btnMyReview;
+    Button btnYourReview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +76,12 @@ public class MainActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         binding.setActivity(this);
 
+        //메뉴
         drawer = findViewById(R.id.drawer);
         tvLogout = findViewById(R.id.tvLogout);
+        btnMyReview = findViewById(R.id.btnMyReview);
+        btnYourReview = findViewById(R.id.btnYourReview);
+        //메뉴끝
 
         binding.tvDate.setText(month+" / "+date);
 
@@ -123,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //메뉴에서 넘어갈때
         tvLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,6 +148,28 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        btnMyReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getApplicationContext(),MyReviewActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        btnYourReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getApplicationContext(),YourReviewActivity.class);
+                startActivity(intent);
+            }
+        });
+        //메뉴 끝
+
+
 
     }
 
