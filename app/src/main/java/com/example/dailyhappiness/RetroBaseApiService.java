@@ -56,5 +56,15 @@ public interface RetroBaseApiService {
     @POST("/getReviews/")
     Call<JsonArray> getReviews(@Field("userIndex") String userIndex, @Field("getMine") boolean getMine, @Field("reviewCount") int reviewCount);
 
+    @FormUrlEncoded
+    @POST("/missionCandidate/insert")
+    Call<JsonObject> insertMissionCandidate(@Field("userIndex") String userIndex, @Field("missionName") String missionName);
 
+    @FormUrlEncoded
+    @POST("/missionCandidate/get")
+    Call<JsonArray> getMissionCandidate(@Field("userIndex") String userIndex, @Field("missionCandidateCount") int count,@Field("mode") int mode);
+
+    @FormUrlEncoded
+    @POST("/missionCandidate/increment")
+    Call<JsonObject> evaluateMissionCandidate(@Field("userIndex") String userIndex, @Field("missionCandidateIndex") int missionCandidateIndex, @Field("which") int which,@Field("value") int value);
 }

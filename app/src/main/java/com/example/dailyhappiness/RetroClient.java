@@ -227,5 +227,58 @@ public class RetroClient {
         } );
     }
 
+    public void insertMissionCandidate(String userIndex, String missionName, final RetroCallback callback){
+        apiService.insertMissionCandidate(userIndex,missionName).enqueue(new Callback<JsonObject>(){
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
 
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onError(t);
+            }
+        } );
+    }
+
+
+    public void getMissionCandidate(String userIndex, int count, int mode, final RetroCallback callback){
+        apiService.getMissionCandidate(userIndex,count,mode).enqueue(new Callback<JsonArray>(){
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+                callback.onError(t);
+            }
+        } );
+    }
+
+    public void evaluateMissionCandidate(String userIndex, int missionCandidateIndex,int which, int value, final RetroCallback callback){
+        apiService.evaluateMissionCandidate(userIndex,missionCandidateIndex,which,value).enqueue(new Callback<JsonObject>(){
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onError(t);
+            }
+        } );
+    }
 }
