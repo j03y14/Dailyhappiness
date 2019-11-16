@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     TextView tvLogout;
     Button btnMyReview;
     Button btnYourReview;
+    Button btnCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         tvLogout = findViewById(R.id.tvLogout);
         btnMyReview = findViewById(R.id.btnMyReview);
         btnYourReview = findViewById(R.id.btnYourReview);
+        btnCalendar = findViewById(R.id.btnCalendar);
         //메뉴끝
 
         binding.tvDate.setText(month+" / "+date);
@@ -164,6 +166,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(getApplicationContext(),YourReviewActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),CalendarActivity.class);
                 startActivity(intent);
             }
         });

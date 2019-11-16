@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".YourReviewActivity"></activity>
+        <activity android:name=".CalendarActivity"></activity>
+        <activity android:name=".YourReviewActivity" />
         <activity android:name=".WriteReviewActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
