@@ -3,9 +3,9 @@ package com.example.dailyhappiness;
 public class Mission {
 
     static String todayMission = "";
-    static String nextMission = "";
+
     static int missionNumber = 0;
-    static int count = 0;
+    static int count = 0; // 사용자가 이 미션을 넘긴 횟수
 
     public static int getCount() { return count; }
 
