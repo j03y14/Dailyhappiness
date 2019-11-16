@@ -15,12 +15,15 @@ import android.widget.Toast;
 
 import com.example.dailyhappiness.databinding.ActivityCalendarBinding;
 import com.example.dailyhappiness.databinding.ActivityMyReviewBinding;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -30,27 +33,19 @@ public class CalendarActivity extends AppCompatActivity {
 
     ActivityCalendarBinding binding;
 
+    private RetroClient retroClient;
+
     String time,kcal,menu;
     private final OneDayDecorator oneDayDecorator = new OneDayDecorator();
     Cursor cursor;
 
     //미션 한 날짜
-    final String[] result = {"2019,11,01",
-            "2019,11,02",
-            "2019,11,03",
-            "2019,11,05",
-            "2019,11,06",
-            "2019,11,08",
-            "2019,11,09",
-            "2019,11,10",
-            "2019,11,11",
-            "2019,11,12",
-            "2019,11,13",
-            "2019,11,16"};
+    private ArrayList<String> result;
+
 
     //달력밑에 히스토리 data   "날짜\n한줄평"
     ArrayAdapter arrayAdapter;
-    String[] data = {"짜장면\n맛있다","김치찌개\n존맛탱","컴밥\n다음엔스팸참치","햄버거\n버거킹좋아","갈비","스테이크","샐러드","식빵","곱창","닭발","닭볶음탕","치킨","감자탕","라면","불고기"};
+    ArrayList<String> data;
 
 
     @Override
@@ -59,24 +54,14 @@ public class CalendarActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_calendar);
         binding.setActivity(this);
 
-        arrayAdapter = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_list_item_1,data);
-        binding.lvList.setAdapter(arrayAdapter);
+        retroClient= RetroClient.getInstance(this).createBaseApi();
+        result = new ArrayList<String>();
+        data = new ArrayList<String>();
 
-        binding.calendarView.state().edit()
-                .setFirstDayOfWeek(Calendar.SUNDAY)
-                .setMinimumDate(CalendarDay.from(2017, 0, 1)) // 달력의 시작
-                .setMaximumDate(CalendarDay.from(2030, 11, 31)) // 달력의 끝
-                .setCalendarDisplayMode(CalendarMode.MONTHS)
-                .commit();
-
-        binding.calendarView.addDecorators(
-                new SundayDecorator(),
-                new SaturdayDecorator(),
-                oneDayDecorator);
+        getReviews(Account.getUserIndex(), true,0);
 
 
 
-        new ApiSimulator(result).executeOnExecutor(Executors.newSingleThreadExecutor());
 
 //        binding.calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
 //            @Override
@@ -105,9 +90,9 @@ public class CalendarActivity extends AppCompatActivity {
                 ArrayList<ArrayList<String>> monthList = new ArrayList<ArrayList<String>>();
                 for(int i = 0 ; i < 12; i ++){
                     ArrayList<String> month = new ArrayList<String>();  //1 month
-                    for(int j = 0; j < result.length; j ++){
-                        if(i == Integer.parseInt(result[j].substring(5,7))-1)  //그 달에 맞는 result(날짜들) 분류
-                            month.add(result[j]);
+                    for(int j = 0; j < result.size(); j ++){
+                        if(i == Integer.parseInt(result.get(j).substring(5,7))-1)  //그 달에 맞는 result(날짜들) 분류
+                            month.add(result.get(j));
                     }
                     monthList.add(month);                               //1~12 month
                 }
@@ -127,9 +112,9 @@ public class CalendarActivity extends AppCompatActivity {
 
     private class ApiSimulator extends AsyncTask<Void, Void, List<CalendarDay>> {
 
-        String[] Time_Result;
+        ArrayList<String> Time_Result;
 
-        ApiSimulator(String[] Time_Result){
+        ApiSimulator(ArrayList<String> Time_Result){
             this.Time_Result = Time_Result;
         }
 
@@ -147,8 +132,8 @@ public class CalendarActivity extends AppCompatActivity {
             //특정날짜 달력에 점표시해주는곳
             //월은 0이 1월 년,일은 그대로
             //string 문자열인 Time_Result 을 받아와서 ,를 기준으로짜르고 string을 int 로 변환
-            for(int i = 0 ; i < Time_Result.length ; i ++){
-                String[] time = Time_Result[i].split(",");
+            for(int i = 0 ; i < Time_Result.size() ; i ++){
+                String[] time = Time_Result.get(i).split("-");
                 int year = Integer.parseInt(time[0]);
                 int month = Integer.parseInt(time[1]);
                 int dayy = Integer.parseInt(time[2]);
@@ -171,6 +156,52 @@ public class CalendarActivity extends AppCompatActivity {
 
             binding.calendarView.addDecorator(new EventDecorator(R.color.colorAccent, calendarDays,CalendarActivity.this));
         }
+    }
+
+    public void getReviews(String userIndex, boolean getMine, int reviewCount){
+        Log.i("getReviews","getReviews 호출");
+
+        retroClient.getReviews(userIndex, getMine, reviewCount, new RetroCallback<JsonArray>() {
+            @Override
+            public void onError(Throwable t) {
+                Log.e("getReviews", "onError");
+            }
+
+            @Override
+            public void onSuccess(int code, JsonArray receivedData) {
+
+                for(int i=0; i<receivedData.size();i++) {
+                    JsonObject review = (JsonObject) receivedData.get(i);
+                    result.add(review.get("date").getAsString());
+                    data.add(review.get("date").getAsString() +"\n" +review.get("missionName").getAsString());
+                }
+
+                arrayAdapter = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_list_item_1,data);
+                binding.lvList.setAdapter(arrayAdapter);
+
+                binding.calendarView.state().edit()
+                        .setFirstDayOfWeek(Calendar.SUNDAY)
+                        .setMinimumDate(CalendarDay.from(2017, 0, 1)) // 달력의 시작
+                        .setMaximumDate(CalendarDay.from(2030, 11, 31)) // 달력의 끝
+                        .setCalendarDisplayMode(CalendarMode.MONTHS)
+                        .commit();
+
+                binding.calendarView.addDecorators(
+                        new SundayDecorator(),
+                        new SaturdayDecorator(),
+                        oneDayDecorator);
+
+
+
+                new ApiSimulator(result).executeOnExecutor(Executors.newSingleThreadExecutor());
+
+            }
+
+            @Override
+            public void onFailure(int code) {
+                Log.e("getReviews", "onFailure");
+            }
+        });
     }
 
 }
