@@ -71,13 +71,13 @@
             android:layout_height="wrap_content"
             android:text="너의 리뷰"/>
 
-        <TextView
-            android:paddingLeft="10dp"
+        <Button
+            android:id="@+id/btnCalendar"
+            android:paddingRight="145dp"
             android:textSize="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:text="메뉴3"/>
+            android:text="히스토리"/>
 
         <TextView
             android:clickable="true"
