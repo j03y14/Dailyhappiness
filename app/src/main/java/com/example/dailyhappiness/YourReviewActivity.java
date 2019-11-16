@@ -58,7 +58,7 @@ public class YourReviewActivity extends AppCompatActivity {
      */
     public void getReviews(String userIndex, boolean getMine, int reviewCount){
         Log.i("getReviews","getReviews 호출");
-        reviewArray.clear();
+
         retroClient.getReviews(userIndex, getMine, reviewCount, new RetroCallback<JsonArray>() {
             @Override
             public void onError(Throwable t) {

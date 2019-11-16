@@ -64,7 +64,7 @@ public class MyReviewActivity extends AppCompatActivity {
      */
     public void getReviews(String userIndex, boolean getMine, int reviewCount){
         Log.i("getReviews","getReviews 호출");
-        reviewArray.clear();
+
         retroClient.getReviews(userIndex, getMine, reviewCount, new RetroCallback<JsonArray>() {
             @Override
             public void onError(Throwable t) {
@@ -87,7 +87,7 @@ public class MyReviewActivity extends AppCompatActivity {
                     String image = review.get("picture").getAsString();     //인증사진이 보여지는 사진 주소를 가지고 있음
                     reviewArray.add(new Review(missionNumber,user,date,missionName,content,rating,weather,temperature,image));
                 }
-                reviewArray.isEmpty();
+
                 listAdapter = new ListAdapter();
 
                 for(int i=0;i<reviewArray.size();i++){
