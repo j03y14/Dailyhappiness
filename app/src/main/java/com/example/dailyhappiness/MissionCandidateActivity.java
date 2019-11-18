@@ -87,37 +87,7 @@ public class MissionCandidateActivity extends AppCompatActivity {
 
     }
 
-    public void setMission(String name){
-        mission = name;
-        Log.d("미션이름받아옴?",Account.getUserIndex()+""+mission);
 
-        insertMissionCandidate(Account.getUserIndex(), mission);
-    }
-
-
-    /* 미션 후보를 넣는 사용자의 index 와 미션이 무슨 미션인지를 받아서 보내면 됨.
-    *  미션 후보를 추가할 때 쓰는 함수
-    * */
-    public void insertMissionCandidate(String userIndex, String missionName){
-        retroClient.insertMissionCandidate(userIndex,missionName,new RetroCallback<JsonObject>(){
-            @Override
-            public void onError(Throwable t) {
-                Log.i("미션안들어감","웅 안들어감");
-            }
-
-            @Override
-            public void onSuccess(int code, JsonObject receivedData) {
-                Log.i("미션들어감?","웅 들어감");
-
-               // missionCandidateListAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onFailure(int code) {
-                Log.i("미션안들어감","웅 안들어감ㅋㅋ");
-            }
-        });
-    };
 
     /*
     * userIndex : 사용자 번호

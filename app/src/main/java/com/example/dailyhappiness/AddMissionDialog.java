@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.JsonObject;
+
 public class AddMissionDialog extends Dialog{
 
     private Button btnOk;
@@ -27,6 +29,7 @@ public class AddMissionDialog extends Dialog{
     private View.OnClickListener okListener;
     private View.OnClickListener cancelListener;
 
+    private RetroClient retroClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,8 @@ public class AddMissionDialog extends Dialog{
         layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         layoutParams.dimAmount = 0.8f;
         getWindow().setAttributes(layoutParams);
+
+        retroClient = RetroClient.getInstance(context).createBaseApi();
 
         //사이즈조절
         WindowManager.LayoutParams wm = new WindowManager.LayoutParams();
@@ -58,8 +63,13 @@ public class AddMissionDialog extends Dialog{
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mission = edtMission.getText().toString();
+
                 //((MissionCandidateActivity)context).setMission(mission);  //새로 정의 안 하고 미션캔디데잇액티비티의 셋미션 메소드 씀
+
+                EditText missionName = findViewById(R.id.edtMission);
+                mission = missionName.getText().toString();
+                setMission(mission);  //새로 정의 안 하고 미션캔디데잇액티비티의 셋미션 메소드 씀
+
                 dismiss();
             }
         });
@@ -83,5 +93,37 @@ public class AddMissionDialog extends Dialog{
         this.cancelListener = cancelListener;
         //this.context = context;
     }
+
+    public void setMission(String name){
+        mission = name;
+        Log.d("미션이름받아옴?",Account.getUserIndex()+""+mission);
+
+        insertMissionCandidate(Account.getUserIndex(), mission);
+    }
+
+
+    /* 미션 후보를 넣는 사용자의 index 와 미션이 무슨 미션인지를 받아서 보내면 됨.
+     *  미션 후보를 추가할 때 쓰는 함수
+     * */
+    public void insertMissionCandidate(String userIndex, String missionName){
+        retroClient.insertMissionCandidate(userIndex,missionName,new RetroCallback<JsonObject>(){
+            @Override
+            public void onError(Throwable t) {
+                Log.i("미션안들어감","웅 안들어감");
+            }
+
+            @Override
+            public void onSuccess(int code, JsonObject receivedData) {
+                Log.i("미션들어감?","웅 들어감");
+
+                // missionCandidateListAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(int code) {
+                Log.i("미션안들어감","웅 안들어감ㅋㅋ");
+            }
+        });
+    };
 
 }
