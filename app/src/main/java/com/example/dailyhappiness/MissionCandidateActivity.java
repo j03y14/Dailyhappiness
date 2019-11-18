@@ -45,18 +45,44 @@ public class MissionCandidateActivity extends AppCompatActivity {
         binding.setActivity(this);
 
 
+        addMissionDialog = new AddMissionDialog(this);
+
         // 커스텀 다이얼로그 호출
         binding.iBtnAddMission.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //파라미터에 리스너 등록
-                addMissionDialog = new AddMissionDialog(MissionCandidateActivity.this);
+                //addMissionDialog = new AddMissionDialog(MissionCandidateActivity.this,okListener, cancelListener);
                 addMissionDialog.show();
 
-                //insertMissionCandidate(Account.userIndex,AddMissionDialog.mission);
             }
 
+
+
+
+//            private View.OnClickListener okListener = new View.OnClickListener() {
+//                public void onClick(View v) {
+//                    //EditText edtMission = findViewById(R.id.edtMission);
+//                   // String mission = edtMission.getText().toString();
+//
+//                    Toast.makeText(getApplicationContext(),mission+"ghgh",Toast.LENGTH_SHORT).show();
+//                    addMissionDialog.dismiss();
+//                }
+//            };
+//
+//            private View.OnClickListener cancelListener = new View.OnClickListener() {
+//                public void onClick(View v) {
+//                    Toast.makeText(MissionCandidateActivity.this, "취소하셨습니다", Toast.LENGTH_SHORT).show();
+//                    addMissionDialog.dismiss();
+//                }
+//            };
+
+
+
         });
+        mission = addMissionDialog.getMission();
+        Log.i("ㅎㅎ",mission);
+
 
 
     }
