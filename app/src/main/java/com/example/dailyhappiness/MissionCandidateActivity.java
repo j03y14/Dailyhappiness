@@ -52,8 +52,8 @@ public class MissionCandidateActivity extends AppCompatActivity {
                 //파라미터에 리스너 등록
                 addMissionDialog = new AddMissionDialog(MissionCandidateActivity.this);
                 addMissionDialog.show();
-                //insertMissionCandidate(Account.getUserIndex(), mission);
 
+                //insertMissionCandidate(Account.userIndex,AddMissionDialog.mission);
             }
 
         });
@@ -63,7 +63,8 @@ public class MissionCandidateActivity extends AppCompatActivity {
 
     public void setMission(String name){
         mission = name;
-        Log.d("미션이름받아옴?",mission);
+        Log.d("미션이름받아옴?",Account.getUserIndex()+""+mission);
+
         insertMissionCandidate(Account.getUserIndex(), mission);
     }
 
@@ -73,10 +74,9 @@ public class MissionCandidateActivity extends AppCompatActivity {
     * */
     public void insertMissionCandidate(String userIndex, String missionName){
         retroClient.insertMissionCandidate(userIndex,missionName,new RetroCallback<JsonObject>(){
-
             @Override
             public void onError(Throwable t) {
-
+                Log.i("미션안들어감","웅 안들어감");
             }
 
             @Override
@@ -88,7 +88,7 @@ public class MissionCandidateActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int code) {
-
+                Log.i("미션안들어감","웅 안들어감ㅋㅋ");
             }
         });
     };

@@ -22,6 +22,9 @@ public class AddMissionDialog extends Dialog{
     private Button btnCancel;
     private EditText missionName;
 
+    private Context context = null;
+    private String mission = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +51,8 @@ public class AddMissionDialog extends Dialog{
             @Override
             public void onClick(View v) {
                 missionName = findViewById(R.id.edtMission);
-                MissionCandidateActivity mca = new MissionCandidateActivity();
-                Log.i("호호",missionName.getText().toString());
-                mca.setMission(missionName.getText().toString());
-                //mca.insertMissionCandidate(Account.getUserIndex(), missionName.getText().toString());
+                mission = missionName.getText().toString();
+                ((MissionCandidateActivity)context).setMission(mission);  //새로 정의 안 하고 미션캔디데잇액티비티의 셋미션 메소드 씀
                 dismiss();
             }
         });
@@ -66,6 +67,7 @@ public class AddMissionDialog extends Dialog{
     //생성자 생성
     public AddMissionDialog(@NonNull Context context) {
         super(context);
+        this.context = context;
     }
 
 }

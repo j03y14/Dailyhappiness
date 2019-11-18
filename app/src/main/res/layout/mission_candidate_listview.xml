@@ -40,11 +40,11 @@
     <ImageView
         android:layout_gravity="right"
         android:src="@drawable/like2"
-        android:layout_width="70dp"
-        android:layout_height="70dp"/>
+        android:layout_width="55dp"
+        android:layout_height="55dp"/>
     <ImageView
         android:layout_gravity="right"
         android:src="@drawable/unlike2"
-        android:layout_width="70dp"
-        android:layout_height="70dp"/>
+        android:layout_width="55dp"
+        android:layout_height="55dp"/>
 </LinearLayout>
