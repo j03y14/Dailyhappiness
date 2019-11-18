@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnMyReview;
     Button btnYourReview;
     Button btnCalendar;
+    Button btnCandidate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         btnMyReview = findViewById(R.id.btnMyReview);
         btnYourReview = findViewById(R.id.btnYourReview);
         btnCalendar = findViewById(R.id.btnCalendar);
+        btnCandidate = findViewById(R.id.btnCandidate);
         //메뉴끝
 
         binding.tvDate.setText(month+" / "+date);
@@ -157,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(getApplicationContext(),MyReviewActivity.class);
                 startActivity(intent);
+                finish();
 
             }
         });
@@ -167,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(getApplicationContext(),YourReviewActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -175,11 +179,19 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),CalendarActivity.class);
                 startActivity(intent);
+                finish();
+            }
+        });
+
+        btnCandidate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),MissionCandidateActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
         //메뉴 끝
-
-
 
     }
 

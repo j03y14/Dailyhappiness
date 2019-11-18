@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".CalendarActivity"></activity>
+        <activity android:name=".AddMissionDialog"></activity>
+        <activity android:name=".CalendarActivity" />
         <activity android:name=".YourReviewActivity" />
         <activity android:name=".WriteReviewActivity" />
         <activity android:name=".SplashActivity">
@@ -30,6 +31,7 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".CreateAccountActivity" />
         <activity android:name=".MyReviewActivity" />
+        <activity android:name=".MissionCandidateActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

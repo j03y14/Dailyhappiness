@@ -59,8 +59,6 @@ public class ReviewListView extends RelativeLayout {
         ratingBar = findViewById(R.id.ratingBar);
         tvContents = findViewById(R.id.tvContents);
 
-
-
     }
 
     public void setID(String id){

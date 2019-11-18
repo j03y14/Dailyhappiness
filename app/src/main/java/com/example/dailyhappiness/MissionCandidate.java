@@ -1,7 +1,7 @@
 package com.example.dailyhappiness;
 
 public class MissionCandidate {
-
+    String user;
     String missionName = "";
     int index = 0;
     int likes = 0;
@@ -12,7 +12,8 @@ public class MissionCandidate {
     boolean dislikeChecked = false;
     boolean duplicateCountChecked = false;
 
-    public MissionCandidate(String missionName, int index, int likes, int dislikes, int duplicateCount, boolean likeChecked, boolean dislikeChecked, boolean duplicateCountChecked) {
+    public MissionCandidate(String user, String missionName, int index, int likes, int dislikes, int duplicateCount, boolean likeChecked, boolean dislikeChecked, boolean duplicateCountChecked) {
+        this.user = user;
         this.missionName = missionName;
         this.index = index;
         this.likes = likes;
@@ -21,6 +22,15 @@ public class MissionCandidate {
         this.likeChecked = likeChecked;
         this.dislikeChecked = dislikeChecked;
         this.duplicateCountChecked = duplicateCountChecked;
+    }
+
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 
     public String getMissionName() {

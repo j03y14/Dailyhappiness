@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvID"
+                android:text="IDIDID"
+                android:textSize="25dp"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvID2"
+                android:textSize="25dp"
+                android:gravity="center"
+                android:text="님의 미션 추천이에요!" />
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvMissionCandidate"
+            android:textSize="25dp"
+            android:textColor="@color/colorAccent"
+            android:text="10년 전 영화 보기"/>
+    </LinearLayout>
+    <ImageView
+        android:layout_gravity="right"
+        android:src="@drawable/like2"
+        android:layout_width="70dp"
+        android:layout_height="70dp"/>
+    <ImageView
+        android:layout_gravity="right"
+        android:src="@drawable/unlike2"
+        android:layout_width="70dp"
+        android:layout_height="70dp"/>
+</LinearLayout>

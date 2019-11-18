@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="activity"
+            type="com.example.dailyhappiness.MissionCandidateActivity" />
+    </data>
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MissionCandidateActivity"
+        android:clipToPadding="false"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFFFF"
+            android:elevation="30dp">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:id="@+id/ivHowMission"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="80dp"
+                android:src="@drawable/imghowmission"
+                android:scaleType="fitCenter"/>
+
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+                android:scaleType="fitCenter"
+                android:id="@+id/iBtnBack"
+                android:background="#00000000"
+                android:layout_marginLeft="10dp"
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/buttonback"/>
+
+
+        </RelativeLayout>
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/imgaddmission"
+            android:background="@color/colorAccent"
+            android:id="@+id/iBtnAddMission"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/tvMission"/>
+
+        <ListView
+            android:id="@+id/lvView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ListView>
+
+    </LinearLayout>
+</layout>

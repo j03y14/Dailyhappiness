@@ -1,11 +1,21 @@
 package com.example.dailyhappiness;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
+import com.example.dailyhappiness.databinding.ActivityMissionCandidateBinding;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -14,15 +24,47 @@ import java.util.ArrayList;
 
 public class MissionCandidateActivity extends AppCompatActivity {
 
+    ActivityMissionCandidateBinding binding;
+
     private RetroClient retroClient;
     private ArrayList<MissionCandidate> missionCandidateArray;
+
+    private MissionCandidateListAdapter missionCandidateListAdapter;
+
+    private AddMissionDialog addMissionDialog;
+    private String mission="";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         retroClient = RetroClient.getInstance(this).createBaseApi();
         missionCandidateArray = new ArrayList<MissionCandidate>();
 
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_mission_candidate);
+        binding.setActivity(this);
 
+
+        // 커스텀 다이얼로그 호출
+        binding.iBtnAddMission.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //파라미터에 리스너 등록
+                addMissionDialog = new AddMissionDialog(MissionCandidateActivity.this);
+                addMissionDialog.show();
+                //insertMissionCandidate(Account.getUserIndex(), mission);
+
+            }
+
+        });
+
+
+    }
+
+    public void setMission(String name){
+        mission = name;
+        Log.d("미션이름받아옴?",mission);
+        insertMissionCandidate(Account.getUserIndex(), mission);
     }
 
 
@@ -39,7 +81,9 @@ public class MissionCandidateActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(int code, JsonObject receivedData) {
+                Log.i("미션들어감?","웅 들어감");
 
+               // missionCandidateListAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -54,7 +98,7 @@ public class MissionCandidateActivity extends AppCompatActivity {
     * count : 여태까지 몇개의 미션 후보를 가져왔는지. 리뷰 리스트랑 똑같음.
     * mode : 1이면 최신순, 0이면 좋아요가 많은 순.
     * */
-    public void getMissionCandidate(String userIndex,int count, int mode){
+    public void getMissionCandidate(String user, String userIndex,int count, int mode){
         retroClient.getMissionCandidate(userIndex,count,mode,new RetroCallback<JsonArray>(){
 
             @Override
@@ -66,7 +110,8 @@ public class MissionCandidateActivity extends AppCompatActivity {
             public void onSuccess(int code, JsonArray receivedData) {
                 for(int i =0; i<receivedData.size(); i++){
                     JsonObject missionCandidate = (JsonObject) receivedData.get(i);
-                    String missiionName = missionCandidate.get("missionName").getAsString(); //: 미션 내용
+                    String user = missionCandidate.get("user").getAsString();//유저 아이디
+                    String missionName = missionCandidate.get("missionName").getAsString(); //: 미션 내용
                     int index = missionCandidate.get("missionCandidateIndex").getAsInt(); //: 미션 후보 인덱스
                     int likes = missionCandidate.get("totalLikes").getAsInt(); //: 좋아요 수
                     int dislikes = missionCandidate.get("totalDislikes").getAsInt();  //: 싫어요 수
@@ -74,8 +119,18 @@ public class MissionCandidateActivity extends AppCompatActivity {
                     boolean likeChecked = missionCandidate.get("userLikes").getAsBoolean();  //: 유저가 좋아요 눌렀는지
                     boolean dislikeChecked =missionCandidate.get("userDislikes").getAsBoolean(); //: 유저가 싫어요 눌렀는지
                     boolean duplicateChecked =missionCandidate.get("userDuplicateCount").getAsBoolean(); //: 유저가 중복 눌렀는지
-                    missionCandidateArray.add(new MissionCandidate(missiionName,index,likes,dislikes,duplicateCount,likeChecked,dislikeChecked,duplicateChecked));
+                    missionCandidateArray.add(new MissionCandidate(user,missionName,index,likes,dislikes,duplicateCount,likeChecked,dislikeChecked,duplicateChecked));
                 }
+
+                missionCandidateArray.isEmpty();
+                missionCandidateListAdapter = new MissionCandidateListAdapter();
+
+                for(int i=0;i<missionCandidateArray.size();i++){
+                    missionCandidateListAdapter.addItem(missionCandidateArray.get(i));
+                }
+
+                binding.lvView.setAdapter(missionCandidateListAdapter);
+
             }
 
             @Override

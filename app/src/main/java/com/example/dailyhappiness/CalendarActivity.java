@@ -61,8 +61,6 @@ public class CalendarActivity extends AppCompatActivity {
         getReviews(Account.getUserIndex(), true,0);
 
 
-
-
 //        binding.calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
 //            @Override
 //            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
@@ -190,7 +188,6 @@ public class CalendarActivity extends AppCompatActivity {
                         new SundayDecorator(),
                         new SaturdayDecorator(),
                         oneDayDecorator);
-
 
 
                 new ApiSimulator(result).executeOnExecutor(Executors.newSingleThreadExecutor());
