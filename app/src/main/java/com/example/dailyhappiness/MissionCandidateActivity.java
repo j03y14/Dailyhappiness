@@ -120,8 +120,7 @@ public class MissionCandidateActivity extends AppCompatActivity {
                     boolean duplicateChecked =missionCandidate.get("userDuplicateCount").getAsBoolean(); //: 유저가 중복 눌렀는지
                     missionCandidateArray.add(new MissionCandidate(user,missionName,index,likes,dislikes,duplicateCount,likeChecked,dislikeChecked,duplicateChecked));
                 }
-
-                missionCandidateArray.isEmpty();
+                
                 missionCandidateListAdapter = new MissionCandidateListAdapter(missionCandidateArray);
                 Log.d("dd", missionCandidateArray.size()+"개");
 
@@ -140,6 +139,7 @@ public class MissionCandidateActivity extends AppCompatActivity {
             }
         });
     };
+
     /*
     * 좋아요나 싫어요, 중복 버튼이 눌렸을 때 호출하는 함수
     * userIndex : 사용자 번호
@@ -167,7 +167,7 @@ public class MissionCandidateActivity extends AppCompatActivity {
 
             }
         });
-    };
+    }
 }
 
 
