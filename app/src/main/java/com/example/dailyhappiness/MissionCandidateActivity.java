@@ -40,11 +40,11 @@ public class MissionCandidateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         retroClient = RetroClient.getInstance(this).createBaseApi();
         missionCandidateArray = new ArrayList<MissionCandidate>();
-
+        getMissionCandidate(Account.userIndex,0,1);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_mission_candidate);
         binding.setActivity(this);
 
-        getMissionCandidate(Account.userIndex,0,1);
+
 
         addMissionDialog = new AddMissionDialog(this);
         // 커스텀 다이얼로그 호출
@@ -115,9 +115,9 @@ public class MissionCandidateActivity extends AppCompatActivity {
                     int likes = missionCandidate.get("totalLikes").getAsInt(); //: 좋아요 수
                     int dislikes = missionCandidate.get("totalDislikes").getAsInt();  //: 싫어요 수
                     int duplicateCount = missionCandidate.get("totalDuplicateCount").getAsInt(); //: 중복체크 수
-                    boolean likeChecked = missionCandidate.get("userLikes").getAsBoolean();  //: 유저가 좋아요 눌렀는지
-                    boolean dislikeChecked =missionCandidate.get("userDislikes").getAsBoolean(); //: 유저가 싫어요 눌렀는지
-                    boolean duplicateChecked =missionCandidate.get("userDuplicateCount").getAsBoolean(); //: 유저가 중복 눌렀는지
+                    int likeChecked = missionCandidate.get("userLikes").getAsInt();  //: 유저가 좋아요 눌렀는지
+                    int dislikeChecked =missionCandidate.get("userDislikes").getAsInt(); //: 유저가 싫어요 눌렀는지
+                    int duplicateChecked =missionCandidate.get("userDuplicateCount").getAsInt(); //: 유저가 중복 눌렀는지
                     missionCandidateArray.add(new MissionCandidate(user,missionName,index,likes,dislikes,duplicateCount,likeChecked,dislikeChecked,duplicateChecked));
                 }
                 

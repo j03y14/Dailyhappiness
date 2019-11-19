@@ -8,11 +8,11 @@ public class MissionCandidate {
     int dislikes =0;
     int duplicateCount =0;
 
-    boolean likeChecked = false;
-    boolean dislikeChecked = false;
-    boolean duplicateCountChecked = false;
+    int likeChecked = 0;
+    int dislikeChecked = 0;
+    int duplicateCountChecked = 0;
 
-    public MissionCandidate(String user, String missionName, int index, int likes, int dislikes, int duplicateCount, boolean likeChecked, boolean dislikeChecked, boolean duplicateCountChecked) {
+    public MissionCandidate(String user, String missionName, int index, int likes, int dislikes, int duplicateCount, int likeChecked, int dislikeChecked, int duplicateCountChecked) {
         this.user = user;
         this.missionName = missionName;
         this.index = index;
@@ -73,27 +73,27 @@ public class MissionCandidate {
         this.duplicateCount = duplicateCount;
     }
 
-    public boolean isLikeChecked() {
+    public int isLikeChecked() {
         return likeChecked;
     }
 
-    public void setLikeChecked(boolean likeChecked) {
+    public void setLikeChecked(int likeChecked) {
         this.likeChecked = likeChecked;
     }
 
-    public boolean isDislikeChecked() {
+    public int isDislikeChecked() {
         return dislikeChecked;
     }
 
-    public void setDislikeChecked(boolean dislikeChecked) {
+    public void setDislikeChecked(int dislikeChecked) {
         this.dislikeChecked = dislikeChecked;
     }
 
-    public boolean isDuplicateCountChecked() {
+    public int isDuplicateCountChecked() {
         return duplicateCountChecked;
     }
 
-    public void setDuplicateCountChecked(boolean duplicateCountChecked) {
+    public void setDuplicateCountChecked(int duplicateCountChecked) {
         this.duplicateCountChecked = duplicateCountChecked;
     }
 }
