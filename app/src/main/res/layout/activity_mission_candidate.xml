@@ -52,10 +52,6 @@
             android:background="@color/colorAccent"
             android:id="@+id/iBtnAddMission"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/tvMission"/>
 
         <ListView
             android:id="@+id/lvView"

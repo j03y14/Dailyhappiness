@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 public class MissionCandidateListview extends LinearLayout {
 
-    TextView tvID;
-    TextView tvMissionCandidate;
+    private TextView tvID;
+    private TextView tvMissionCandidate;
 
     public MissionCandidateListview(Context context) {
         super(context);
@@ -35,8 +35,8 @@ public class MissionCandidateListview extends LinearLayout {
         tvID.setText(id);
     }
 
-    public void setMessage(String message){
-        tvMissionCandidate.setText(message);
+    public void setMission(String mission){
+        tvMissionCandidate.setText(mission);
     }
 
 

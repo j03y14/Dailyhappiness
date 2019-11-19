@@ -1,7 +1,7 @@
 package com.example.dailyhappiness;
 
 public class MissionCandidate {
-    String user;
+    String user ="";
     String missionName = "";
     int index = 0;
     int likes = 0;

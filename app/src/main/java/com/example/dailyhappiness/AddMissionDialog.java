@@ -22,12 +22,10 @@ public class AddMissionDialog extends Dialog{
 
     private Button btnOk;
     private Button btnCancel;
-    EditText edtMission;
+    private EditText edtMission;
 
     private Context context = null;
     private String mission = "";
-    private View.OnClickListener okListener;
-    private View.OnClickListener cancelListener;
 
     private RetroClient retroClient;
 
@@ -55,9 +53,6 @@ public class AddMissionDialog extends Dialog{
         btnCancel=findViewById(R.id.btnCancel);
         edtMission=findViewById(R.id.edtMission);
 
-        //클릭 리스너 셋팅
-       // btnOk.setOnClickListener(okListener);
-        //btnCancel.setOnClickListener(cancelListener);
 
         //클릭 리스너 셋팅
         btnOk.setOnClickListener(new View.OnClickListener() {
@@ -65,10 +60,8 @@ public class AddMissionDialog extends Dialog{
             public void onClick(View v) {
 
                 //((MissionCandidateActivity)context).setMission(mission);  //새로 정의 안 하고 미션캔디데잇액티비티의 셋미션 메소드 씀
-
-                EditText missionName = findViewById(R.id.edtMission);
-                mission = missionName.getText().toString();
-                setMission(mission);  //새로 정의 안 하고 미션캔디데잇액티비티의 셋미션 메소드 씀
+                mission = edtMission.getText().toString();
+                setMission(mission);
 
                 dismiss();
             }
@@ -81,22 +74,16 @@ public class AddMissionDialog extends Dialog{
         });
     }
 
-    public String getMission(){
-        return mission;
-    }
 
     //생성자 생성
     public AddMissionDialog(@NonNull Context context) {
         super(context);
-       //,View.OnClickListener okListener, View.OnClickListener cancelListene
-        this.okListener = okListener;
-        this.cancelListener = cancelListener;
-        //this.context = context;
+
     }
 
     public void setMission(String name){
         mission = name;
-        Log.d("미션이름받아옴?",Account.getUserIndex()+""+mission);
+        //Log.d("미션이름받아옴?",Account.getUserIndex()+""+mission);
 
         insertMissionCandidate(Account.getUserIndex(), mission);
     }

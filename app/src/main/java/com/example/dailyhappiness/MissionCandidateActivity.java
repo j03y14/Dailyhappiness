@@ -1,6 +1,7 @@
 package com.example.dailyhappiness;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.DisplayMetrics;
@@ -32,7 +33,6 @@ public class MissionCandidateActivity extends AppCompatActivity {
     private MissionCandidateListAdapter missionCandidateListAdapter;
 
     private AddMissionDialog addMissionDialog;
-    private String mission="";
 
 
     @Override
@@ -44,9 +44,9 @@ public class MissionCandidateActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_mission_candidate);
         binding.setActivity(this);
 
+        getMissionCandidate(Account.userIndex,0,1);
 
         addMissionDialog = new AddMissionDialog(this);
-
         // 커스텀 다이얼로그 호출
         binding.iBtnAddMission.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,25 +80,28 @@ public class MissionCandidateActivity extends AppCompatActivity {
 
 
         });
-        mission = addMissionDialog.getMission();
-        Log.i("ㅎㅎ",mission);
 
-
-
+        binding.iBtnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
-
-
 
     /*
     * userIndex : 사용자 번호
     * count : 여태까지 몇개의 미션 후보를 가져왔는지. 리뷰 리스트랑 똑같음.
     * mode : 1이면 최신순, 0이면 좋아요가 많은 순.
     * */
-    public void getMissionCandidate(String user, String userIndex,int count, int mode){
+    public void getMissionCandidate(String userIndex,int count, int mode){
         retroClient.getMissionCandidate(userIndex,count,mode,new RetroCallback<JsonArray>(){
 
             @Override
             public void onError(Throwable t) {
+                Log.i("에드리뷰리스트","확인3");
 
             }
 
@@ -119,19 +122,21 @@ public class MissionCandidateActivity extends AppCompatActivity {
                 }
 
                 missionCandidateArray.isEmpty();
-                missionCandidateListAdapter = new MissionCandidateListAdapter();
+                missionCandidateListAdapter = new MissionCandidateListAdapter(missionCandidateArray);
+                Log.d("dd", missionCandidateArray.size()+"개");
 
-                for(int i=0;i<missionCandidateArray.size();i++){
-                    missionCandidateListAdapter.addItem(missionCandidateArray.get(i));
-                }
+//                for(int i=0;i<missionCandidateArray.size();i++){
+//                    missionCandidateListAdapter.addItem(missionCandidateArray.get(i));
+//                }
 
+                Log.i("에드리뷰리스트","확인");
                 binding.lvView.setAdapter(missionCandidateListAdapter);
 
             }
 
             @Override
             public void onFailure(int code) {
-
+                Log.i("에드리뷰리스트","확인2");
             }
         });
     };
@@ -163,8 +168,6 @@ public class MissionCandidateActivity extends AppCompatActivity {
             }
         });
     };
-
-
 }
 
 
