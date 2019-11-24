@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -33,21 +34,19 @@ public class AddMissionDialog extends Dialog{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //다이얼로그 밖의 화면은 흐리게 만들어줌
-        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-        layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-        layoutParams.dimAmount = 0.8f;
-        getWindow().setAttributes(layoutParams);
-
         retroClient = RetroClient.getInstance(context).createBaseApi();
 
-        //사이즈조절
-        WindowManager.LayoutParams wm = new WindowManager.LayoutParams();
-        wm.copyFrom(getWindow().getAttributes());
-        wm.width = WindowManager.LayoutParams.MATCH_PARENT;
-        getWindow().setAttributes(wm);
-
         setContentView(R.layout.activity_add_mission_dialog);
+
+        // 다이얼로그 크기 조절
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(this.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        lp.dimAmount = 0.8f;
+        Window window = this.getWindow();
+        window.setAttributes(lp);
 
         btnOk=findViewById(R.id.btnOk);
         btnCancel=findViewById(R.id.btnCancel);
@@ -78,7 +77,6 @@ public class AddMissionDialog extends Dialog{
     //생성자 생성
     public AddMissionDialog(@NonNull Context context) {
         super(context);
-
     }
 
     public void setMission(String name){
@@ -103,7 +101,7 @@ public class AddMissionDialog extends Dialog{
             public void onSuccess(int code, JsonObject receivedData) {
                 Log.i("미션들어감?","웅 들어감");
 
-                // missionCandidateListAdapter.notifyDataSetChanged();
+                //((MissionCandidateActivity)context).missionCandidateListAdapter.notifyDataSetChanged();
             }
 
             @Override

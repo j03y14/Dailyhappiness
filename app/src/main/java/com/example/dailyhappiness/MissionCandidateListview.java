@@ -11,6 +11,9 @@ public class MissionCandidateListview extends LinearLayout {
 
     private TextView tvID;
     private TextView tvMissionCandidate;
+    private TextView tvLike;
+    private TextView tvDislike;
+    private TextView tvDuplicate;
 
     public MissionCandidateListview(Context context) {
         super(context);
@@ -26,9 +29,11 @@ public class MissionCandidateListview extends LinearLayout {
         LayoutInflater inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.mission_candidate_listview,this,true);
 
-        tvID=findViewById(R.id.tvID);
+        tvID = findViewById(R.id.tvID);
         tvMissionCandidate = findViewById(R.id.tvMissionCandidate);
-
+        tvLike = findViewById(R.id.tvLike);
+        tvDislike = findViewById(R.id.tvDislike);
+        tvDuplicate = findViewById(R.id.tvDuplicate);
     }
 
     public void setID(String id){
@@ -39,5 +44,16 @@ public class MissionCandidateListview extends LinearLayout {
         tvMissionCandidate.setText(mission);
     }
 
+    public  void setLikeCount(int count){
+        tvLike.setText(count+"");
+    }
+
+    public  void setDislikeCount(int count){
+        tvDislike.setText(count+"");
+    }
+
+    public  void setDuplicateCount(int count){
+        tvDuplicate.setText(count+"");
+    }
 
 }

@@ -8,6 +8,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:orientation="vertical">
         <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -19,6 +20,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tvID"
                 android:text="IDIDID"
+                android:textColor="@color/colorAccent"
                 android:textSize="25dp"
                 android:textStyle="bold"/>
             <TextView
@@ -27,24 +29,77 @@
                 android:id="@+id/tvID2"
                 android:textSize="25dp"
                 android:gravity="center"
+                android:textColor="@color/colorAccent"
                 android:text="님의 미션 추천이에요!" />
         </LinearLayout>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:id="@+id/tvMissionCandidate"
             android:textSize="25dp"
-            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
             android:text="10년 전 영화 보기"/>
     </LinearLayout>
-    <ImageView
-        android:layout_gravity="right"
-        android:src="@drawable/like2"
-        android:layout_width="55dp"
-        android:layout_height="55dp"/>
-    <ImageView
-        android:layout_gravity="right"
-        android:src="@drawable/unlike2"
-        android:layout_width="55dp"
-        android:layout_height="55dp"/>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:id="@+id/iBtnLike"
+            android:layout_gravity="right"
+            android:src="@drawable/imgemptylike"
+            android:scaleType="fitCenter"
+            android:background="#00000000"
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+        <ImageButton
+            android:id="@+id/iBtnDislike"
+            android:layout_gravity="right"
+            android:src="@drawable/imgemptydislike"
+            android:layout_toRightOf="@+id/iBtnLike"
+            android:scaleType="fitCenter"
+            android:background="#00000000"
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+        <ImageButton
+            android:id="@+id/iBtnDuplicate"
+            android:layout_gravity="right"
+            android:src="@drawable/imgemptyduplicate"
+            android:layout_toRightOf="@+id/iBtnDislike"
+            android:scaleType="fitCenter"
+            android:background="#00000000"
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvLike"
+            android:layout_below="@+id/iBtnLike"
+            android:layout_alignLeft="@id/iBtnLike"
+            android:layout_alignRight="@id/iBtnLike"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvDislike"
+            android:layout_below="@+id/iBtnDislike"
+            android:layout_alignLeft="@id/iBtnDislike"
+            android:layout_alignRight="@id/iBtnDislike"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvDuplicate"
+            android:layout_below="@id/iBtnDuplicate"
+            android:layout_alignLeft="@id/iBtnDuplicate"
+            android:layout_alignRight="@id/iBtnDuplicate"
+            android:gravity="center"/>
+    </RelativeLayout>
+
+
 </LinearLayout>
