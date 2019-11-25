@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnYourReview;
     Button btnCalendar;
     Button btnCandidate;
+    Button btnKingOfKings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         btnYourReview = findViewById(R.id.btnYourReview);
         btnCalendar = findViewById(R.id.btnCalendar);
         btnCandidate = findViewById(R.id.btnCandidate);
+        btnKingOfKings = findViewById(R.id.btnKingOfKings);
         //메뉴끝
 
         binding.tvDate.setText(month+" / "+date);
@@ -187,6 +189,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),MissionCandidateActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        btnKingOfKings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),KingListActivity.class);
                 startActivity(intent);
                 finish();
             }

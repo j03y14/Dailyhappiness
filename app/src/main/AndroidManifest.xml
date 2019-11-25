@@ -16,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AddMissionDialog"></activity>
+        <activity android:name=".KingListView"></activity>
+        <activity android:name=".KingListActivity" />
+        <activity android:name=".AddMissionDialog" />
         <activity android:name=".CalendarActivity" />
         <activity android:name=".YourReviewActivity" />
         <activity android:name=".WriteReviewActivity" />

@@ -87,6 +87,14 @@
             android:layout_height="wrap_content"
             android:text="이런 미션 어때요"/>
 
+        <Button
+            android:id="@+id/btnKingOfKings"
+            android:paddingRight="165dp"
+            android:textSize="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="왕중왕"/>
+
         <TextView
             android:clickable="true"
             android:paddingLeft="10dp"
