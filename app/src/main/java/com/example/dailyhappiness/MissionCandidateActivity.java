@@ -25,6 +25,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MissionCandidateActivity extends AppCompatActivity {
+    public static Context context;
 
     ActivityMissionCandidateBinding binding;
 
@@ -39,6 +40,7 @@ public class MissionCandidateActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
         binding = DataBindingUtil.setContentView(this,R.layout.activity_mission_candidate);
         binding.setActivity(this);
         retroClient = RetroClient.getInstance(this).createBaseApi();
@@ -46,7 +48,6 @@ public class MissionCandidateActivity extends AppCompatActivity {
         getMissionCandidate(Account.userIndex,0,1);
 
         addMissionDialog = new AddMissionDialog(this);
-
 
         // 커스텀 다이얼로그 호출
         binding.iBtnAddMission.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +93,7 @@ public class MissionCandidateActivity extends AppCompatActivity {
         });
     }
 
+
     /*
     * userIndex : 사용자 번호
     * count : 여태까지 몇개의 미션 후보를 가져왔는지. 리뷰 리스트랑 똑같음.
@@ -108,6 +110,7 @@ public class MissionCandidateActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(int code, JsonArray receivedData) {
+                missionCandidateArray.clear();
                 for(int i =0; i<receivedData.size(); i++){
                     JsonObject missionCandidate = (JsonObject) receivedData.get(i);
                     String user = missionCandidate.get("user").getAsString();//유저 아이디
@@ -130,9 +133,6 @@ public class MissionCandidateActivity extends AppCompatActivity {
 
                 Log.i("에드리뷰리스트","확인");
                 binding.lvView.setAdapter(missionCandidateListAdapter);
-
-
-
             }
 
             @Override

@@ -57,11 +57,9 @@ public class AddMissionDialog extends Dialog{
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //((MissionCandidateActivity)context).setMission(mission);  //새로 정의 안 하고 미션캔디데잇액티비티의 셋미션 메소드 씀
                 mission = edtMission.getText().toString();
                 setMission(mission);
-
+                ((MissionCandidateActivity)MissionCandidateActivity.context).getMissionCandidate(Account.userIndex,0,1);
                 dismiss();
             }
         });
