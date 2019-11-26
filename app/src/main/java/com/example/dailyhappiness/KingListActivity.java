@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.dailyhappiness.databinding.ActivityKingListBinding;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 
@@ -17,11 +19,15 @@ public class KingListActivity extends AppCompatActivity {
     private KingListAdapter kingListAdapter;
     private ArrayList<KingList> kingArray;
 
+    private RetroClient retroClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_king_list);
         binding.setActivity(this);
+
+        retroClient = RetroClient.getInstance(this).createBaseApi();
 
         binding.iBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,16 +38,46 @@ public class KingListActivity extends AppCompatActivity {
             }
         });
 
+        getMissionKing();
 
-        // onSuccess 에 들어갈 부분
-        kingListAdapter = new KingListAdapter();
 
-        for(int i=0;i<10;i++){
-//            kingListAdapter.addItem(kingArray.get(i));
-        }
 
-        binding.lvMission.setAdapter(kingListAdapter);
-        binding.lvCandidate.setAdapter(kingListAdapter);
+
         // onSuccess
     }
+
+    public void getMissionKing(){
+        kingListAdapter = new KingListAdapter();
+        retroClient.getMissionKing(new RetroCallback<JsonArray>() {
+            @Override
+            public void onError(Throwable t) {
+
+            }
+
+            @Override
+            public void onSuccess(int code, JsonArray receivedData) {
+
+                for(int j = 0; j<receivedData.size(); j++){
+                    JsonObject data = (JsonObject)receivedData.get(j);
+                    int rank = data.get("ranking").getAsInt();
+                    String user = data.get("id").getAsString();
+                    int userIndex = data.get("userIndex").getAsInt();
+                    int count = data.get("number").getAsInt();
+                    String emblem = data.get("emblem").getAsString();
+                    kingListAdapter.addItem(new KingList(rank,user,userIndex,count,emblem));
+                }
+
+
+
+                binding.lvMission.setAdapter(kingListAdapter);
+                binding.lvCandidate.setAdapter(kingListAdapter);
+            }
+
+            @Override
+            public void onFailure(int code) {
+
+            }
+        });
+    }
+
 }

@@ -67,4 +67,8 @@ public interface RetroBaseApiService {
     @FormUrlEncoded
     @POST("/missionCandidate/increment")
     Call<JsonObject> evaluateMissionCandidate(@Field("userIndex") String userIndex, @Field("missionCandidateIndex") int missionCandidateIndex, @Field("which") int which,@Field("value") int value);
+
+
+    @POST("/missionKing/get")
+    Call<JsonArray> getMissionKing();
 }

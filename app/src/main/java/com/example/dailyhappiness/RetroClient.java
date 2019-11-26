@@ -244,6 +244,23 @@ public class RetroClient {
             }
         } );
     }
+    public void getMissionKing(final RetroCallback callback){
+        apiService.getMissionKing().enqueue(new Callback<JsonArray>(){
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+                callback.onError(t);
+            }
+        } );
+    }
 
 
     public void getMissionCandidate(String userIndex, int count, int mode, final RetroCallback callback){

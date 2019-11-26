@@ -40,7 +40,7 @@ public class KingListView extends RelativeLayout {
     }
 
     public void setRank(int rank){
-        tvRank.setText(rank);
+        tvRank.setText(rank+"");
     }
 
 //    public void setImageID(int resid){
@@ -52,7 +52,7 @@ public class KingListView extends RelativeLayout {
     }
 
     public void setCount(int count){
-        tvCount.setText(count);
+        tvCount.setText(count+"");
     }
 
 
