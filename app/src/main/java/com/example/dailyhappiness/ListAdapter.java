@@ -1,9 +1,11 @@
 package com.example.dailyhappiness;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -44,8 +46,23 @@ public class ListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) { //convertView가 한번 만들어지면 다시 안 만들어도 되기때문에 원래 컨벌트가 널인지 아닌지 먼저 확인을 해봐야 함
+
+        final Context context = parent.getContext();
         ReviewListView view=new ReviewListView(parent.getContext());
+
+        if (view==null) {
+            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = (ReviewListView) inflater.inflate((R.layout.activity_review_list_view),parent,false);
+        }
+
+//        if (convertView==null) {
+//            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//            convertView = inflater.inflate((R.layout.activity_review_list_view),parent,false);
+//        }
+
+
         Review item=items.get(position);
+
         ivPhoto = view.findViewById(R.id.ivPhoto);
 
         view.setID(item.getUser());
@@ -77,12 +94,7 @@ public class ListAdapter extends BaseAdapter {
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setDoInput(true); // 서버로 부터 응답 수신
                     conn.connect();
-                    Log.d("이미지파일이 뭐냐" , imageFile);
-                    //File file = new File(imageFile);
-                    //Uri photoUri = Uri.fromFile(file);
 
-
-                    //InputStream is = new ByteArrayInputStream(photoUri.getBytes(StandardCharsets.UTF_8)); // InputStream 값 가져오기
                     InputStream is = conn.getInputStream();
                     bitmapPhoto = BitmapFactory.decodeStream(is); // Bitmap으로 변환
 

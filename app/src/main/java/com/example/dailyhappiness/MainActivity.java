@@ -7,8 +7,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,7 +16,6 @@ import android.os.Message;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,8 +27,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -74,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
         user = Account.getInstance();
 
         super.onCreate(savedInstanceState);
-        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //화면 위에 액션바 없애기
 
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         binding.setActivity(this);

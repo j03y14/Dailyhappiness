@@ -42,13 +42,28 @@
                 android:layout_alignParentLeft="true"
                 android:src="@drawable/buttonback"/>
 
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+                android:scaleType="fitCenter"
+                android:id="@+id/iBtnUpdate"
+                android:background="#00000000"
+                android:src="@drawable/buttonupdate"
+                android:layout_toRightOf="@id/ivYourReview"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="80dp"/>
 
         </RelativeLayout>
 
         <ListView
             android:id="@+id/lvView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></ListView>
+            android:layout_height="650dp"></ListView>
 
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:layout_gravity="bottom"/>
     </LinearLayout>
 </layout>
