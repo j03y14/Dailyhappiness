@@ -21,6 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dailyhappiness.databinding.ActivityMainBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.JsonObject;
 
 import java.text.SimpleDateFormat;
@@ -72,6 +75,22 @@ public class MainActivity extends AppCompatActivity {
 
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         binding.setActivity(this);
+        /*
+        푸시 알림 동의 설정 할 때 쓰는 코드
+
+        FirebaseMessaging.getInstance().subscribeToTopic("agree")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+
+                    }
+                });
+
+        //푸시 알림 거절 설정 할 때 쓰는 코드
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("weather");
+
+        */
 
         //메뉴
         drawer = findViewById(R.id.drawer);
