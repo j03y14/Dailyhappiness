@@ -59,12 +59,22 @@ public class KingListActivity extends AppCompatActivity {
 
                 for(int j = 0; j<receivedData.size(); j++){
                     JsonObject data = (JsonObject)receivedData.get(j);
+                    //which가 1이면 미션왕 0이면 추천왕
+                    int which = data.get("which").getAsInt();
                     int rank = data.get("ranking").getAsInt();
                     String user = data.get("id").getAsString();
                     int userIndex = data.get("userIndex").getAsInt();
                     int count = data.get("number").getAsInt();
                     String emblem = data.get("emblem").getAsString();
-                    kingListAdapter.addItem(new KingList(rank,user,userIndex,count,emblem));
+                    if(which ==1){
+                        //미션왕 리스트에 넣기
+                        kingListAdapter.addItem(new KingList(rank,user,userIndex,count,emblem));
+                    }else if(which ==0){
+                        //미션왕 리스트에 넣기
+                    }
+                    
+
+
                 }
 
 
