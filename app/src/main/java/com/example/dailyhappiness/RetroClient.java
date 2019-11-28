@@ -6,13 +6,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 
-import org.json.JSONObject;
-
-import java.net.URL;
-
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -68,6 +63,23 @@ public class RetroClient {
 
     public void createAccount(String id, String pw, String gender, String age, final RetroCallback callback){
         apiService.createAccount(id, pw, gender ,age).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onError(t);
+            }
+        });
+    }
+    public void idCheck(String id, final RetroCallback callback){
+        apiService.idCheck(id).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {

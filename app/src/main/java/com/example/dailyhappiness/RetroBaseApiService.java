@@ -23,6 +23,10 @@ public interface RetroBaseApiService {
     Call<JsonObject> createAccount(@Field("id") String id, @Field("password") String password, @Field("gender") String gender, @Field("age") String age);
 
     @FormUrlEncoded
+    @POST("/register/idCheck")
+    Call<JsonObject> idCheck(@Field("id") String id);
+
+    @FormUrlEncoded
     @POST("/login/")
     Call<JsonObject> login(@Field("id") String id, @Field("password") String password);
 

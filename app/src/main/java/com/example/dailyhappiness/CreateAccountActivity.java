@@ -114,4 +114,34 @@ public class CreateAccountActivity extends AppCompatActivity {
             }
         });
     }
+
+    /*
+    * id를 넣어주면 id가 중복인지 아닌지 확인한다.
+    * isDuplicate가 true이면 중복이고 False이면 중복이 아니다.
+    * */
+    public void idCheck(final String id){
+        retroClient.idCheck(id, new RetroCallback<JsonObject>(){
+            @Override
+            public void onError(Throwable t) {
+
+            }
+
+            @Override
+            public void onSuccess(int code, JsonObject receivedData) {
+                Boolean isDuplicate = receivedData.get("duplicate").getAsBoolean();
+
+                if(isDuplicate){
+                    //중복이면
+                }else{
+                    //중복이 아니면
+                }
+
+            }
+
+            @Override
+            public void onFailure(int code) {
+
+            }
+        });
+    }
 }
