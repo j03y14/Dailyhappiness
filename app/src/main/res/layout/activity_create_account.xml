@@ -18,14 +18,11 @@
             android:id="@+id/Id"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
+            android:layout_marginStart="25dp"
             android:layout_marginTop="70dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginRight="32dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@+id/Passward"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnDuplicate"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -48,17 +45,16 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right" />
+
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/Passward"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
+            android:layout_marginStart="25dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginRight="32dp"
+            android:layout_marginEnd="86dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@+id/PasswardRepeat"
             app:layout_constraintEnd_toEndOf="parent"
@@ -90,11 +86,9 @@
             android:id="@+id/PasswardRepeat"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
+            android:layout_marginStart="25dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginRight="32dp"
+            android:layout_marginEnd="86dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@+id/Gender"
             app:layout_constraintEnd_toEndOf="parent"
@@ -126,15 +120,12 @@
             android:id="@+id/Gender"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
+            android:layout_marginStart="25dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginRight="32dp"
+            android:layout_marginEnd="86dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@+id/Age"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.51"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/PasswardRepeat">
 
@@ -170,6 +161,7 @@
                     android:layout_height="wrap_content"
                     android:text="남" />
             </RadioGroup>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -180,11 +172,9 @@
             android:id="@+id/Age"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
+            android:layout_marginStart="25dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginRight="32dp"
+            android:layout_marginEnd="86dp"
             android:layout_marginBottom="43dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@+id/btnConfirm"
@@ -223,11 +213,29 @@
             android:layout_marginRight="162dp"
             android:layout_marginBottom="184dp"
             android:text="확인"
+            android:background="@color/colorAccent"
+            android:textColor="#FFFFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Age" />
+
+        <Button
+            android:id="@+id/btnDuplicate"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="73dp"
+            android:layout_marginEnd="26dp"
+            android:layout_marginBottom="29dp"
+            android:background="@color/colorAccent"
+
+            android:text="중복\n확인"
+            android:textColor="#FFFFFFFF"
+            app:layout_constraintBottom_toTopOf="@+id/Passward"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/Id"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
