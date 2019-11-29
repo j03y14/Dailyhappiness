@@ -5,6 +5,7 @@ import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.dailyhappiness.databinding.ActivityKingListBinding;
@@ -17,6 +18,8 @@ public class KingListActivity extends AppCompatActivity {
     ActivityKingListBinding binding;
 
     private KingListAdapter kingListAdapter;
+    private KingListAdapter kingListAdapter2;
+
     private ArrayList<KingList> kingArray;
 
     private RetroClient retroClient;
@@ -42,12 +45,12 @@ public class KingListActivity extends AppCompatActivity {
 
 
 
-
-        // onSuccess
     }
 
     public void getMissionKing(){
         kingListAdapter = new KingListAdapter();
+        kingListAdapter2 = new KingListAdapter();
+
         retroClient.getMissionKing(new RetroCallback<JsonArray>() {
             @Override
             public void onError(Throwable t) {
@@ -66,21 +69,22 @@ public class KingListActivity extends AppCompatActivity {
                     int userIndex = data.get("userIndex").getAsInt();
                     int count = data.get("number").getAsInt();
                     String emblem = data.get("emblem").getAsString();
-                    if(which ==1){
+                    if(which == 1){
                         //미션왕 리스트에 넣기
                         kingListAdapter.addItem(new KingList(rank,user,userIndex,count,emblem));
-                    }else if(which ==0){
-                        //미션왕 리스트에 넣기
+                        Log.i("미션왕","미션왕");
+                    }else if(which == 0){
+                        //추천왕 리스트에 넣기
+                        kingListAdapter2.addItem(new KingList(rank,user,userIndex,count,emblem));
+                        Log.i("추천왕","추천왕");
                     }
                     
 
 
                 }
 
-
-
                 binding.lvMission.setAdapter(kingListAdapter);
-                binding.lvCandidate.setAdapter(kingListAdapter);
+                binding.lvCandidate.setAdapter(kingListAdapter2);
             }
 
             @Override
