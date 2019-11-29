@@ -11,6 +11,15 @@ public class Account {
     static String gender = "";
     static String age = "";
     static String userIndex = "";
+    static int isFirst = 1;
+
+    public static int getIsFirst() {
+        return isFirst;
+    }
+
+    public static void setIsFirst(int isFirst) {
+        Account.isFirst = isFirst;
+    }
 
     private static Account instance = null;
 
@@ -63,12 +72,13 @@ public class Account {
         return instance;
     }
 
-    public static void Account(String id, String pw, String gender, String age,String name, String time_affordable, String expense_affordable) {
+    public static void Account(String id, String pw, String gender, String age,String name, String time_affordable, String expense_affordable,int isFirst) {
         Log.d("account 생성자", id);
         setAge(age);
         setGender(gender);
         setId(id);
         setPw(pw);
+        setIsFirst(isFirst);
     }
 
 }
