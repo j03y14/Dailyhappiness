@@ -5,17 +5,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 
 import com.example.dailyhappiness.databinding.ActivityMyPageBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.gson.JsonObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,7 +32,10 @@ public class MyPageActivity extends AppCompatActivity {
     private Thread thread;
     private Bitmap bitmapProfile;
     private String clover = "";
-    private boolean pushSate = true; //푸시 알람 상태 받아오기
+    private int pushState; //푸시 알람 상태 받아오기
+    private RetroClient retroClient;
+    private int time;
+    private int cost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,19 +44,25 @@ public class MyPageActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_my_page);
         binding.setActivity(this);
 
-        //clover = 사진주소
+        retroClient = RetroClient.getInstance(this).createBaseApi();
+
+        pushState = Account.getPush_notification();
+        time = Account.getTime_affordable();
+        cost = Account.getExpense_affordable();
+        clover = Account.getEmblem();
+        Log.e("agree", clover);
         getProfile(clover);  //프로필 클로버 가져오기
 
         binding.tvId.setText(Account.getId());
 
-        binding.tvMissionCount.setText("10");  //수행한 미션 개수
+        binding.tvMissionCount.setText(Account.getMissionCount() + "개");  //수행한 미션 개수
 
-        binding.tvTime.setText("30"+" 분");    //설정한 시간
+        binding.tvTime.setText(Account.getTime_affordable()+" 분");    //설정한 시간
 
-        binding.tvCost.setText("10000"+" 원"); //설정한 비용
+        binding.tvCost.setText(Account.getExpense_affordable()+" 원"); //설정한 비용
 
         //푸시 알람
-        if(pushSate){
+        if(pushState==1){
             binding.switchPush.setChecked(true);
         }else {
             binding.switchPush.setChecked(false);
@@ -64,14 +76,16 @@ public class MyPageActivity extends AppCompatActivity {
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-
+                                    Log.e("agree", "동의함");
 
                                 }
                             });
+                    pushState = 1;
 
                 }else {
                     //푸시 알림 거절 설정 할 때 쓰는 코드
                     FirebaseMessaging.getInstance().unsubscribeFromTopic("agree");
+                    pushState = 0;
                 }
             }
         });
@@ -81,7 +95,7 @@ public class MyPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int length = binding.tvTime.getText().toString().length();
-                int time = Integer.parseInt(binding.tvTime.getText().toString().substring(0,length-2));
+                time = Integer.parseInt(binding.tvTime.getText().toString().substring(0,length-2));
                 time -= 10;
                 binding.tvTime.setText(time+" 분");
             }
@@ -91,7 +105,7 @@ public class MyPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int length = binding.tvTime.getText().toString().length();
-                int time = Integer.parseInt(binding.tvTime.getText().toString().substring(0,length-2));
+                time = Integer.parseInt(binding.tvTime.getText().toString().substring(0,length-2));
                 time += 10;
                 binding.tvTime.setText(time+" 분");
             }
@@ -102,7 +116,7 @@ public class MyPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int length = binding.tvCost.getText().toString().length();
-                int cost = Integer.parseInt(binding.tvCost.getText().toString().substring(0,length-2));
+                cost = Integer.parseInt(binding.tvCost.getText().toString().substring(0,length-2));
                 cost -= 1000;
                 binding.tvCost.setText(cost+" 원");
             }
@@ -112,7 +126,7 @@ public class MyPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int length = binding.tvCost.getText().toString().length();
-                int cost = Integer.parseInt(binding.tvCost.getText().toString().substring(0,length-2));
+                cost = Integer.parseInt(binding.tvCost.getText().toString().substring(0,length-2));
                 cost += 1000;
                 binding.tvCost.setText(cost+" 원");
             }
@@ -121,9 +135,8 @@ public class MyPageActivity extends AppCompatActivity {
         binding.iBtnBack.setOnClickListener(new View.OnClickListener() { //뒤로가기 버튼 누르면 현재 상태 저장
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(intent);
-                finish();
+                mypage(Account.getUserIndex(),time,cost,pushState);
+
             }
         });
 
@@ -171,5 +184,63 @@ public class MyPageActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public void mypage(final String userIndex,int time,int cost,int pushState){
+        retroClient.mypage(userIndex,time,cost,pushState, new RetroCallback<JsonObject>(){
+            @Override
+            public void onError(Throwable t) {
+
+
+            }
+
+            @Override
+            public void onSuccess(int code, JsonObject receivedData) {
+                //저장하고 다시 로그인
+                login(Account.getId(),Account.getPw());
+            }
+
+            @Override
+            public void onFailure(int code) {
+
+
+            }
+        });
+    }
+    public void login(final String id, final String pw){
+        retroClient.login(id, pw, new RetroCallback<JsonObject>(){
+
+            @Override
+            public void onError(Throwable t) {
+                Log.e("error", t.toString());
+            }
+
+            @Override
+            public void onSuccess(int code, JsonObject receivedData) {
+                Account.setId(receivedData.get("id").getAsString());
+                Account.setPw(receivedData.get("password").getAsString());
+                Account.setAge(receivedData.get("age").getAsString());
+                Account.setGender(receivedData.get("gender").getAsString());
+                Account.setUserIndex(receivedData.get("userIndex").getAsString());
+                Account.setEmblem("https://dailyhappiness.xyz/static/img/emblem/grade"+receivedData.get("grade").getAsString());
+                Account.setPush_notification(receivedData.get("push_notification").getAsInt());
+                Account.setMissionCount(receivedData.get("missionCount").getAsInt());
+                //isFirst가 1이면 처음 접속하는 유저. 0이면 접속 한 적이 있는 유저
+                Account.setIsFirst(receivedData.get("isFirst").getAsInt());
+                Account.setExpense_affordable(receivedData.get("expense_affordable").getAsInt());
+                Account.setTime_affordable(receivedData.get("time_affordable").getAsInt());
+                Mission.setCount(receivedData.get("count").getAsInt());
+
+                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+
+            @Override
+            public void onFailure(int code)
+            {
+                Log.e("error", "오류가 생겼습니다.");
+            }
+        });
     }
 }

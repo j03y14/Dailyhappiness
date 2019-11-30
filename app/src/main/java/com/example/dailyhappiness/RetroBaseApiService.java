@@ -75,4 +75,8 @@ public interface RetroBaseApiService {
 
     @POST("/missionKing/get")
     Call<JsonArray> getMissionKing();
+
+    @FormUrlEncoded
+    @POST("/register/mypage")
+    Call<JsonObject> mypage(@Field("userIndex") String userIndex, @Field("time_affordable") int time_affordable, @Field("expense_affordable") int expense_affordable, @Field("push_notification") int push_notification);
 }
