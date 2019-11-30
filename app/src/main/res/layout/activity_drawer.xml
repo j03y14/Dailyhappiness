@@ -54,6 +54,13 @@
         android:layout_weight="7"
         android:gravity="center|top"
         android:orientation="vertical">
+        <Button
+            android:id="@+id/btnMyPage"
+            android:gravity="left"
+            android:textSize="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="마이 페이지"/>
 
         <Button
             android:id="@+id/btnMyReview"

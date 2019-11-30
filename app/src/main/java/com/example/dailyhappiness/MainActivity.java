@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     //DrawerActivity에서 가져다 씀
     View drawer;
     TextView tvLogout;
+    Button btnMyPage;
     Button btnMyReview;
     Button btnYourReview;
     Button btnCalendar;
@@ -75,26 +76,12 @@ public class MainActivity extends AppCompatActivity {
 
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         binding.setActivity(this);
-        /*
-        푸시 알림 동의 설정 할 때 쓰는 코드
 
-        FirebaseMessaging.getInstance().subscribeToTopic("agree")
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-
-
-                    }
-                });
-
-        //푸시 알림 거절 설정 할 때 쓰는 코드
-        FirebaseMessaging.getInstance().unsubscribeFromTopic("weather");
-
-        */
 
         //메뉴
         drawer = findViewById(R.id.drawer);
         tvLogout = findViewById(R.id.tvLogout);
+        btnMyPage = findViewById(R.id.btnMyPage);
         btnMyReview = findViewById(R.id.btnMyReview);
         btnYourReview = findViewById(R.id.btnYourReview);
         btnCalendar = findViewById(R.id.btnCalendar);
@@ -163,6 +150,15 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "로그아웃되었습니다", Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        btnMyPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),MyPageActivity.class);
                 startActivity(intent);
                 finish();
             }

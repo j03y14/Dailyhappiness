@@ -78,8 +78,6 @@ public class KingListActivity extends AppCompatActivity {
                         kingListAdapter2.addItem(new KingList(rank,user,userIndex,count,emblem));
                         Log.i("추천왕","추천왕");
                     }
-                    
-
 
                 }
 
