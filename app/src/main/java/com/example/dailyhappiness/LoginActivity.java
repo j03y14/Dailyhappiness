@@ -118,8 +118,13 @@ public class LoginActivity extends AppCompatActivity {
                 Account.setAge(receivedData.get("age").getAsString());
                 Account.setGender(receivedData.get("gender").getAsString());
                 Account.setUserIndex(receivedData.get("userIndex").getAsString());
+                Account.setEmblem("https://dailyhappiness.xyz/static/img/emblem/grade"+receivedData.get("grade").getAsString()+".png");
+                Account.setPush_notification(receivedData.get("push_notification").getAsInt());
+                Account.setMissionCount(receivedData.get("missionCount").getAsInt());
                 //isFirst가 1이면 처음 접속하는 유저. 0이면 접속 한 적이 있는 유저
                 Account.setIsFirst(receivedData.get("isFirst").getAsInt());
+                Account.setExpense_affordable(receivedData.get("expense_affordable").getAsInt());
+                Account.setTime_affordable(receivedData.get("time_affordable").getAsInt());
                 Mission.setCount(receivedData.get("count").getAsInt());
 
                 if (!id.equals(Account.getId())) {     //해당 아이디가 목록에 없을때

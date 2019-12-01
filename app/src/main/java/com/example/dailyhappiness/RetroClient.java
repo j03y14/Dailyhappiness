@@ -310,4 +310,23 @@ public class RetroClient {
             }
         } );
     }
+
+    public void mypage(String userIndex, int time_affordable,int expense_affordable, int push_notification, final RetroCallback callback){
+        apiService.mypage(userIndex,time_affordable,expense_affordable,push_notification).enqueue(new Callback<JsonObject>(){
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onError(t);
+            }
+        } );
+    }
+
 }
