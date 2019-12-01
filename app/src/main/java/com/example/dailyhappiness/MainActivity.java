@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     String month = monthFormat.format(currentDate);
     String date = dayFormat.format(currentDate);
 
+    int state = 0;
 
     //DrawerActivity에서 가져다 씀
     View drawer;
@@ -76,6 +77,13 @@ public class MainActivity extends AppCompatActivity {
 
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         binding.setActivity(this);
+
+        if(state == 0){
+            Intent intent = new Intent(getApplicationContext(),SurveyActivity.class);
+            startActivity(intent);
+            state++;
+            finish();
+        }
 
 
         //메뉴

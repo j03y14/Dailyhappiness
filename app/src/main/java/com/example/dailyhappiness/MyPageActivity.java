@@ -28,7 +28,7 @@ public class MyPageActivity extends AppCompatActivity {
     ActivityMyPageBinding binding;
     private Thread thread;
     private Bitmap bitmapProfile;
-    private String clover = "";
+    private String clover = "";      //사진 주소
     private boolean pushSate = true; //푸시 알람 상태 받아오기
 
     @Override

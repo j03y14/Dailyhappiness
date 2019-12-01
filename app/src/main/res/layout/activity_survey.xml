@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="activity"
+            type="com.example.dailyhappiness.SurveyActivity" />
+    </data>
+
+    <LinearLayout
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="15dp"
+    tools:context=".SurveyActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:layout_marginBottom="10dp"
+        android:text="여러분에게 알맞은 미션을 추천해드리기 위한 설문조사가 필요합니다\n이런 미션을 받았을때 몇점을 주고 싶은가요?"/>
+
+
+        <ListView
+            android:id="@+id/lvView"
+            android:layout_width="match_parent"
+            android:layout_height="550dp"
+            android:layout_marginBottom="10dp"></ListView>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/btnOk"
+            android:background="@color/colorAccent"
+            android:text="확인"/>
+
+
+
+
+</LinearLayout>
+</layout>

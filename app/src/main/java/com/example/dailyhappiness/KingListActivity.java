@@ -43,8 +43,6 @@ public class KingListActivity extends AppCompatActivity {
 
         getMissionKing();
 
-
-
     }
 
     public void getMissionKing(){

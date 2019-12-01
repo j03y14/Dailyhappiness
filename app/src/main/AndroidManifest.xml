@@ -16,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MyPageActivity"></activity>
+        <activity android:name=".SurveyListview"></activity>
+        <activity android:name=".SurveyActivity" />
+        <activity android:name=".MyPageActivity" />
         <activity android:name=".KingListView" />
         <activity android:name=".KingListActivity" />
         <activity android:name=".AddMissionDialog" />
