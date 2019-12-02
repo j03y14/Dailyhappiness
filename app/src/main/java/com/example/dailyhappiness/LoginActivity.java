@@ -124,6 +124,7 @@ public class LoginActivity extends AppCompatActivity {
                 Account.setIsFirst(receivedData.get("isFirst").getAsInt());
                 Account.setExpense_affordable(receivedData.get("expense_affordable").getAsInt());
                 Account.setTime_affordable(receivedData.get("time_affordable").getAsInt());
+                Account.setDidSurvey(receivedData.get("didSurvey").getAsInt());
                 Mission.setCount(receivedData.get("count").getAsInt());
 
                 if (!id.equals(Account.getId())) {     //해당 아이디가 목록에 없을때

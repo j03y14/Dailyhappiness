@@ -79,4 +79,17 @@ public interface RetroBaseApiService {
     @FormUrlEncoded
     @POST("/register/mypage")
     Call<JsonObject> mypage(@Field("userIndex") String userIndex, @Field("time_affordable") int time_affordable, @Field("expense_affordable") int expense_affordable, @Field("push_notification") int push_notification);
+
+
+    @POST("/missionBundle/getSurveyMission")
+    Call<JsonArray> getSurveyMission();
+
+    @FormUrlEncoded
+    @POST("/writeReview/survey")
+    Call<JsonObject> writeSurveyMission(@Field("userIndex") String userIndex, @Field("missionID") int missionID, @Field("rating") int rating, @Field("isLast") int isLast);
+
+
+    @FormUrlEncoded
+    @POST("/missionCandidate/search")
+    Call<JsonArray> missionCandidateSearch(@Field("keyword") String keyword);
 }

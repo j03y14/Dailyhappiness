@@ -329,4 +329,56 @@ public class RetroClient {
         } );
     }
 
+    public void getSurveyMission(final RetroCallback callback){
+        apiService.getSurveyMission().enqueue(new Callback<JsonArray>(){
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+                callback.onError(t);
+            }
+        } );
+    }
+
+    public void writeSurveyMission(String userIndex, int missionID,int rating, int isLast, final RetroCallback callback){
+        apiService.writeSurveyMission(userIndex,missionID,rating,isLast).enqueue(new Callback<JsonObject>(){
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onError(t);
+            }
+        } );
+    }
+    public void missionCandidateSearch(String keyword, final RetroCallback callback){
+        apiService.missionCandidateSearch(keyword).enqueue(new Callback<JsonArray>(){
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+                callback.onError(t);
+            }
+        } );
+    }
 }

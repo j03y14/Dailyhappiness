@@ -17,6 +17,15 @@ public class Account {
     static int missionCount =0;
     static int time_affordable =0;
     static int expense_affordable =0;
+    static int didSurvey =0;
+
+    public static int getDidSurvey() {
+        return didSurvey;
+    }
+
+    public static void setDidSurvey(int didSurvey) {
+        Account.didSurvey = didSurvey;
+    }
 
     public static int getTime_affordable() {
         return time_affordable;
