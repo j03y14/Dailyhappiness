@@ -35,6 +35,7 @@ public class SurveyActivity extends AppCompatActivity {
 
         retroClient = RetroClient.getInstance(this).createBaseApi();
 
+        getSurveyMissions();
 
 
 
