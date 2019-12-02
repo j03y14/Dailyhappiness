@@ -42,7 +42,6 @@ public class LoginActivity extends AppCompatActivity {
 
         tedPermission();
 
-
         binding = DataBindingUtil.setContentView(this,R.layout.activity_login);
         binding.setActivity(this);
 

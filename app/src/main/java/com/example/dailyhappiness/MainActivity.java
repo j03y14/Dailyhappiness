@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -71,13 +72,13 @@ public class MainActivity extends AppCompatActivity {
 
     //DrawerActivity에서 가져다 씀
     View drawer;
-    TextView tvLogout;
-    Button btnMyPage;
-    Button btnMyReview;
-    Button btnYourReview;
-    Button btnCalendar;
-    Button btnCandidate;
-    Button btnKingOfKings;
+    ImageButton tvLogout;
+    ImageButton btnMyPage;
+    ImageButton btnMyReview;
+    ImageButton btnYourReview;
+    ImageButton btnCalendar;
+    ImageButton btnCandidate;
+    ImageButton btnKingOfKings;
     ImageView ivID;
     TextView tvId;
 

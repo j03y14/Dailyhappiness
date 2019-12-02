@@ -54,63 +54,76 @@
         android:layout_weight="7"
         android:gravity="center|top"
         android:orientation="vertical">
-        <Button
+        <ImageButton
             android:id="@+id/btnMyPage"
-            android:gravity="left"
-            android:textSize="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="마이 페이지"/>
+            android:layout_height="60dp"
+            android:paddingRight="90dp"
+            android:background="#FFFFFFFF"
+            android:layout_marginLeft="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/btnpage2"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/btnMyReview"
-            android:paddingRight="145dp"
-            android:textSize="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="나의 리뷰"/>
+            android:layout_height="60dp"
+            android:paddingRight="120dp"
+            android:background="#FFFFFFFF"
+            android:layout_marginLeft="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/btnmy2" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btnYourReview"
-            android:paddingRight="145dp"
-            android:textSize="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="너의 리뷰"/>
+            android:layout_height="60dp"
+            android:paddingRight="120dp"
+            android:background="#FFFFFFFF"
+            android:layout_marginLeft="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/btnyour2"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/btnCalendar"
-            android:paddingRight="145dp"
-            android:textSize="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="히스토리"/>
+            android:layout_height="60dp"
+            android:paddingRight="120dp"
+            android:background="#FFFFFFFF"
+            android:layout_marginLeft="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/btnhistory"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/btnCandidate"
-            android:paddingRight="88dp"
-            android:textSize="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="이런 미션 어때요"/>
+            android:layout_height="60dp"
+            android:paddingRight="60dp"
+            android:background="#FFFFFFFF"
+            android:layout_marginLeft="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/btnhow"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/btnKingOfKings"
-            android:paddingRight="165dp"
-            android:textSize="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="왕중왕"/>
+            android:layout_height="60dp"
+            android:paddingRight="120dp"
+            android:background="#FFFFFFFF"
+            android:layout_marginLeft="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/btnking"/>
 
-        <TextView
-            android:clickable="true"
-            android:paddingLeft="10dp"
-            android:textSize="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
+        <ImageButton
             android:id="@+id/tvLogout"
-            android:text="로그아웃"/>
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingRight="120dp"
+            android:background="#FFFFFFFF"
+            android:layout_marginTop="130dp"
+            android:layout_marginLeft="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/btnlogout"/>
 
     </LinearLayout>
 
