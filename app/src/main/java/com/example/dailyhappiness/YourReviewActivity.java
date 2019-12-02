@@ -136,6 +136,7 @@ public class YourReviewActivity extends AppCompatActivity implements AbsListView
                     int weather = review.get("weather").getAsInt();        //날씨 1: 맑음, 2: 비, 3: 눈, 4: 흐림
                     float temperature = review.get("temperature").getAsFloat();  //온도
                     String image = review.get("picture").getAsString();     //인증사진이 보여지는 사진 주소를 가지고 있음
+                    String emblem = review.setEmblem("https://dailyhappiness.xyz/static/img/emblem/grade"+receivedData.get("grade").getAsString()+".png");
                    // reviewArray.add(new Review(missionNumber,user,date,missionName,content,rating,weather,temperature,image));
 
                     listAdapter.addItem((new Review(missionNumber,user,date,missionName,content,rating,weather,temperature,image)));

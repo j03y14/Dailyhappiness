@@ -37,23 +37,7 @@ public class SurveyListview extends LinearLayout {
         tvScore = findViewById(R.id.tvScore);
         seekBar = findViewById(R.id.seekBar);
 
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) { //움직임 중
-                number = seekBar.getProgress();
-                setScore();
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) { //움직임이 시작될때
-                number = seekBar.getProgress();
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) { //움직임이 멈췄을 때
-                number = seekBar.getProgress();
-            }
-        });
+        //seekBar.setOnSeekBarChangeListener();
 
     }
 
