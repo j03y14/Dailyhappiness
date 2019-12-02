@@ -89,8 +89,6 @@ public class YourReviewActivity extends AppCompatActivity implements AbsListView
                     OFFSET += 10;
                 }
             },1000);
-
-
         }
     }
 
@@ -102,8 +100,6 @@ public class YourReviewActivity extends AppCompatActivity implements AbsListView
         // 리스트의 갯수가 0개 이상이고, 화면에 보이는 맨 하단까지의 아이템 갯수가 총 갯수보다 크거나 같을때.. 즉 리스트의 끝일때. true
         lastItemVisibleFlag = (totalItemCount > 0) && (firstVisibleItem + visibleItemCount >= totalItemCount);
     }
-
-
 
 
     /*
@@ -133,12 +129,13 @@ public class YourReviewActivity extends AppCompatActivity implements AbsListView
                     String date = review.get("date").getAsString();        //날짜
                     String content = review.get("comment").getAsString();     //내용
                     int rating = review.get("rating").getAsInt();         //평점 (1점 ~ 10점)
-                    int weather = review.get("weather").getAsInt();        //날씨 1: 맑음, 2: 비, 3: 눈, 4: 흐림
+                    //int weather = review.get("weather").getAsInt();        //날씨 1: 맑음, 2: 비, 3: 눈, 4: 흐림
                     float temperature = review.get("temperature").getAsFloat();  //온도
                     String image = review.get("picture").getAsString();     //인증사진이 보여지는 사진 주소를 가지고 있음
+                    String emblem = "https://dailyhappiness.xyz/static/img/emblem/grade"+review.get("grade").getAsString()+".png";
                    // reviewArray.add(new Review(missionNumber,user,date,missionName,content,rating,weather,temperature,image));
 
-                    listAdapter.addItem((new Review(missionNumber,user,date,missionName,content,rating,weather,temperature,image)));
+                    listAdapter.addItem((new Review(missionNumber,user,date,missionName,content,rating,temperature,image,emblem)));
                 }
 
 

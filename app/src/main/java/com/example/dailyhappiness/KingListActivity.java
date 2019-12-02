@@ -66,6 +66,7 @@ public class KingListActivity extends AppCompatActivity {
                     String user = data.get("id").getAsString();
                     int userIndex = data.get("userIndex").getAsInt();
                     int count = data.get("number").getAsInt();
+                    //String emblem = "https://dailyhappiness.xyz/static/img/emblem/grade"+data.get("grade").getAsString()+".png";
                     String emblem = data.get("emblem").getAsString();
                     if(which == 1){
                         //미션왕 리스트에 넣기

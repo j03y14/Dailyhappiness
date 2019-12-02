@@ -9,9 +9,10 @@ public class Review {
     int rating;         //평점 (1점 ~ 10점)
     int weather;        //날씨 1: 맑음, 2: 비, 3: 눈, 4: 흐림
     float temperature;  //온도
-    String image;     //인증사진이 보여지는 사진 주소를 가지고 있음
+    String image;       //인증사진이 보여지는 사진 주소를 가지고 있음
+    String emblem;      //클로버
 
-    public Review(int missionNumber, String user, String date, String missionName, String content, int rating, int weather, float temperature, String image) {
+    public Review(int missionNumber, String user, String date, String missionName, String content, int rating, float temperature, String image,String emblem) {
         this.missionNumber = missionNumber;
         this.date = date;
         this.user = user;
@@ -19,8 +20,8 @@ public class Review {
         this.content = content;
         this.rating = rating;
         this.temperature = temperature;
-        this.weather = weather;
         this.image = image;
+        this.emblem = emblem;
     }
 
     public void setUser(String user) {
@@ -93,5 +94,13 @@ public class Review {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getEmblem() {
+        return emblem;
+    }
+
+    public void setEmblem(String emblem) {
+        this.emblem = emblem;
     }
 }

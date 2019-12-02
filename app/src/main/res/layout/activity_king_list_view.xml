@@ -17,9 +17,14 @@
         android:textSize="30dp"/>
 
     <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_toRightOf="@id/tvRank"
+        android:scaleType="fitCenter"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignTop="@id/tvID"
+        android:layout_alignBottom="@id/tvID"
         android:id="@+id/ivID"/>
 
     <TextView
@@ -27,7 +32,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvID"
         android:layout_toRightOf="@id/ivID"
-        android:text="asdf"
         android:textStyle="bold"
         android:layout_alignTop="@id/tvRank"
         android:layout_alignBottom="@id/tvRank"
@@ -40,12 +44,12 @@
         android:id="@+id/tvCount"
         android:layout_toRightOf="@id/tvID"
         android:text="30"
+        android:layout_alignParentRight="true"
         android:layout_alignTop="@id/tvRank"
         android:layout_alignBottom="@id/tvRank"
-        android:gravity="center"
+        android:gravity="right|center"
+        android:layout_marginRight="10dp"
         android:textSize="30dp"
         android:textStyle="bold"/>
-
-
 
 </RelativeLayout>

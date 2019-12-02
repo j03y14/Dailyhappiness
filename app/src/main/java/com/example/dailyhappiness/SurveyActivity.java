@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.SeekBar;
 
 import com.example.dailyhappiness.databinding.ActivitySurveyBinding;
 
@@ -15,6 +16,8 @@ public class SurveyActivity extends AppCompatActivity {
     ActivitySurveyBinding binding;
 
     SurveyAdapter surveyAdapter;
+    SurveyListview surveyListview;
+    int number = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,14 +25,14 @@ public class SurveyActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_survey);
         binding.setActivity(this);
 
-        //getSurbeyList안에 넣을 것
+        //getSurveyList 안에 넣을 것
         surveyAdapter = new SurveyAdapter();
 
-        //onSuccessdp 넣을 것
+        //onSuccess 넣을 것
         for(int i=0;i<10;i++){
             surveyAdapter.addItem(new Survey(1,"world"));
         }
-        //surveyAdapter.addItem(); //for문 안에
+        //surveyAdapter.addItem();
         binding.lvView.setAdapter(surveyAdapter);
 
         binding.btnOk.setOnClickListener(new View.OnClickListener() {
@@ -40,6 +43,5 @@ public class SurveyActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 }
