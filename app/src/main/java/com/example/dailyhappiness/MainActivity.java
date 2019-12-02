@@ -92,12 +92,12 @@ public class MainActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         binding.setActivity(this);
 
-//        if(state == 0){
-//            Intent intent = new Intent(getApplicationContext(),SurveyActivity.class);
-//            startActivity(intent);
-//            state++;
-//            finish();
-//        }
+        if(Account.getDidSurvey() == 0){
+            Intent intent = new Intent(getApplicationContext(),SurveyActivity.class);
+            startActivity(intent);
+            state++;
+            finish();
+        }
 
 
         //메뉴

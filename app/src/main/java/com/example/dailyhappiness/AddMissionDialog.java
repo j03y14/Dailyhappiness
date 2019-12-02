@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
@@ -66,15 +67,13 @@ public class AddMissionDialog extends Dialog{
         //tvMission = findViewById(R.id.tvMission);
 
         items = new ArrayList<>();
-        items.add("1");
-        items.add("2");
-        arrayAdapter = new ArrayAdapter(getContext(),android.R.layout.simple_list_item_1,items);
+
         //lvMission.setAdapter(arrayAdapter);
 
         edtMission.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                items.clear();
             }
 
             @Override
@@ -84,7 +83,14 @@ public class AddMissionDialog extends Dialog{
 
             @Override
             public void afterTextChanged(Editable s) {
-                lvMission.setAdapter(arrayAdapter);
+                items.clear();
+                if(s.toString()!=""){
+                    missionCandidateSearch(s.toString());
+                }else{
+
+                }
+
+
             }
         });
 
@@ -147,5 +153,30 @@ public class AddMissionDialog extends Dialog{
             }
         });
     };
+
+    public void missionCandidateSearch(String keyword){
+        retroClient.missionCandidateSearch(keyword, new RetroCallback<JsonArray>(){
+            @Override
+            public void onError(Throwable t) {
+
+            }
+
+            @Override
+            public void onSuccess(int code, JsonArray receivedData) {
+                for(int i=0; i<receivedData.size();i++){
+                    JsonObject mission = (JsonObject)receivedData.get(i);
+                    items.add(mission.get("missionName").getAsString());
+
+                }
+                arrayAdapter = new ArrayAdapter(getContext(),android.R.layout.simple_list_item_1,items);
+                lvMission.setAdapter(arrayAdapter);
+            }
+
+            @Override
+            public void onFailure(int code) {
+
+            }
+        });
+    }
 
 }
