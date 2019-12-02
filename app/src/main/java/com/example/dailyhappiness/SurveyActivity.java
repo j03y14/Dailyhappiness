@@ -63,7 +63,7 @@ public class SurveyActivity extends AppCompatActivity {
                 for(int i=0; i<receivedData.size();i++)
                 {
                     JsonObject mission = (JsonObject)receivedData.get(i);
-                    surveyAdapter.addItem(new Survey(mission.get('missionID').getAsInt(),mission.get('missionName').getAs));
+                    surveyAdapter.addItem(new Survey(mission.get("missionID").getAsInt(),mission.get("missionName").getAsString()));
 
                 }
 
