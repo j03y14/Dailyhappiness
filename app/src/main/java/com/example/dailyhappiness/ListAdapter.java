@@ -29,6 +29,9 @@ public class ListAdapter extends BaseAdapter {
     private Bitmap bitmapPhoto;
     private ImageView ivPhoto;
 
+    private Bitmap bitmapID;
+    private ImageView ivID;
+
     @Override
     public int getCount() {
         return items.size();
@@ -50,25 +53,25 @@ public class ListAdapter extends BaseAdapter {
         final Context context = parent.getContext();
         ReviewListView view=new ReviewListView(parent.getContext());
 
-        if (view==null) {
-            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = (ReviewListView) inflater.inflate((R.layout.activity_review_list_view),parent,false);
-        }
-
-//        if (convertView==null) {
+//        if (view==null) {
 //            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//            convertView = inflater.inflate((R.layout.activity_review_list_view),parent,false);
+//            view = (ReviewListView) inflater.inflate((R.layout.activity_review_list_view),parent,false);
 //        }
+
+        if (convertView==null) {
+            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate((R.layout.activity_review_list_view),parent,false);
+        }
 
 
         Review item=items.get(position);
 
         ivPhoto = view.findViewById(R.id.ivPhoto);
+        ivID = view.findViewById(R.id.ivID);
 
         view.setID(item.getUser());
         view.setDate(item.getDate());
-        //view.setImageID(item.getImageResource());
-        setImage(item.getImage());
+        setImage(item.getImage(), item.getEmblem());
         view.setMission(item.getMissionName());
         view.setRatingBar(item.getRating());
         view.setContents(item.getContent());
@@ -80,7 +83,7 @@ public class ListAdapter extends BaseAdapter {
         items.add(review);
     }
 
-    public void setImage(final String imageFile){
+    public void setImage(final String imageFile, final String imageFile2){
 
         thread = new Thread(){
             public void run(){
@@ -88,6 +91,7 @@ public class ListAdapter extends BaseAdapter {
                 try {
                     URL url = new URL(imageFile);
                     //https://dailyhappiness.xyz/image?filename=70-2019_11_12.jpg
+                    URL url2 = new URL(imageFile2);
 
                     // Web에서 이미지를 가져온 뒤
                     // ImageView에 지정할 Bitmap을 만든다
@@ -95,8 +99,15 @@ public class ListAdapter extends BaseAdapter {
                     conn.setDoInput(true); // 서버로 부터 응답 수신
                     conn.connect();
 
+                    HttpURLConnection conn2 = (HttpURLConnection) url2.openConnection();
+                    conn2.setDoInput(true); // 서버로 부터 응답 수신
+                    conn2.connect();
+
                     InputStream is = conn.getInputStream();
                     bitmapPhoto = BitmapFactory.decodeStream(is); // Bitmap으로 변환
+
+                    InputStream is2 = conn2.getInputStream();
+                    bitmapID = BitmapFactory.decodeStream(is2); // Bitmap으로 변환
 
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
@@ -118,6 +129,7 @@ public class ListAdapter extends BaseAdapter {
             // UI 작업을 할 수 있는 메인 Thread에서 ImageView에 이미지를 지정한다
             Log.d("이미지로드확인","휴");
             ivPhoto.setImageBitmap(bitmapPhoto);
+            ivID.setImageBitmap(bitmapID);
 
         } catch (InterruptedException e) {
             e.printStackTrace();

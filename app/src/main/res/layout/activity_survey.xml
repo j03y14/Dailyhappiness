@@ -30,7 +30,7 @@
         <ListView
             android:id="@+id/lvView"
             android:layout_width="match_parent"
-            android:layout_height="550dp"
+            android:layout_height="650dp"
             android:layout_marginBottom="10dp"></ListView>
 
         <Button

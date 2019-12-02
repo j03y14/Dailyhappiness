@@ -10,6 +10,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,6 +19,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +29,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.JsonObject;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -37,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
 
     private RetroClient retroClient;
     private Account user;
+
+    private Thread thread;
+    private Bitmap bitmapProfile;
+    private String clover = "";
 
     //현재 날짜와 시간 가져오기
     SimpleDateFormat timeFormat1;
@@ -66,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
     Button btnCalendar;
     Button btnCandidate;
     Button btnKingOfKings;
+    ImageView ivID;
+    TextView tvId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,12 +92,12 @@ public class MainActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         binding.setActivity(this);
 
-        if(state == 0){
-            Intent intent = new Intent(getApplicationContext(),SurveyActivity.class);
-            startActivity(intent);
-            state++;
-            finish();
-        }
+//        if(state == 0){
+//            Intent intent = new Intent(getApplicationContext(),SurveyActivity.class);
+//            startActivity(intent);
+//            state++;
+//            finish();
+//        }
 
 
         //메뉴
@@ -95,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
         btnCalendar = findViewById(R.id.btnCalendar);
         btnCandidate = findViewById(R.id.btnCandidate);
         btnKingOfKings = findViewById(R.id.btnKingOfKings);
+        ivID = findViewById(R.id.ivID);
+        tvId = findViewById(R.id.tvId);
         //메뉴끝
 
         binding.tvDate.setText(month+" / "+date);
@@ -145,6 +161,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //메뉴에서 넘어갈때
+        clover = Account.getEmblem();
+        getProfile(clover);
+        tvId.setText(Account.getId());
         tvLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -235,22 +254,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public void onDrawerStateChanged(int newState) {
-//            String state;
-//            switch (newState) {
-//                case DrawerLayout.STATE_IDLE:
-//                    state = "STATE_IDLE";
-//                    break;
-//                case DrawerLayout.STATE_DRAGGING:
-//                    state = "STATE_DRAGGING";
-//                    break;
-//                case DrawerLayout.STATE_SETTLING:
-//                    state = "STATE_SETTLING";
-//                    break;
-//                default:
-//                    state = "unknown!";
-//            }
 
-            //tvState.setText(state);
         }
     };
 
@@ -262,13 +266,13 @@ public class MainActivity extends AppCompatActivity {
 
                 timeFormat1 = new SimpleDateFormat("HH",Locale.getDefault());
                 timeFormat2 = new SimpleDateFormat("mm",Locale.getDefault());
-                timeFormat3 = new SimpleDateFormat("ss",Locale.getDefault());
+                //timeFormat3 = new SimpleDateFormat("ss",Locale.getDefault());
 
                 hours = timeFormat1.format(new Date());
                 minutes = timeFormat2.format(new Date());
-                seconds = timeFormat3.format(new Date());
+                //seconds = timeFormat3.format(new Date());
 
-                binding.tvLeftTime.setText("남은 시간 "+(23-Integer.parseInt(hours)) + " : " + (60-Integer.parseInt(minutes)) + " : " + (60-Integer.parseInt(seconds)));
+                binding.tvLeftTime.setText("남은 시간 "+(23-Integer.parseInt(hours)) + " : " + (60-Integer.parseInt(minutes)) );
             }
         };
 
@@ -390,6 +394,50 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    //클로버 가져오기
+    private void getProfile(final String imageFile){
+        thread = new Thread(){
+            public void run(){
+
+                try {
+                    URL url = new URL(imageFile);
+                    //https://dailyhappiness.xyz/image?filename=70-2019_11_12.jpg
+
+                    // Web에서 이미지를 가져온 뒤
+                    // ImageView에 지정할 Bitmap을 만든다
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setDoInput(true); // 서버로 부터 응답 수신
+                    conn.connect();
+
+                    InputStream is = conn.getInputStream();
+                    bitmapProfile = BitmapFactory.decodeStream(is); // Bitmap으로 변환
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        thread.start(); // Thread 실행
+
+        try {
+            // 메인 Thread는 별도의 작업 Thread가 작업을 완료할 때까지 대기해야한다
+            // join()를 호출하여 별도의 작업 Thread가 종료될 때까지 메인 Thread가 기다리게 한다
+            thread.join();
+
+            // 작업 Thread에서 이미지를 불러오는 작업을 완료한 뒤
+            // UI 작업을 할 수 있는 메인 Thread에서 ImageView에 이미지를 지정한다
+            Log.d("이미지로드확인","휴");
+            ivID.setImageBitmap(bitmapProfile);
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }

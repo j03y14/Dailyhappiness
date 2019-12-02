@@ -6,24 +6,35 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
+
+import java.util.ArrayList;
 
 public class AddMissionDialog extends Dialog{
 
     private Button btnOk;
     private Button btnCancel;
     private EditText edtMission;
+    private ListView lvMission;
+    //private TextView tvMission;
+
+    private ArrayAdapter arrayAdapter;
+    private ArrayList<String> items;
 
     private Context context = null;
     private String mission = "";
@@ -48,9 +59,35 @@ public class AddMissionDialog extends Dialog{
         Window window = this.getWindow();
         window.setAttributes(lp);
 
-        btnOk=findViewById(R.id.btnOk);
-        btnCancel=findViewById(R.id.btnCancel);
-        edtMission=findViewById(R.id.edtMission);
+        btnOk = findViewById(R.id.btnOk);
+        btnCancel = findViewById(R.id.btnCancel);
+        edtMission = findViewById(R.id.edtMission);
+        lvMission = findViewById(R.id.lvMission);
+        //tvMission = findViewById(R.id.tvMission);
+
+        items = new ArrayList<>();
+        items.add("1");
+        items.add("2");
+        arrayAdapter = new ArrayAdapter(getContext(),android.R.layout.simple_list_item_1,items);
+        //lvMission.setAdapter(arrayAdapter);
+
+        edtMission.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                lvMission.setAdapter(arrayAdapter);
+            }
+        });
+
 
 
         //클릭 리스너 셋팅
@@ -60,12 +97,14 @@ public class AddMissionDialog extends Dialog{
                 mission = edtMission.getText().toString();
                 setMission(mission);
                 ((MissionCandidateActivity)MissionCandidateActivity.context).getMissionCandidate(Account.userIndex,0,1);
+                edtMission.setText("");
                 dismiss();
             }
         });
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                edtMission.setText("");
                 dismiss();
             }
         });

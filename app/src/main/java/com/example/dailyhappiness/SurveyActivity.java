@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.SeekBar;
 
 import com.example.dailyhappiness.databinding.ActivitySurveyBinding;
 import com.google.gson.JsonArray;
@@ -18,6 +19,8 @@ public class SurveyActivity extends AppCompatActivity {
     ActivitySurveyBinding binding;
 
     SurveyAdapter surveyAdapter;
+    SurveyListview surveyListview;
+    int number = 1;
 
     RetroClient retroClient;
 
@@ -27,7 +30,7 @@ public class SurveyActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_survey);
         binding.setActivity(this);
 
-        //getSurbeyList안에 넣을 것
+        //getSurveyList 안에 넣을 것
         surveyAdapter = new SurveyAdapter();
 
         retroClient = RetroClient.getInstance(this).createBaseApi();
@@ -44,7 +47,6 @@ public class SurveyActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 
     private void getSurveyMissions(){

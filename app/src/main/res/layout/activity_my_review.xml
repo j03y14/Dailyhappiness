@@ -46,10 +46,17 @@
 
     </RelativeLayout>
 
+
     <ListView
         android:id="@+id/lvView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
+        android:layout_height="750dp"></ListView>
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_gravity="bottom"/>
 
 </LinearLayout>
 
