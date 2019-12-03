@@ -92,6 +92,16 @@ public class CreateAccountActivity extends AppCompatActivity {
                 idCheck(binding.edtInputID.getText().toString());
             }
         });
+
+        binding.btnUser1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.edtInputID.setText("dailyHappiness");
+                binding.edtInputPW.setText("1234qwer!");
+                binding.edtRepeatInputPW.setText("1234qwer!");
+                binding.edtInputAge.setText("25");
+            }
+        });
     }
 
     public void createAccount(View v, final String id, final String pw, String gender, String age){

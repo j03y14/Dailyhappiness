@@ -52,7 +52,7 @@ public class MissionCandidateActivity extends AppCompatActivity implements AbsLi
         retroClient = RetroClient.getInstance(this).createBaseApi();
         missionCandidateArray = new ArrayList<MissionCandidate>();
 
-        missionCandidateListAdapter = new MissionCandidateListAdapter(missionCandidateArray,MissionCandidateActivity.this);
+        //missionCandidateListAdapter = new MissionCandidateListAdapter(missionCandidateArray,MissionCandidateActivity.this);
 
         getMissionCandidate(Account.userIndex,0,1);
 
@@ -69,6 +69,14 @@ public class MissionCandidateActivity extends AppCompatActivity implements AbsLi
                 addMissionDialog.show();
 
 
+            }
+        });
+
+        binding.iBtnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OFFSET=20;
+                getMissionCandidate(Account.getUserIndex(), 0, 1);
             }
         });
 
@@ -156,6 +164,7 @@ public class MissionCandidateActivity extends AppCompatActivity implements AbsLi
                     int duplicateChecked =missionCandidate.get("userDuplicateCount").getAsInt(); //: 유저가 중복 눌렀는지
                     missionCandidateArray.add(new MissionCandidate(user,missionName,index,likes,dislikes,duplicateCount,likeChecked,dislikeChecked,duplicateChecked));
                 }
+                missionCandidateListAdapter = new MissionCandidateListAdapter(missionCandidateArray,MissionCandidateActivity.this);
 
                 if(OFFSET==20){
                     binding.lvView.setAdapter(missionCandidateListAdapter);

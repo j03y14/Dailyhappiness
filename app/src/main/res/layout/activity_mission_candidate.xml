@@ -42,6 +42,16 @@
                 android:layout_alignParentLeft="true"
                 android:src="@drawable/buttonback"/>
 
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+                android:scaleType="fitCenter"
+                android:id="@+id/iBtnUpdate"
+                android:background="#00000000"
+                android:src="@drawable/buttonupdate"
+                android:layout_toRightOf="@id/ivHowMission"
+                android:layout_marginRight="10dp"/>
+
 
         </RelativeLayout>
 

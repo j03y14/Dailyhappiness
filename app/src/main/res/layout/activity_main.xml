@@ -104,8 +104,8 @@
 
             <LinearLayout
                 android:id="@+id/linearLayout"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
+                android:layout_width="350dp"
+                android:layout_height="350dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="34dp"
@@ -126,8 +126,9 @@
 
                     <ImageView
                         android:id="@+id/imgMission"
-                        android:layout_width="350dp"
-                        android:layout_height="350dp"
+                        android:layout_width="400dp"
+                        android:layout_height="400dp"
+                        android:scaleType="fitCenter"
                         app:srcCompat="@drawable/imgpostit" />
 
                     <TextView
@@ -157,7 +158,7 @@
                         android:layout_alignRight="@+id/imgMission"
                         android:layout_alignBottom="@+id/imgMission"
                         android:layout_marginRight="18dp"
-                        android:layout_marginBottom="70dp"
+                        android:layout_marginBottom="100dp"
                         android:background="#fceff5"
                         android:src="@drawable/buttonnext" />
                 </RelativeLayout>
