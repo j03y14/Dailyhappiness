@@ -39,6 +39,8 @@ public class MyReviewActivity extends AppCompatActivity implements AbsListView.O
     private int OFFSET = 10;                        // 한 페이지마다 로드할 데이터 갯수
     private boolean mLockListView = false;          // 데이터 불러올때 중복안되게 하기위한 변수
 
+    private CloverEvolutionDialog cloverEvolutionDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,11 @@ public class MyReviewActivity extends AppCompatActivity implements AbsListView.O
 
         pd = ProgressDialog.show(MyReviewActivity.this, "", "리뷰를 불러오는 중입니다.");
 
+
+        //클로버가 진화했을때 나오는 다이얼로그
+        //cloverEvolutionDialog = new CloverEvolutionDialog(this,"클로버 진화!");
+        //cloverEvolutionDialog.show();
+
         getReviews(Account.getUserIndex(), true, 0);
         Log.d("", "onCreate: ");
 
@@ -66,6 +73,14 @@ public class MyReviewActivity extends AppCompatActivity implements AbsListView.O
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        binding.iBtnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OFFSET=10;
+                getReviews(Account.getUserIndex(), true, 0);
             }
         });
     }
