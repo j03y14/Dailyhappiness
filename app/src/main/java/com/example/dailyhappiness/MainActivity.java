@@ -7,6 +7,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView ivID;
     TextView tvId;
 
+    ProgressDialog pd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -101,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+
         //메뉴
         drawer = findViewById(R.id.drawer);
         tvLogout = findViewById(R.id.tvLogout);
@@ -118,8 +121,8 @@ public class MainActivity extends AppCompatActivity {
 
         showLeftTime();
 
-        getMission(Account.getUserIndex());
-
+        //getMission(Account.getUserIndex());
+        binding.tvMission.setText(Mission.getTodayMission());
 
         binding.iBtnSuccess.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -305,7 +308,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //기존 미션을 목록에서 삭제하지 않고 다음으 미션으로 넘기기
-                passMission(user.getUserIndex(),"true");
+                passMission(user.getUserIndex(),Mission.getCount(), Mission.getMissionNumber());
 
 
             }
@@ -315,7 +318,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //미션 목록에서 지우고 다음 미션으로 넘기기
-                passDislikeMission(user.getUserIndex(), "true", String.valueOf(Mission.getMissionNumber()),"true" );
+                passDislikeMission(user.getUserIndex(), Mission.getCount(), String.valueOf(Mission.getMissionNumber()),"true" );
 
             }
         });
@@ -333,9 +336,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int code, JsonObject receivedData) {
 
-                Mission.setMissionNumber(receivedData.get("missionIndex").getAsInt());
+                Mission.setMissionNumber(receivedData.get("missionID").getAsInt());
                 Mission.setTodayMission(receivedData.get("missionName").getAsString());
                 binding.tvMission.setText(Mission.getTodayMission());
+                pd.dismiss();
             }
             @Override
             public void onFailure(int code) {
@@ -345,9 +349,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //다음에 할게요로 미션 넘기기
-    public void passMission(final String userIndex, final String cost){
-
-        retroClient.passMission(userIndex, cost, new RetroCallback<JsonObject>() {
+    public void passMission(final String userIndex, final int cost,int mission){
+        pd = ProgressDialog.show(MainActivity.this, "", "미션을 불러오는 중입니다.");
+        retroClient.passMission(userIndex, cost, mission, new RetroCallback<JsonObject>() {
             @Override
             public void onError(Throwable t) {
                 Log.e("passMission error", t.toString());
@@ -373,7 +377,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
     //미션이 싫어서 미션을 넘기는 것
-    public void passDislikeMission(final String userIndex, final String cost,final String mission,final String dislike){
+    public void passDislikeMission(final String userIndex, final int cost,final String mission,final String dislike){
+        pd = ProgressDialog.show(MainActivity.this, "", "미션을 불러오는 중입니다.");
         retroClient.passDislikeMission(userIndex, cost, mission, dislike,new RetroCallback<JsonObject>() {
             @Override
             public void onError(Throwable t) {

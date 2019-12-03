@@ -6,6 +6,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -37,6 +39,7 @@ public class RetroClient {
 
     private static OkHttpClient httpClient = new OkHttpClient.Builder()
             .retryOnConnectionFailure(true)
+            .readTimeout(60, TimeUnit.SECONDS)
             .build();
 
     private RetroClient(Context context) {
@@ -150,8 +153,8 @@ public class RetroClient {
         } );
     }
 
-    public void passMission(String userIndex, String count, final RetroCallback callback){
-        apiService.passMission(userIndex,count).enqueue(new Callback<JsonObject>(){
+    public void passMission(String userIndex, int count,int mission, final RetroCallback callback){
+        apiService.passMission(userIndex,count,mission).enqueue(new Callback<JsonObject>(){
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
@@ -168,7 +171,7 @@ public class RetroClient {
         } );
     }
 
-    public void passDislikeMission(String userIndex, String count, String mission, String dislike, final RetroCallback callback){
+    public void passDislikeMission(String userIndex, int count, String mission, String dislike, final RetroCallback callback){
         apiService.passDislikeMission(userIndex,count,mission,dislike).enqueue(new Callback<JsonObject>(){
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
