@@ -2,14 +2,12 @@ package com.example.dailyhappiness;
 
 import android.content.Context;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 
-import org.json.JSONObject;
-
-import java.net.URL;
-
-import okhttp3.ResponseBody;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,8 +36,8 @@ public class RetroClient {
 
 
     private static OkHttpClient httpClient = new OkHttpClient.Builder()
-                                                            .retryOnConnectionFailure(true)
-                                                            .build();
+            .retryOnConnectionFailure(true)
+            .build();
 
     private RetroClient(Context context) {
         retrofit = new Retrofit.Builder()
@@ -65,6 +63,23 @@ public class RetroClient {
 
     public void createAccount(String id, String pw, String gender, String age, final RetroCallback callback){
         apiService.createAccount(id, pw, gender ,age).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onError(t);
+            }
+        });
+    }
+    public void idCheck(String id, final RetroCallback callback){
+        apiService.idCheck(id).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
@@ -135,8 +150,8 @@ public class RetroClient {
         } );
     }
 
-    public void passMission(String userIndex, String cost, final RetroCallback callback){
-        apiService.passMission(userIndex,cost).enqueue(new Callback<JsonObject>(){
+    public void passMission(String userIndex, String count, final RetroCallback callback){
+        apiService.passMission(userIndex,count).enqueue(new Callback<JsonObject>(){
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
@@ -153,8 +168,8 @@ public class RetroClient {
         } );
     }
 
-    public void passDislikeMission(String userIndex, String cost, String mission, String dislike, final RetroCallback callback){
-        apiService.passDislikeMission(userIndex,cost,mission,dislike).enqueue(new Callback<JsonObject>(){
+    public void passDislikeMission(String userIndex, String count, String mission, String dislike, final RetroCallback callback){
+        apiService.passDislikeMission(userIndex,count,mission,dislike).enqueue(new Callback<JsonObject>(){
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
@@ -171,5 +186,199 @@ public class RetroClient {
         } );
     }
 
+    public void uploadImage(MultipartBody.Part file, RequestBody requestBody, final RetroCallback callback){
+        apiService.uploadImage(file,requestBody).enqueue(new Callback<JsonObject>(){
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
 
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onError(t);
+            }
+        } );
+    }
+
+    public void uploadReview(String userIndex, int missionIndex, String missionRating, String location_lat, String location_lon, String content, final RetroCallback callback){
+        apiService.uploadReview(userIndex, missionIndex, missionRating, location_lat, location_lon, content).enqueue(new Callback<JsonObject>(){
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+
+            }
+        });
+    }
+    public void getReviews(String userIndex, boolean getMine, int reviewCount, final RetroCallback callback){
+        apiService.getReviews(userIndex,getMine,reviewCount).enqueue(new Callback<JsonArray>(){
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+                callback.onError(t);
+            }
+        } );
+    }
+
+    public void insertMissionCandidate(String userIndex, String missionName, final RetroCallback callback){
+        apiService.insertMissionCandidate(userIndex,missionName).enqueue(new Callback<JsonObject>(){
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onError(t);
+            }
+        } );
+    }
+    public void getMissionKing(final RetroCallback callback){
+        apiService.getMissionKing().enqueue(new Callback<JsonArray>(){
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+                callback.onError(t);
+            }
+        } );
+    }
+
+
+    public void getMissionCandidate(String userIndex, int count, int mode, final RetroCallback callback){
+        apiService.getMissionCandidate(userIndex,count,mode).enqueue(new Callback<JsonArray>(){
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+                callback.onError(t);
+            }
+        } );
+    }
+
+    public void evaluateMissionCandidate(String userIndex, int missionCandidateIndex,int which, int value, final RetroCallback callback){
+        apiService.evaluateMissionCandidate(userIndex,missionCandidateIndex,which,value).enqueue(new Callback<JsonObject>(){
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onError(t);
+            }
+        } );
+    }
+
+    public void mypage(String userIndex, int time_affordable,int expense_affordable, int push_notification, final RetroCallback callback){
+        apiService.mypage(userIndex,time_affordable,expense_affordable,push_notification).enqueue(new Callback<JsonObject>(){
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onError(t);
+            }
+        } );
+    }
+
+    public void getSurveyMission(final RetroCallback callback){
+        apiService.getSurveyMission().enqueue(new Callback<JsonArray>(){
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+                callback.onError(t);
+            }
+        } );
+    }
+
+    public void writeSurveyMission(String userIndex, int missionID,int rating, int isLast, final RetroCallback callback){
+        apiService.writeSurveyMission(userIndex,missionID,rating,isLast).enqueue(new Callback<JsonObject>(){
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onError(t);
+            }
+        } );
+    }
+    public void missionCandidateSearch(String keyword, final RetroCallback callback){
+        apiService.missionCandidateSearch(keyword).enqueue(new Callback<JsonArray>(){
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.code(), response.body());
+                } else {
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+                callback.onError(t);
+            }
+        } );
+    }
 }

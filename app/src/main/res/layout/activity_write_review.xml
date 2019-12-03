@@ -10,106 +10,70 @@
             type="com.example.dailyhappiness.WriteReviewActivity" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".WriteReviewActivity"
-        android:background="#fff">
+        android:gravity="center"
+        android:layout_margin="20dp">
 
         <TextView
             android:id="@+id/tvMission"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="176dp"
-            android:layout_marginLeft="176dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginEnd="177dp"
-            android:layout_marginRight="177dp"
-            android:layout_marginBottom="34dp"
-            android:text="TextView"
-            app:layout_constraintBottom_toTopOf="@+id/tvReview"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginHorizontal="25dp"
+            android:layout_centerHorizontal="true"
+            android:text="미션 보여주기"
+            android:textSize="25dp"/>
 
         <TextView
-            android:id="@+id/tvReview"
+            android:id="@+id/tvID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="176dp"
-            android:layout_marginLeft="176dp"
-            android:layout_marginEnd="177dp"
-            android:layout_marginRight="177dp"
-            android:layout_marginBottom="34dp"
-            android:text="TextView"
-            app:layout_constraintBottom_toTopOf="@+id/ratingBar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvMission" />
+            android:layout_marginBottom="25dp"
+            android:text="OO님의 한줄평"
+            android:textSize="20dp"
+            android:layout_below="@id/tvMission"
+            android:layout_centerHorizontal="true"/>
 
         <RatingBar
             android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="85dp"
-            android:layout_marginLeft="85dp"
-            android:layout_marginEnd="86dp"
-            android:layout_marginRight="86dp"
-            android:layout_marginBottom="20dp"
-            app:layout_constraintBottom_toTopOf="@+id/edtInputReview"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvReview"
-            android:isIndicator="false"
-            android:stepSize="0.5"
-            android:max="10"/>
+            android:layout_marginBottom="25dp"
+            android:layout_below="@id/tvID"
+            android:layout_centerHorizontal="true"/>
 
         <EditText
-            android:id="@+id/edtInputReview"
+            android:id="@+id/edtReview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp"
-            app:layout_constraintBottom_toTopOf="@+id/imgPhoto"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
+            android:layout_marginBottom="25dp"
+            android:layout_below="@id/ratingBar"
+            android:textSize="20dp"
+            android:layout_centerHorizontal="true"/>
 
         <ImageView
-            android:id="@+id/imgPhoto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="50dp"
-            app:layout_constraintBottom_toTopOf="@+id/imgBtnOK"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edtInputReview"
-            app:srcCompat="@drawable/imgreview" />
+            android:clickable="true"
+            android:background="#CCCCCC"
+            android:id="@+id/ivPhoto"
+            android:src="@drawable/imgphoto"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_below="@id/edtReview"
+            android:layout_marginBottom="25dp"
+            android:layout_centerHorizontal="true"
+            android:scaleType="fitCenter"/>
 
         <ImageButton
-            android:id="@+id/imgBtnOK"
+            android:background="#00000000"
+            android:id="@+id/iBtnOK"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="165dp"
-            android:layout_marginLeft="165dp"
-            android:layout_marginEnd="166dp"
-            android:layout_marginRight="166dp"
-            android:layout_marginBottom="80dp"
-            android:background="#fff"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/buttonok" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:src="@drawable/buttonok"
+            android:layout_below="@id/ivPhoto"
+            android:layout_centerHorizontal="true"
+            android:text="확인"/>
+
+    </RelativeLayout>
 </layout>

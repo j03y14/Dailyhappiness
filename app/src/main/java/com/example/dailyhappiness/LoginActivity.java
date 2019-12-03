@@ -1,9 +1,12 @@
 package com.example.dailyhappiness;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SearchRecentSuggestionsProvider;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Debug;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -13,10 +16,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.google.gson.JsonObject;
-
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 import com.example.dailyhappiness.databinding.ActivityLoginBinding;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+
+import static com.example.dailyhappiness.Account.userIndex;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -33,21 +40,25 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
 
+        tedPermission();
+
         binding = DataBindingUtil.setContentView(this,R.layout.activity_login);
         binding.setActivity(this);
 
         sp = getSharedPreferences("sp",Activity.MODE_PRIVATE); //(저장될 키, 값)
         String loginID = sp.getString("id", ""); // 처음엔 값이 없으므로 ""
         String loginPW = sp.getString("pw","");
+        //String loginUserID = sp.getString("userIndex","");
 
         retroClient = RetroClient.getInstance(this).createBaseApi();
         user = Account.getInstance();
 
         if(loginID != "" && loginPW != "") {
             Toast.makeText(this, "자동 로그인 되었습니다.", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-            finish();
+//            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//            startActivity(intent);
+//            finish();
+            login(loginID,loginPW);
         }
         else if(loginID == "" && loginPW == "") {
             binding.btnLogin.setOnClickListener(new View.OnClickListener() {  //로그인 버튼을 눌렀을때
@@ -64,12 +75,12 @@ public class LoginActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    login(v, id, cryptoPW);
+                    login( id, cryptoPW);
 
                 }
             });
         }
-        
+
         binding.btnJoinIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {  //회원가입하기를 눌렀을때
@@ -91,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void login(View v, final String id, final String pw){
+    public void login(final String id, final String pw){
         retroClient.login(id, pw, new RetroCallback<JsonObject>(){
 
             @Override
@@ -101,15 +112,24 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(int code, JsonObject receivedData) {
-                user.setId(receivedData.get("id").getAsString());
-                user.setPw(receivedData.get("password").getAsString());
-                user.setAge(receivedData.get("age").getAsString());
-                user.setGender(receivedData.get("gender").getAsString());
-                user.setUserIndex(receivedData.get("userIndex").getAsString());
+                Account.setId(receivedData.get("id").getAsString());
+                Account.setPw(receivedData.get("password").getAsString());
+                Account.setAge(receivedData.get("age").getAsString());
+                Account.setGender(receivedData.get("gender").getAsString());
+                Account.setUserIndex(receivedData.get("userIndex").getAsString());
+                Account.setEmblem("https://dailyhappiness.xyz/static/img/emblem/grade"+receivedData.get("grade").getAsString()+".png");
+                Account.setPush_notification(receivedData.get("push_notification").getAsInt());
+                Account.setMissionCount(receivedData.get("missionCount").getAsInt());
+                //isFirst가 1이면 처음 접속하는 유저. 0이면 접속 한 적이 있는 유저
+                Account.setIsFirst(receivedData.get("isFirst").getAsInt());
+                Account.setExpense_affordable(receivedData.get("expense_affordable").getAsInt());
+                Account.setTime_affordable(receivedData.get("time_affordable").getAsInt());
+                Account.setDidSurvey(receivedData.get("didSurvey").getAsInt());
+                Mission.setCount(receivedData.get("count").getAsInt());
 
-                if (!id.equals(user.getId())) {     //해당 아이디가 목록에 없을때
+                if (!id.equals(Account.getId())) {     //해당 아이디가 목록에 없을때
                     Toast.makeText(LoginActivity.this, "아이디가 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
-                } else if (!pw.equals(user.getPw())) {   //비밀번호가 일치하지 않을때
+                } else if (!pw.equals(Account.getPw())) {   //비밀번호가 일치하지 않을때
                     Toast.makeText(LoginActivity.this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
                 } else {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -119,6 +139,7 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = sp.edit(); //로그인 정보 저장
                     editor.putString("id", id);
                     editor.putString("pw", pw);
+                    editor.putString("userIndex", Account.getUserIndex());
                     editor.commit();
                     finish();
                 }
@@ -127,8 +148,32 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(int code)
             {
-                Log.e("error", "로그인 오류가 생겼습니다.");
+                Log.e("error", "오류가 생겼습니다.");
             }
         });
     }
+
+    private void tedPermission() { //권한 요청
+
+        PermissionListener permissionListener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                // 권한 요청 성공
+            }
+
+            @Override
+            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                // 권한 요청 실패
+            }
+        };
+
+        TedPermission.with(this)
+                .setPermissionListener(permissionListener)
+                .setDeniedMessage("[설정] > [권한] 에서 권한을 허용할 수 있습니다.")
+                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION)
+                .check();
+
+    }
+
+
 }

@@ -24,6 +24,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     //서버 연동 객체
     private RetroClient retroClient;
     private  Account user;
+    private boolean idCheck = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +56,9 @@ public class CreateAccountActivity extends AppCompatActivity {
                 if(id.length() == 0 || pw.length() == 0 || resultPW.length() == 0 || age.length() == 0 ){
                     Toast.makeText(CreateAccountActivity.this, "빈 칸을 채워주세요", Toast.LENGTH_SHORT).show();
                 }
-//                else if(id.equals(user.getId())){
-//                    Toast.makeText(CreateAccountActivity.this, "중복 아이디 입니다. 다시 입력해주세요", Toast.LENGTH_SHORT).show();
-//
-//                }
+                else if(!idCheck){
+                    Toast.makeText(CreateAccountActivity.this, "아이디를 확인해주세요", Toast.LENGTH_SHORT).show();
+                }
                 else if(pw.length() < 8){
                     Toast.makeText(CreateAccountActivity.this, "비밀번호를 8자리 이상으로 설정해주세요", Toast.LENGTH_SHORT).show();
                 }else if(!matcher.find()){
@@ -83,6 +83,13 @@ public class CreateAccountActivity extends AppCompatActivity {
 
                 }
 
+            }
+        });
+
+        binding.btnDuplicate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                idCheck(binding.edtInputID.getText().toString());
             }
         });
     }
@@ -111,6 +118,44 @@ public class CreateAccountActivity extends AppCompatActivity {
             @Override
             public void onFailure(int code) {
                 Log.e("error", "오류가 생겼습니다.");
+            }
+        });
+    }
+
+    /*
+    * id를 넣어주면 id가 중복인지 아닌지 확인한다.
+    * isDuplicate가 true이면 중복이고 False이면 중복이 아니다.
+    * */
+    public void idCheck(final String id){
+        retroClient.idCheck(id, new RetroCallback<JsonObject>(){
+            @Override
+            public void onError(Throwable t) {
+                Log.i("아이디 중복 확인","에러");
+
+            }
+
+            @Override
+            public void onSuccess(int code, JsonObject receivedData) {
+                Boolean isDuplicate = receivedData.get("duplicate").getAsBoolean();
+                Log.i("아이디 중복 확인","성공");
+
+                if(isDuplicate){
+                    //중복이면
+                    Log.i("아이디 중복","중복임");
+                    Toast.makeText(CreateAccountActivity.this, "중복 아이디 입니다. 다시 입력해주세요", Toast.LENGTH_SHORT).show();
+                    idCheck = false;
+                }else{
+                    //중복이 아니면
+                    Toast.makeText(CreateAccountActivity.this, "아이디를 사용할 수 있습니다.", Toast.LENGTH_SHORT).show();
+                    idCheck = true;
+                }
+
+            }
+
+            @Override
+            public void onFailure(int code) {
+                Log.i("아이디 중복 확인","실패");
+
             }
         });
     }

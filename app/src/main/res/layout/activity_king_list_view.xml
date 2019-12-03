@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    tools:context=".KingListView">
+
+    <TextView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/tvRank"
+        android:text="1"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textSize="30dp"/>
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_toRightOf="@id/tvRank"
+        android:scaleType="fitCenter"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignTop="@id/tvID"
+        android:layout_alignBottom="@id/tvID"
+        android:id="@+id/ivID"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvID"
+        android:layout_toRightOf="@id/ivID"
+        android:textStyle="bold"
+        android:layout_alignTop="@id/tvRank"
+        android:layout_alignBottom="@id/tvRank"
+        android:gravity="center"
+        android:textSize="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvCount"
+        android:layout_toRightOf="@id/tvID"
+        android:text="30"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/tvRank"
+        android:layout_alignBottom="@id/tvRank"
+        android:gravity="right|center"
+        android:layout_marginRight="10dp"
+        android:textSize="30dp"
+        android:textStyle="bold"/>
+
+</RelativeLayout>

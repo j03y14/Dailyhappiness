@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="activity"
+            type="com.example.dailyhappiness.DrawerActivity" />
+    </data>
+
+    <LinearLayout
+    android:layout_width="240dp"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:background="#FFD5DA"
+    android:orientation="vertical"
+    android:id="@+id/drawer"
+    tools:context=".DrawerActivity">
+
+
+    <LinearLayout
+        android:background="@drawable/imgsun"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <ImageView
+            android:paddingLeft="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"
+            android:scaleType="fitCenter"
+            android:layout_marginTop="20dp"
+            android:id="@+id/ivID"/>
+        <TextView
+            android:paddingLeft="20dp"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="20dp"
+            android:gravity="center"
+            android:id="@+id/tvId"
+            android:text="아이디는 이거임"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="#FFFFFFFF"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        android:gravity="center|top"
+        android:orientation="vertical">
+        <ImageButton
+            android:id="@+id/btnMyPage"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:paddingRight="90dp"
+            android:background="#FFFFFFFF"
+            android:layout_marginLeft="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/btnpage2"/>
+
+        <ImageButton
+            android:id="@+id/btnMyReview"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:paddingRight="120dp"
+            android:background="#FFFFFFFF"
+            android:layout_marginLeft="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/btnmy2" />
+
+        <ImageButton
+            android:id="@+id/btnYourReview"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:paddingRight="120dp"
+            android:background="#FFFFFFFF"
+            android:layout_marginLeft="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/btnyour2"/>
+
+        <ImageButton
+            android:id="@+id/btnCalendar"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:paddingRight="120dp"
+            android:background="#FFFFFFFF"
+            android:layout_marginLeft="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/btnhistory"/>
+
+        <ImageButton
+            android:id="@+id/btnCandidate"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:paddingRight="60dp"
+            android:background="#FFFFFFFF"
+            android:layout_marginLeft="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/btnhow"/>
+
+        <ImageButton
+            android:id="@+id/btnKingOfKings"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:paddingRight="120dp"
+            android:background="#FFFFFFFF"
+            android:layout_marginLeft="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/btnking"/>
+
+        <ImageButton
+            android:id="@+id/tvLogout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingRight="120dp"
+            android:background="#FFFFFFFF"
+            android:layout_marginTop="130dp"
+            android:layout_marginLeft="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/btnlogout"/>
+
+    </LinearLayout>
+
+</LinearLayout>
+</layout>
