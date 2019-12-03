@@ -32,7 +32,6 @@ public class AddMissionDialog extends Dialog{
     private Button btnCancel;
     private EditText edtMission;
     private ListView lvMission;
-    //private TextView tvMission;
 
     private ArrayAdapter arrayAdapter;
     private ArrayList<String> items;
@@ -64,7 +63,6 @@ public class AddMissionDialog extends Dialog{
         btnCancel = findViewById(R.id.btnCancel);
         edtMission = findViewById(R.id.edtMission);
         lvMission = findViewById(R.id.lvMission);
-        //tvMission = findViewById(R.id.tvMission);
 
         items = new ArrayList<>();
 

@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.Toast;
 
 import com.example.dailyhappiness.databinding.ActivityMyReviewBinding;
 import com.google.gson.JsonArray;
@@ -50,6 +51,9 @@ public class MyReviewActivity extends AppCompatActivity implements AbsListView.O
         reviewArray = new ArrayList<Review>();
 
         listAdapter = new ListAdapter();
+
+        pd = ProgressDialog.show(MyReviewActivity.this, "", "리뷰를 불러오는 중입니다.");
+
         getReviews(Account.getUserIndex(), true, 0);
         Log.d("", "onCreate: ");
 
@@ -64,8 +68,13 @@ public class MyReviewActivity extends AppCompatActivity implements AbsListView.O
                 finish();
             }
         });
+    }
 
-        pd = ProgressDialog.show(MyReviewActivity.this, "", "리뷰를 불러오는 중입니다.");
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override

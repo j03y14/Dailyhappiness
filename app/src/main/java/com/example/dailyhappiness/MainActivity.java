@@ -238,6 +238,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
     DrawerLayout.DrawerListener drawerListener = new DrawerLayout.DrawerListener() {
 
         public void onDrawerClosed(View drawerView) {
