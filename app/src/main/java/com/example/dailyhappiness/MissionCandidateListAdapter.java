@@ -13,14 +13,17 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 
 public class MissionCandidateListAdapter extends BaseAdapter {
-    ArrayList<MissionCandidate> items;
+    public ArrayList<MissionCandidate> getItems() {
+        return items;
+    }
+
+    ArrayList<MissionCandidate> items = new ArrayList<MissionCandidate>();
     Context context;
 
     private RetroClient retroClient;
 
 
-    public MissionCandidateListAdapter(ArrayList<MissionCandidate> items, Context context){
-        this.items = items;
+    public MissionCandidateListAdapter(Context context){
         this.context = context;
     }
 
@@ -210,6 +213,9 @@ public class MissionCandidateListAdapter extends BaseAdapter {
 
             }
         });
+    }
+    public void clearItems(){
+        items.clear();
     }
 
 }

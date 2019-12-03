@@ -379,6 +379,7 @@ public class WriteReviewActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int code, JsonObject receivedData) {
                 startActivity(intent);
+                finish();
             }
 
             @Override

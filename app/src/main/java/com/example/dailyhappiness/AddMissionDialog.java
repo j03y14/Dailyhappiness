@@ -99,7 +99,7 @@ public class AddMissionDialog extends Dialog{
             public void onClick(View v) {
                 mission = edtMission.getText().toString();
                 setMission(mission);
-                ((MissionCandidateActivity)MissionCandidateActivity.context).getMissionCandidate(Account.userIndex,0,1);
+                //((MissionCandidateActivity)MissionCandidateActivity.context).getMissionCandidate(Account.userIndex,0,1);
                 edtMission.setText("");
                 dismiss();
             }
@@ -141,6 +141,8 @@ public class AddMissionDialog extends Dialog{
             public void onSuccess(int code, JsonObject receivedData) {
                 Log.i("미션들어감?","웅 들어감");
 
+                ((MissionCandidateActivity)MissionCandidateActivity.context).missionCandidateListAdapter.clearItems();
+                ((MissionCandidateActivity)MissionCandidateActivity.context).getMissionCandidate(Account.userIndex,0,1);
                 //((MissionCandidateActivity)context).missionCandidateListAdapter.notifyDataSetChanged();
             }
 

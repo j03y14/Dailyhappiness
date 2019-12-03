@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),WriteReviewActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
