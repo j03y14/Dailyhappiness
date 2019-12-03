@@ -31,7 +31,7 @@ public interface RetroBaseApiService {
     Call<JsonObject> login(@Field("id") String id, @Field("password") String password);
 
     @FormUrlEncoded
-    @POST("/missionBundle/get")
+    @POST("/missionBundle/get1")
     Call<JsonObject> getMission(@Field("userIndex") String userIndex);
 
     @FormUrlEncoded
@@ -40,11 +40,11 @@ public interface RetroBaseApiService {
 
     @FormUrlEncoded
     @POST("/missionBundle/increment")
-    Call<JsonObject> passMission(@Field("userIndex") String userIndex, @Field("count") String count);
+    Call<JsonObject> passMission(@Field("userIndex") String userIndex, @Field("count") int count,@Field("mission") int missionNumber);
 
     @FormUrlEncoded
     @POST("/missionBundle/increment")
-    Call<JsonObject> passDislikeMission(@Field("userIndex") String userIndex, @Field("count") String count, @Field("mission") String missionNumber, @Field("dislike") String dislike);
+    Call<JsonObject> passDislikeMission(@Field("userIndex") String userIndex, @Field("count") int count, @Field("mission") String missionNumber, @Field("dislike") String dislike);
 
     @Multipart
     @POST("/writeReview/image")

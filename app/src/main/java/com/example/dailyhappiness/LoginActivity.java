@@ -23,6 +23,7 @@ import com.example.dailyhappiness.databinding.ActivityLoginBinding;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
+import static com.example.dailyhappiness.Account.pw;
 import static com.example.dailyhappiness.Account.userIndex;
 
 public class LoginActivity extends AppCompatActivity {
@@ -150,16 +151,8 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (!pw.equals(Account.getPw())) {   //비밀번호가 일치하지 않을때
                     Toast.makeText(LoginActivity.this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
                 } else {
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    intent.putExtra("id", id);
-                    startActivity(intent);
+                    getMission(Account.getUserIndex());
 
-                    SharedPreferences.Editor editor = sp.edit(); //로그인 정보 저장
-                    editor.putString("id", id);
-                    editor.putString("pw", pw);
-                    editor.putString("userIndex", Account.getUserIndex());
-                    editor.commit();
-                    finish();
                 }
             }
 
@@ -193,5 +186,35 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    public void getMission(final String userIndex){
+        retroClient.getMission(userIndex, new RetroCallback<JsonObject>(){
+            @Override
+            public void onError(Throwable t) {
+                Log.e("getMission error", t.toString());
+            }
+
+            @Override
+            public void onSuccess(int code, JsonObject receivedData) {
+
+                Mission.setMissionNumber(receivedData.get("missionID").getAsInt());
+                Mission.setTodayMission(receivedData.get("missionName").getAsString());
+
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                //intent.putExtra("id", );
+                startActivity(intent);
+
+                SharedPreferences.Editor editor = sp.edit(); //로그인 정보 저장
+                editor.putString("id", Account.getId());
+                editor.putString("pw", Account.getPw());
+                editor.putString("userIndex", Account.getUserIndex());
+                editor.commit();
+                finish();
+            }
+            @Override
+            public void onFailure(int code) {
+                Log.e("error", "getMission 오류가 생겼습니다.");
+            }
+        });
+    }
 
 }
