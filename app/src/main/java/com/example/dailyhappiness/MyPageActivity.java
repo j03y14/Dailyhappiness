@@ -145,6 +145,12 @@ public class MyPageActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        mypage(Account.getUserIndex(),time,cost,pushState);
+        //super.onBackPressed();
+    }
+
     //클로버 가져오기
     private void getProfile(final String imageFile){
         thread = new Thread(){

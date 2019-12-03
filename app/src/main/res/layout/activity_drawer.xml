@@ -31,7 +31,7 @@
             android:paddingLeft="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/imgclover"
             android:scaleType="fitCenter"
             android:layout_marginTop="20dp"
             android:id="@+id/ivID"/>
@@ -72,7 +72,7 @@
             android:background="#FFFFFFFF"
             android:layout_marginLeft="10dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/btnmy2" />
+            android:src="@drawable/btnmy" />
 
         <ImageButton
             android:id="@+id/btnYourReview"

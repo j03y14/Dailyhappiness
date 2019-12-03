@@ -45,6 +45,13 @@ public class KingListActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     public void getMissionKing(){
         kingListAdapter = new KingListAdapter();
         kingListAdapter2 = new KingListAdapter();

@@ -45,7 +45,7 @@ public class MissionCandidateListAdapter extends BaseAdapter {
 
         retroClient = RetroClient.getInstance(context).createBaseApi();
         final MissionCandidateListview view = new MissionCandidateListview(parent.getContext());
-        final MissionCandidate item=items.get(position);
+        final MissionCandidate item = items.get(position);
 
         view.setID(item.getUser());
         view.setMission(item.getMissionName());

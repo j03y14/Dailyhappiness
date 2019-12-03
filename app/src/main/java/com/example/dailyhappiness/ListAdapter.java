@@ -53,10 +53,10 @@ public class ListAdapter extends BaseAdapter {
         final Context context = parent.getContext();
         ReviewListView view=new ReviewListView(parent.getContext());
 
-//        if (view==null) {
-//            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//            view = (ReviewListView) inflater.inflate((R.layout.activity_review_list_view),parent,false);
-//        }
+        if (view==null) {
+            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = (ReviewListView) inflater.inflate((R.layout.activity_review_list_view),parent,false);
+        }
 
         if (convertView==null) {
             LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

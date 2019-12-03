@@ -108,6 +108,13 @@ public class CalendarActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     private class ApiSimulator extends AsyncTask<Void, Void, List<CalendarDay>> {
 
         ArrayList<String> Time_Result;

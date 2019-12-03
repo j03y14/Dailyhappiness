@@ -3,6 +3,7 @@ package com.example.dailyhappiness;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 public class YourReviewActivity extends AppCompatActivity implements AbsListView.OnScrollListener{
 
     ActivityYourReviewBinding binding;
+    ProgressDialog pd;
 
     private RetroClient retroClient;
     private ArrayList<Review> reviewArray;
@@ -40,6 +42,8 @@ public class YourReviewActivity extends AppCompatActivity implements AbsListView
         reviewArray = new ArrayList<Review>();
         listAdapter = new ListAdapter();
 
+        pd = ProgressDialog.show(YourReviewActivity.this, "", "리뷰를 불러오는 중입니다.");
+
         getReviews(Account.getUserIndex(), false, 0);
         Log.d("", "onCreate: ");
 
@@ -54,6 +58,7 @@ public class YourReviewActivity extends AppCompatActivity implements AbsListView
                 finish();
             }
         });
+
         binding.iBtnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +66,13 @@ public class YourReviewActivity extends AppCompatActivity implements AbsListView
                 getReviews(Account.getUserIndex(), false, 0);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -144,6 +156,7 @@ public class YourReviewActivity extends AppCompatActivity implements AbsListView
                 }
 
                 listAdapter.notifyDataSetChanged();
+                pd.dismiss();
 
             }
 

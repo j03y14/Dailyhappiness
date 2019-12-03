@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SurveyListview"></activity>
+        <activity android:name=".CloverEvolutionDialog"></activity>
+        <activity android:name=".SurveyListview" />
         <activity android:name=".SurveyActivity" />
         <activity android:name=".MyPageActivity" />
         <activity android:name=".KingListView" />

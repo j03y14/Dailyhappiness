@@ -3,6 +3,7 @@ package com.example.dailyhappiness;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +12,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.Toast;
 
 import com.example.dailyhappiness.databinding.ActivityMyReviewBinding;
 import com.google.gson.JsonArray;
@@ -26,6 +28,7 @@ import java.util.ArrayList;
 public class MyReviewActivity extends AppCompatActivity implements AbsListView.OnScrollListener{
 
     ActivityMyReviewBinding binding;
+    ProgressDialog pd;
 
     private RetroClient retroClient;
     private ArrayList<Review> reviewArray;
@@ -35,6 +38,8 @@ public class MyReviewActivity extends AppCompatActivity implements AbsListView.O
     private boolean lastItemVisibleFlag = false;    // 리스트 스크롤이 마지막 셀(맨 바닥)로 이동했는지 체크할 변수
     private int OFFSET = 10;                        // 한 페이지마다 로드할 데이터 갯수
     private boolean mLockListView = false;          // 데이터 불러올때 중복안되게 하기위한 변수
+
+    private CloverEvolutionDialog cloverEvolutionDialog;
 
 
     @Override
@@ -48,6 +53,14 @@ public class MyReviewActivity extends AppCompatActivity implements AbsListView.O
         reviewArray = new ArrayList<Review>();
 
         listAdapter = new ListAdapter();
+
+        pd = ProgressDialog.show(MyReviewActivity.this, "", "리뷰를 불러오는 중입니다.");
+
+
+        //클로버가 진화했을때 나오는 다이얼로그
+        //cloverEvolutionDialog = new CloverEvolutionDialog(this,"클로버 진화!");
+        //cloverEvolutionDialog.show();
+
         getReviews(Account.getUserIndex(), true, 0);
         Log.d("", "onCreate: ");
 
@@ -62,6 +75,21 @@ public class MyReviewActivity extends AppCompatActivity implements AbsListView.O
                 finish();
             }
         });
+
+        binding.iBtnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OFFSET=10;
+                getReviews(Account.getUserIndex(), true, 0);
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -141,6 +169,7 @@ public class MyReviewActivity extends AppCompatActivity implements AbsListView.O
                     binding.lvView.setAdapter(listAdapter);
                 }
                 listAdapter.notifyDataSetChanged();
+                pd.dismiss();
             }
 
             @Override

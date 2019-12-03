@@ -99,7 +99,7 @@ public class SurveyActivity extends AppCompatActivity {
             public void onSuccess(int code, JsonObject receivedData) {
                 if(receivedData.get("end").getAsInt()==1){
                     login(Account.getId(),Account.getPw());
-                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                    Intent intent = new Intent(getApplicationContext(),MyPageActivity.class);
                     startActivity(intent);
                     finish();
                 }

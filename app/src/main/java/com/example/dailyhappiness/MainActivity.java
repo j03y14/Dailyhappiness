@@ -69,8 +69,6 @@ public class MainActivity extends AppCompatActivity {
     String month = monthFormat.format(currentDate);
     String date = dayFormat.format(currentDate);
 
-    int state = 0;
-
     //DrawerActivity에서 가져다 씀
     View drawer;
     ImageButton tvLogout;
@@ -98,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
         if(Account.getDidSurvey() == 0){
             Intent intent = new Intent(getApplicationContext(),SurveyActivity.class);
             startActivity(intent);
-            state++;
             finish();
         }
 
@@ -140,8 +137,6 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "미션은 하루에 2번만 넘길 수 있어요", Toast.LENGTH_SHORT).show();
                 }else{
                     show();
-
-
                 }
             }
         });
@@ -244,6 +239,11 @@ public class MainActivity extends AppCompatActivity {
         });
         //메뉴 끝
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     DrawerLayout.DrawerListener drawerListener = new DrawerLayout.DrawerListener() {
