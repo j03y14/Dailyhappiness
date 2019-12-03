@@ -33,6 +33,10 @@ public class SurveyAdapter extends BaseAdapter {
 
         view.setNumber(item.getNumber());
         view.setMission(item.getMission());
+
+        // 시크바의 Default 값을 5로 초기화 ... 아님말구 ㅎ  - 돼지 -
+        view.seekBar.setProgress(5);
+
         view.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) { //움직임 중

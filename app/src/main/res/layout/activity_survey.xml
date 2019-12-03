@@ -22,7 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="20dp"
+        android:textSize="19dp"
+        android:textStyle="bold"
         android:layout_marginBottom="10dp"
         android:text="여러분에게 알맞은 미션을 추천해드리기 위한 설문조사가 필요합니다\n이런 미션을 받았을때 몇점을 주고 싶은가요?"/>
 

@@ -3,6 +3,7 @@ package com.example.dailyhappiness;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 public class MyReviewActivity extends AppCompatActivity implements AbsListView.OnScrollListener{
 
     ActivityMyReviewBinding binding;
+    ProgressDialog pd;
 
     private RetroClient retroClient;
     private ArrayList<Review> reviewArray;
@@ -62,6 +64,8 @@ public class MyReviewActivity extends AppCompatActivity implements AbsListView.O
                 finish();
             }
         });
+
+        pd = ProgressDialog.show(MyReviewActivity.this, "", "리뷰를 불러오는 중입니다.");
     }
 
     @Override
@@ -141,6 +145,7 @@ public class MyReviewActivity extends AppCompatActivity implements AbsListView.O
                     binding.lvView.setAdapter(listAdapter);
                 }
                 listAdapter.notifyDataSetChanged();
+                pd.dismiss();
             }
 
             @Override

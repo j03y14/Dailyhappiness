@@ -95,7 +95,6 @@ public class AddMissionDialog extends Dialog{
         });
 
 
-
         //클릭 리스너 셋팅
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
