@@ -68,6 +68,7 @@ public class WriteReviewActivity extends AppCompatActivity {
     private String location_lat; //위도
     private String location_lon; //경도
     private String content; //한줄평
+    private CloverEvolutionDialog cloverEvolutionDialog;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -147,6 +148,19 @@ public class WriteReviewActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private long time= 0;
+    @Override
+    public void onBackPressed(){
+        if(System.currentTimeMillis()-time>=2000){
+            time=System.currentTimeMillis();
+            Toast.makeText(getApplicationContext(),"뒤로가기 버튼을 한번 더 누르면 메인화면으로 넘어갑니다",Toast.LENGTH_SHORT).show();
+        }else if(System.currentTimeMillis()-time<2000){
+            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     public void addImage(){
@@ -378,6 +392,13 @@ public class WriteReviewActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(int code, JsonObject receivedData) {
+                if(receivedData.has("level-up"))
+                {
+                    //클로버가 진화했을때 나오는 다이얼로그
+                    cloverEvolutionDialog = new CloverEvolutionDialog(WriteReviewActivity.this,receivedData.get("level-up").getAsString());
+                    cloverEvolutionDialog.show();
+                }
+
                 startActivity(intent);
                 finish();
             }

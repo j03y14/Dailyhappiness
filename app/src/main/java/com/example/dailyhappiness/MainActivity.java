@@ -93,10 +93,18 @@ public class MainActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         binding.setActivity(this);
 
+        binding.imgMission2.setVisibility(View.GONE);
+
         if(Account.getDidSurvey() == 0){
             Intent intent = new Intent(getApplicationContext(),SurveyActivity.class);
             startActivity(intent);
             finish();
+        }
+
+        if(Mission.getMissionNumber() ==  -1){
+            binding.imgMission2.setVisibility(View.VISIBLE);
+            binding.ibtnNext.setEnabled(false);
+            binding.iBtnSuccess.setEnabled(false);
         }
 
 
