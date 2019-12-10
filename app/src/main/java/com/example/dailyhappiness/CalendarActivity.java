@@ -26,7 +26,9 @@ import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.Executors;
 
 public class CalendarActivity extends AppCompatActivity {
@@ -45,7 +47,7 @@ public class CalendarActivity extends AppCompatActivity {
 
     //달력밑에 히스토리 data   "날짜\n한줄평"
     ArrayAdapter arrayAdapter;
-    ArrayList<String> data;
+    ArrayList<String> data, items;
 
 
     @Override
@@ -57,7 +59,21 @@ public class CalendarActivity extends AppCompatActivity {
         retroClient= RetroClient.getInstance(this).createBaseApi();
         result = new ArrayList<String>();
         data = new ArrayList<String>();
+        items = new ArrayList<String>();
+        arrayAdapter = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_list_item_1,items);
+        binding.lvList.setAdapter(arrayAdapter);
 
+        binding.calendarView.state().edit()
+                .setFirstDayOfWeek(Calendar.SUNDAY)
+                .setMinimumDate(CalendarDay.from(2017, 0, 1)) // 달력의 시작
+                .setMaximumDate(CalendarDay.from(2030, 11, 31)) // 달력의 끝
+                .setCalendarDisplayMode(CalendarMode.MONTHS)
+                .commit();
+
+        binding.calendarView.addDecorators(
+                new SundayDecorator(),
+                new SaturdayDecorator(),
+                oneDayDecorator);
         getReviews(Account.getUserIndex(), true,0);
 
 
@@ -84,16 +100,26 @@ public class CalendarActivity extends AppCompatActivity {
             @Override
             public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
                 int m = date.getMonth();
-
+                items.clear();
                 ArrayList<ArrayList<String>> monthList = new ArrayList<ArrayList<String>>();
-                for(int i = 0 ; i < 12; i ++){
-                    ArrayList<String> month = new ArrayList<String>();  //1 month
-                    for(int j = 0; j < result.size(); j ++){
-                        if(i == Integer.parseInt(result.get(j).substring(5,7))-1)  //그 달에 맞는 result(날짜들) 분류
-                            month.add(result.get(j));
+                ArrayList<String> month = new ArrayList<String>();  //1 month
+
+
+                for(int j = 0; j < result.size(); j ++){
+                    int thismonth = Integer.parseInt(result.get(j).substring(5,7));
+                    if(m == thismonth) {  //그 달에 맞는 result(날짜들) 분류
+                        month.add(result.get(j));
+                        String ne = result.get(j) + "\n" + data.get(j);
+                        items.add(ne);
                     }
-                    monthList.add(month);                               //1~12 month
                 }
+                monthList.add(month);                               //1~12 month
+
+
+                arrayAdapter.notifyDataSetChanged();
+
+
+
 
             }
         });
@@ -178,27 +204,32 @@ public class CalendarActivity extends AppCompatActivity {
                 for(int i=0; i<receivedData.size();i++) {
                     JsonObject review = (JsonObject) receivedData.get(i);
                     result.add(review.get("date").getAsString());
-                    data.add(review.get("date").getAsString() +"\n" +review.get("missionName").getAsString());
+                    data.add(review.get("missionName").getAsString());
                 }
+                Calendar calendar = new GregorianCalendar(Locale.KOREA);
 
-                arrayAdapter = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_list_item_1,data);
-                binding.lvList.setAdapter(arrayAdapter);
+                int m = calendar.get(Calendar.MONTH) + 1;
 
-                binding.calendarView.state().edit()
-                        .setFirstDayOfWeek(Calendar.SUNDAY)
-                        .setMinimumDate(CalendarDay.from(2017, 0, 1)) // 달력의 시작
-                        .setMaximumDate(CalendarDay.from(2030, 11, 31)) // 달력의 끝
-                        .setCalendarDisplayMode(CalendarMode.MONTHS)
-                        .commit();
+                출처: https://gojworld.tistory.com/690 [Go];
+                items.clear();
+                ArrayList<ArrayList<String>> monthList = new ArrayList<ArrayList<String>>();
+                ArrayList<String> month = new ArrayList<String>();  //1 month
 
-                binding.calendarView.addDecorators(
-                        new SundayDecorator(),
-                        new SaturdayDecorator(),
-                        oneDayDecorator);
+
+                for(int j = 0; j < result.size()-1; j ++){
+                    int thismonth = Integer.parseInt(result.get(j).substring(5,7));
+                    if(m == thismonth)  //그 달에 맞는 result(날짜들) 분류
+                        month.add(result.get(j));
+                    String ne = result.get(j)+"\n"+data.get(j);
+                    items.add(ne);
+                }
+                monthList.add(month);                               //1~12 month
+
+
+                arrayAdapter.notifyDataSetChanged();
 
 
                 new ApiSimulator(result).executeOnExecutor(Executors.newSingleThreadExecutor());
-
             }
 
             @Override
