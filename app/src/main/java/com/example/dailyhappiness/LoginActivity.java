@@ -114,6 +114,11 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(int code, JsonObject receivedData) {
+                int error = receivedData.get("error").getAsInt();
+                if(error==1){
+                    Toast.makeText(LoginActivity.this, "아이디와 비밀번호를 정확하게 입력하세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Account.setId(receivedData.get("id").getAsString());
                 Account.setPw(receivedData.get("password").getAsString());
                 Account.setAge(receivedData.get("age").getAsString());
@@ -129,14 +134,10 @@ public class LoginActivity extends AppCompatActivity {
                 Account.setDidSurvey(receivedData.get("didSurvey").getAsInt());
                 Mission.setCount(receivedData.get("count").getAsInt());
 
-                if (!id.equals(Account.getId())) {     //해당 아이디가 목록에 없을때
-                    Toast.makeText(LoginActivity.this, "아이디가 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
-                } else if (!pw.equals(Account.getPw())) {   //비밀번호가 일치하지 않을때
-                    Toast.makeText(LoginActivity.this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
-                } else {
-                    getMission(Account.getUserIndex());
 
-                }
+                getMission(Account.getUserIndex());
+
+
             }
 
             @Override
