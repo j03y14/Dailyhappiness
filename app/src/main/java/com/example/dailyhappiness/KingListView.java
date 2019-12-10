@@ -17,6 +17,9 @@ public class KingListView extends RelativeLayout {
     TextView tvID;
     TextView tvCount;
 
+    public  KingListView(){
+        super(null);
+    }
 
     public KingListView(Context context) {
         super(context);

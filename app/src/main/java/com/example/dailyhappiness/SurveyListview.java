@@ -16,6 +16,10 @@ public class SurveyListview extends LinearLayout {
     SeekBar seekBar;
     int number = 0 ;
 
+    public SurveyListview(){
+        super(null);
+    }
+
     public SurveyListview(Context context) {
         super(context);
         init(context);

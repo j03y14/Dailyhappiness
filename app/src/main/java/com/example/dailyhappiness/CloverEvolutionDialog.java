@@ -49,6 +49,10 @@ public class CloverEvolutionDialog extends Dialog {
         });
     }
 
+    public CloverEvolutionDialog(){
+        super(null);
+    }
+
     //생성자 생성
     public CloverEvolutionDialog(@NonNull Context context, String clover) {
         super(context);

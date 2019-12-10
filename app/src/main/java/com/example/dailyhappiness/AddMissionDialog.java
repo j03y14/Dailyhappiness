@@ -114,6 +114,10 @@ public class AddMissionDialog extends Dialog{
     }
 
 
+    public AddMissionDialog(){
+        super(null);
+
+    }
     //생성자 생성
     public AddMissionDialog(@NonNull Context context) {
         super(context);
