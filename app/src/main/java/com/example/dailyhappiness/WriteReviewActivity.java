@@ -150,6 +150,12 @@ public class WriteReviewActivity extends AppCompatActivity {
         });
     }
 
+    public void changeActivity(){
+        Intent intent = new Intent(getApplicationContext(), MyReviewActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     private long time= 0;
     @Override
     public void onBackPressed(){
@@ -397,10 +403,10 @@ public class WriteReviewActivity extends AppCompatActivity {
                     //클로버가 진화했을때 나오는 다이얼로그
                     cloverEvolutionDialog = new CloverEvolutionDialog(WriteReviewActivity.this,receivedData.get("level-up").getAsString());
                     cloverEvolutionDialog.show();
+                }else{
+                    startActivity(intent);
+                    finish();
                 }
-
-                startActivity(intent);
-                finish();
             }
 
             @Override

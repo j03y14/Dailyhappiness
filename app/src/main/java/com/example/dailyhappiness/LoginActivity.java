@@ -90,23 +90,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        //데모 후 지울 곳
-        binding.btnUser1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                binding.edtInputID.setText("dailyHappiness");
-                binding.edtInputPW.setText("1234qwer!");
-            }
-        });
-
-        binding.btnUser2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                binding.edtInputID.setText("asdf");
-                binding.edtInputPW.setText("1234qwer!");
-            }
-        });
-        //데모 후 지울 곳
     }
 
     @Override

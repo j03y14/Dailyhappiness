@@ -3,6 +3,7 @@ package com.example.dailyhappiness;
 import androidx.annotation.NonNull;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -12,7 +13,7 @@ import android.widget.TextView;
 
 
 public class CloverEvolutionDialog extends Dialog {
-
+    Context context;
     private Button btnOk;
     private TextView tvClover;
     private String clover;
@@ -21,7 +22,7 @@ public class CloverEvolutionDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_add_mission_dialog);
+        setContentView(R.layout.activity_clover_evolution_dialog);
 
         // 다이얼로그 크기 조절
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -42,15 +43,16 @@ public class CloverEvolutionDialog extends Dialog {
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((WriteReviewActivity)context).changeActivity();
                 dismiss();
             }
         });
-
     }
 
     //생성자 생성
     public CloverEvolutionDialog(@NonNull Context context, String clover) {
         super(context);
+        this.context = context;
         this.clover = clover;
     }
 
